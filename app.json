@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "USIntellix Patient Mobile",
+    "slug": "patient-mobile-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#090e1a"
+    },
+    "android": {
+      "package": "com.usintellix.patientapp",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.png",
+        "backgroundColor": "#090e1a"
+      },
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ]
+    },
+    "plugins": []
+  }
+}

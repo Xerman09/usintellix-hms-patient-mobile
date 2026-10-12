@@ -19,11 +19,13 @@ import {
   ChevronRightIcon
 } from '../components/Icons';
 import AppointmentsModal from '../components/AppointmentsModal';
+import PrescriptionsModal from '../components/PrescriptionsModal';
 
 export default function PatientDashboardScreen({ user, onLogout }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [reminderSet, setReminderSet] = useState(false);
   const [showAppointments, setShowAppointments] = useState(false);
+  const [showPrescriptions, setShowPrescriptions] = useState(false);
 
   // Compute initials (e.g. "EA" for Erman Ace or from name)
   const firstName = user.first_name || 'Patient';
@@ -105,7 +107,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           <TouchableOpacity
             style={styles.gridCard}
             activeOpacity={0.7}
-            onPress={() => Alert.alert('Prescriptions', 'Your active clinical prescriptions are up to date.')}
+            onPress={() => setShowPrescriptions(true)}
           >
             <View style={[styles.cardIconCircle, { backgroundColor: '#f5f3ff' }]}>
               <PillIcon color="#7c3aed" size={20} />
@@ -175,6 +177,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         visible={showAppointments}
         onClose={() => setShowAppointments(false)}
         patientId={user.id}
+      />
+
+      {/* Prescriptions Interactive Bottom Sheet */}
+      <PrescriptionsModal
+        visible={showPrescriptions}
+        onClose={() => setShowPrescriptions(false)}
       />
 
       {/* Dropdown Menu when hamburger is pressed */}

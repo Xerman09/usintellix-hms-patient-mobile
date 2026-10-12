@@ -16,10 +16,11 @@ export async function apiRequest(endpoint, options = {}) {
   try {
     const response = await fetch(url, {
       ...options,
+      credentials: 'include',
       headers
     });
 
-    // Save PHP session cookies (PHPSESSID) for subsequent requests
+    // Save PHP session cookies (PHPSESSID) for native mobile networking
     const setCookie = response.headers.get('set-cookie');
     if (setCookie) {
       sessionCookies = setCookie.split(';')[0];

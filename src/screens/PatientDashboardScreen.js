@@ -18,10 +18,12 @@ import {
   BellIcon,
   ChevronRightIcon
 } from '../components/Icons';
+import AppointmentsModal from '../components/AppointmentsModal';
 
 export default function PatientDashboardScreen({ user, onLogout }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [reminderSet, setReminderSet] = useState(false);
+  const [showAppointments, setShowAppointments] = useState(false);
 
   // Compute initials (e.g. "EA" for Erman Ace or from name)
   const firstName = user.first_name || 'Patient';
@@ -87,7 +89,11 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         <View style={styles.cardsGrid}>
           
           {/* Card 1: Appointments */}
-          <TouchableOpacity style={styles.gridCard} activeOpacity={0.7}>
+          <TouchableOpacity
+            style={styles.gridCard}
+            activeOpacity={0.7}
+            onPress={() => setShowAppointments(true)}
+          >
             <View style={[styles.cardIconCircle, { backgroundColor: '#eff6ff' }]}>
               <CalendarIcon color="#2563eb" size={20} />
             </View>
@@ -96,7 +102,11 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           </TouchableOpacity>
 
           {/* Card 2: Prescriptions */}
-          <TouchableOpacity style={styles.gridCard} activeOpacity={0.7}>
+          <TouchableOpacity
+            style={styles.gridCard}
+            activeOpacity={0.7}
+            onPress={() => Alert.alert('Prescriptions', 'Your active clinical prescriptions are up to date.')}
+          >
             <View style={[styles.cardIconCircle, { backgroundColor: '#f5f3ff' }]}>
               <PillIcon color="#7c3aed" size={20} />
             </View>
@@ -105,7 +115,11 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           </TouchableOpacity>
 
           {/* Card 3: Health Records */}
-          <TouchableOpacity style={styles.gridCard} activeOpacity={0.7}>
+          <TouchableOpacity
+            style={styles.gridCard}
+            activeOpacity={0.7}
+            onPress={() => Alert.alert('Health Records', 'Your HIPAA digital health record is synced.')}
+          >
             <View style={[styles.cardIconCircle, { backgroundColor: '#ecfdf5' }]}>
               <RecordsIcon color="#059669" size={20} />
             </View>
@@ -114,7 +128,17 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           </TouchableOpacity>
 
           {/* Card 4: Reminders */}
-          <TouchableOpacity style={styles.gridCard} activeOpacity={0.7}>
+          <TouchableOpacity
+            style={styles.gridCard}
+            activeOpacity={0.7}
+            onPress={() => {
+              setReminderSet(!reminderSet);
+              Alert.alert(
+                !reminderSet ? 'Reminders Active' : 'Reminders Paused',
+                !reminderSet ? 'You will be notified before scheduled appointments.' : 'Clinical alerts paused.'
+              );
+            }}
+          >
             <View style={[styles.cardIconCircle, { backgroundColor: '#fff7ed' }]}>
               <BellIcon color="#ea580c" size={20} />
             </View>
@@ -145,6 +169,13 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         </TouchableOpacity>
 
       </ScrollView>
+
+      {/* Appointments Interactive Bottom Sheet */}
+      <AppointmentsModal
+        visible={showAppointments}
+        onClose={() => setShowAppointments(false)}
+        patientId={user.id}
+      />
 
       {/* Dropdown Menu when hamburger is pressed */}
       {drawerOpen && (

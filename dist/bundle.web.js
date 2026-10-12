@@ -1088,7 +1088,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState6(initialState) {
+          function useState7(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1100,7 +1100,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect6(create2, deps) {
+          function useEffect7(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1883,7 +1883,7 @@
           exports.useContext = useContext5;
           exports.useDebugValue = useDebugValue3;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect6;
+          exports.useEffect = useEffect7;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1891,7 +1891,7 @@
           exports.useMemo = useMemo4;
           exports.useReducer = useReducer;
           exports.useRef = useRef10;
-          exports.useState = useState6;
+          exports.useState = useState7;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -3295,18 +3295,18 @@
           var className = "";
           var inlineStyle = null;
           var nextCache = disableCache ? null : cache4;
-          var styles14 = new Array(arguments.length);
+          var styles15 = new Array(arguments.length);
           for (var i = 0; i < arguments.length; i++) {
-            styles14[i] = arguments[i];
+            styles15[i] = arguments[i];
           }
-          while (styles14.length > 0) {
-            var possibleStyle = styles14.pop();
+          while (styles15.length > 0) {
+            var possibleStyle = styles15.pop();
             if (possibleStyle == null || possibleStyle === false) {
               continue;
             }
             if (Array.isArray(possibleStyle)) {
               for (var _i = 0; _i < possibleStyle.length; _i++) {
-                styles14.push(possibleStyle[_i]);
+                styles15.push(possibleStyle[_i]);
               }
               continue;
             }
@@ -4290,9 +4290,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React24 = require_react();
+          var React25 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React24.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React25.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -5899,7 +5899,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React24.Children.forEach(props.children, function(child) {
+                  React25.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -6395,15 +6395,15 @@
             };
           }
           var warnValidStyle$1 = warnValidStyle;
-          function createDangerousStringForStyles(styles14) {
+          function createDangerousStringForStyles(styles15) {
             {
               var serialized = "";
               var delimiter = "";
-              for (var styleName in styles14) {
-                if (!styles14.hasOwnProperty(styleName)) {
+              for (var styleName in styles15) {
+                if (!styles15.hasOwnProperty(styleName)) {
                   continue;
                 }
-                var styleValue = styles14[styleName];
+                var styleValue = styles15[styleName];
                 if (styleValue != null) {
                   var isCustomProperty = styleName.indexOf("--") === 0;
                   serialized += delimiter + (isCustomProperty ? styleName : hyphenateStyleName2(styleName)) + ":";
@@ -6414,19 +6414,19 @@
               return serialized || null;
             }
           }
-          function setValueForStyles2(node, styles14) {
+          function setValueForStyles2(node, styles15) {
             var style2 = node.style;
-            for (var styleName in styles14) {
-              if (!styles14.hasOwnProperty(styleName)) {
+            for (var styleName in styles15) {
+              if (!styles15.hasOwnProperty(styleName)) {
                 continue;
               }
               var isCustomProperty = styleName.indexOf("--") === 0;
               {
                 if (!isCustomProperty) {
-                  warnValidStyle$1(styleName, styles14[styleName]);
+                  warnValidStyle$1(styleName, styles15[styleName]);
                 }
               }
-              var styleValue = dangerousStyleValue2(styleName, styles14[styleName], isCustomProperty);
+              var styleValue = dangerousStyleValue2(styleName, styles15[styleName], isCustomProperty);
               if (styleName === "float") {
                 styleName = "cssFloat";
               }
@@ -6440,9 +6440,9 @@
           function isValueEmpty(value) {
             return value == null || typeof value === "boolean" || value === "";
           }
-          function expandShorthandMap(styles14) {
+          function expandShorthandMap(styles15) {
             var expanded = {};
-            for (var key in styles14) {
+            for (var key in styles15) {
               var longhands = shorthandToLonghand[key] || [key];
               for (var i = 0; i < longhands.length; i++) {
                 expanded[longhands[i]] = key;
@@ -25584,7 +25584,7 @@
   });
 
   // index.web.js
-  var import_react13 = __toESM(require_react());
+  var import_react14 = __toESM(require_react());
 
   // node_modules/react-native-web/dist/modules/AccessibilityUtil/isDisabled.js
   var isDisabled = (props) => props.disabled || Array.isArray(props.accessibilityStates) && props.accessibilityStates.indexOf("disabled") > -1;
@@ -26964,7 +26964,7 @@
     shadow: true,
     textShadow: true
   };
-  function customStyleq(styles14, options) {
+  function customStyleq(styles15, options) {
     if (options === void 0) {
       options = {};
     }
@@ -26978,7 +26978,7 @@
         }
         return preprocess(style, _objectSpread2(_objectSpread2({}, defaultPreprocessOptions), preprocessOptions));
       }
-    })(styles14);
+    })(styles15);
   }
   function insertRules(compiledOrderedRules) {
     compiledOrderedRules.forEach((_ref) => {
@@ -27010,9 +27010,9 @@
   var absoluteFill = create({
     x: _objectSpread2({}, absoluteFillObject)
   }).x;
-  function create(styles14) {
-    Object.keys(styles14).forEach((key) => {
-      var styleObj = styles14[key];
+  function create(styles15) {
+    Object.keys(styles15).forEach((key) => {
+      var styleObj = styles15[key];
       if (styleObj != null && styleObj.$$css !== true) {
         var compiledStyles;
         if (key.indexOf("$raw") > -1) {
@@ -27020,14 +27020,14 @@
         } else {
           if (true) {
             validate(styleObj);
-            styles14[key] = Object.freeze(styleObj);
+            styles15[key] = Object.freeze(styleObj);
           }
           compiledStyles = compileAndInsertAtomic(styleObj);
         }
         staticStyleMap.set(styleObj, compiledStyles);
       }
     });
-    return styles14;
+    return styles15;
   }
   function compose(style1, style2) {
     if (true) {
@@ -27040,10 +27040,10 @@
     return [style1, style2];
   }
   function flatten() {
-    for (var _len = arguments.length, styles14 = new Array(_len), _key = 0; _key < _len; _key++) {
-      styles14[_key] = arguments[_key];
+    for (var _len = arguments.length, styles15 = new Array(_len), _key = 0; _key < _len; _key++) {
+      styles15[_key] = arguments[_key];
     }
-    var flatArray = styles14.flat(Infinity);
+    var flatArray = styles15.flat(Infinity);
     var result = {};
     for (var i = 0; i < flatArray.length; i++) {
       var style = flatArray[i];
@@ -27059,12 +27059,12 @@
       textContent: sheet.getTextContent()
     };
   }
-  function StyleSheet(styles14, options) {
+  function StyleSheet(styles15, options) {
     if (options === void 0) {
       options = {};
     }
     var isRTL = options.writingDirection === "rtl";
-    var styleProps2 = customStyleq(styles14, options);
+    var styleProps2 = customStyleq(styles15, options);
     if (Array.isArray(styleProps2) && styleProps2[1] != null) {
       styleProps2[1] = inline(styleProps2[1], isRTL);
     }
@@ -27595,14 +27595,14 @@
   var dangerousStyleValue_default = dangerousStyleValue;
 
   // node_modules/react-native-web/dist/modules/setValueForStyles/index.js
-  function setValueForStyles(node, styles14) {
+  function setValueForStyles(node, styles15) {
     var style = node.style;
-    for (var styleName in styles14) {
-      if (!styles14.hasOwnProperty(styleName)) {
+    for (var styleName in styles15) {
+      if (!styles15.hasOwnProperty(styleName)) {
         continue;
       }
       var isCustomProperty = styleName.indexOf("--") === 0;
-      var styleValue = dangerousStyleValue_default(styleName, styles14[styleName], isCustomProperty);
+      var styleValue = dangerousStyleValue_default(styleName, styles15[styleName], isCustomProperty);
       if (styleName === "float") {
         styleName = "cssFloat";
       }
@@ -31282,7 +31282,7 @@
   var TextInput_default = TextInput;
 
   // App.js
-  var import_react12 = __toESM(require_react());
+  var import_react13 = __toESM(require_react());
 
   // src/screens/LoginScreen.js
   var import_react10 = __toESM(require_react());
@@ -31313,6 +31313,7 @@
     try {
       const response = await fetch(url, {
         ...options,
+        credentials: "include",
         headers
       });
       const setCookie = response.headers.get("set-cookie");
@@ -32205,10 +32206,462 @@
   });
 
   // src/screens/PatientDashboardScreen.js
+  var import_react12 = __toESM(require_react());
+
+  // src/components/AppointmentsModal.js
   var import_react11 = __toESM(require_react());
+
+  // src/api/appointments.js
+  var AppointmentService = {
+    /**
+     * Fetch patient's appointments (automatically restricted by backend session)
+     */
+    async getAppointments() {
+      return await apiRequest("/appointments", {
+        method: "GET"
+      });
+    },
+    /**
+     * Fetch active medical providers / doctors for selection
+     */
+    async getProviders() {
+      return await apiRequest("/providers", {
+        method: "GET"
+      });
+    },
+    /**
+     * Request / book an appointment
+     */
+    async bookAppointment(data) {
+      return await apiRequest("/appointments", {
+        method: "POST",
+        body: JSON.stringify(data)
+      });
+    }
+  };
+
+  // src/components/AppointmentsModal.js
+  function AppointmentsModal({ visible, onClose, patientId }) {
+    const [activeTab, setActiveTab] = (0, import_react11.useState)("list");
+    const [appointments, setAppointments] = (0, import_react11.useState)([]);
+    const [providers, setProviders] = (0, import_react11.useState)([]);
+    const [loading, setLoading] = (0, import_react11.useState)(false);
+    const [submitting, setSubmitting] = (0, import_react11.useState)(false);
+    const [selectedProviderId, setSelectedProviderId] = (0, import_react11.useState)("");
+    const [appointmentDate, setAppointmentDate] = (0, import_react11.useState)("");
+    const [appointmentTime, setAppointmentTime] = (0, import_react11.useState)("09:00:00");
+    const [reason, setReason] = (0, import_react11.useState)("");
+    (0, import_react11.useEffect)(() => {
+      if (visible) {
+        loadData();
+      }
+    }, [visible]);
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        const [apptsRes, provRes] = await Promise.all([
+          AppointmentService.getAppointments(),
+          AppointmentService.getProviders()
+        ]);
+        console.log("Appointments API response:", apptsRes);
+        console.log("Providers API response:", provRes);
+        if (apptsRes.success && Array.isArray(apptsRes.data)) {
+          setAppointments(apptsRes.data);
+        } else {
+          setAppointments([]);
+        }
+        if (provRes.success && Array.isArray(provRes.data)) {
+          setProviders(provRes.data);
+          if (provRes.data.length > 0) {
+            setSelectedProviderId(provRes.data[0].id.toString());
+          }
+        }
+        const tmrw = /* @__PURE__ */ new Date();
+        tmrw.setDate(tmrw.getDate() + 1);
+        const yyyy = tmrw.getFullYear();
+        const mm = String(tmrw.getMonth() + 1).padStart(2, "0");
+        const dd = String(tmrw.getDate()).padStart(2, "0");
+        setAppointmentDate(`${yyyy}-${mm}-${dd}`);
+      } catch (e) {
+        console.error("Failed to load appointments data:", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    const handleBook = async () => {
+      if (!appointmentDate.trim()) {
+        Alert_default.alert("Required Field", "Please enter a valid appointment date.");
+        return;
+      }
+      if (!reason.trim()) {
+        Alert_default.alert("Required Field", "Please specify the reason for consultation.");
+        return;
+      }
+      setSubmitting(true);
+      try {
+        const payload = {
+          provider_id: selectedProviderId ? parseInt(selectedProviderId, 10) : null,
+          appointment_date: appointmentDate.trim(),
+          appointment_time: appointmentTime.trim(),
+          title: `Consultation: ${reason.trim().slice(0, 30)}`,
+          reason: reason.trim(),
+          status: "scheduled"
+        };
+        const res = await AppointmentService.bookAppointment(payload);
+        setSubmitting(false);
+        if (res.success) {
+          Alert_default.alert("Success", "Your appointment has been scheduled successfully!");
+          setReason("");
+          setActiveTab("list");
+          loadData();
+        } else {
+          Alert_default.alert("Booking Error", res.message || "Unable to schedule appointment.");
+        }
+      } catch (e) {
+        setSubmitting(false);
+        Alert_default.alert("Error", "Network error while scheduling appointment.");
+      }
+    };
+    if (!visible) return null;
+    return /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.overlay }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.sheetContainer }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.sheetHeader }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.headerTitleRow }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.iconBadge }, /* @__PURE__ */ import_react11.default.createElement(CalendarIcon, { color: "#2563eb", size: 18 })), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.headerTitle }, "Appointments")), /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { onPress: onClose, style: styles12.closeBtn, hitSlop: { top: 10, bottom: 10, left: 10, right: 10 } }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.closeBtnText }, "\u2715"))), /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.tabBar }, /* @__PURE__ */ import_react11.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: [styles12.tabBtn, activeTab === "list" && styles12.tabBtnActive],
+        onPress: () => setActiveTab("list")
+      },
+      /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: [styles12.tabBtnText, activeTab === "list" && styles12.tabBtnTextActive] }, "My Visits (", appointments.length, ")")
+    ), /* @__PURE__ */ import_react11.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: [styles12.tabBtn, activeTab === "book" && styles12.tabBtnActive],
+        onPress: () => setActiveTab("book")
+      },
+      /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: [styles12.tabBtnText, activeTab === "book" && styles12.tabBtnTextActive] }, "+ Book New")
+    )), loading ? /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.loadingArea }, /* @__PURE__ */ import_react11.default.createElement(ActivityIndicator_default, { color: "#2563eb", size: "large" }), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.loadingText }, "Loading appointments...")) : activeTab === "list" ? /* @__PURE__ */ import_react11.default.createElement(ScrollView_default, { contentContainerStyle: styles12.scrollList, showsVerticalScrollIndicator: false }, appointments.length === 0 ? /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.emptyBox }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.emptyEmoji }, "\u{1F4C5}"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.emptyTitle }, "No Scheduled Visits"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.emptyDesc }, "You have no upcoming or past appointments."), /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.bookFirstBtn, onPress: () => setActiveTab("book") }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.bookFirstBtnText }, "Book An Appointment"))) : appointments.map((appt, idx) => /* @__PURE__ */ import_react11.default.createElement(View_default, { key: appt.id || idx, style: styles12.apptCard }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.apptCardHeader }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.apptDateText }, appt.appointment_date, "  \u2022  ", appt.appointment_time?.slice(0, 5) || "09:00"), /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.statusPill }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.statusPillText }, appt.status || "Scheduled"))), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.apptTitleText }, appt.title || "Medical Consultation"), appt.provider_first_name || appt.provider_last_name ? /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.apptDoctorText }, "Doctor: Dr. ", appt.provider_first_name || "", " ", appt.provider_last_name || "") : appt.provider_name ? /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.apptDoctorText }, "Doctor: ", appt.provider_name) : null, appt.facility_name ? /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.apptDoctorText }, "Location: ", appt.facility_name) : null, appt.reason && /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.apptReasonText }, "Note: ", appt.reason)))) : /* @__PURE__ */ import_react11.default.createElement(ScrollView_default, { contentContainerStyle: styles12.formScroll, showsVerticalScrollIndicator: false, keyboardShouldPersistTaps: "handled" }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.fieldLabel }, "DATE (YYYY-MM-DD)"), /* @__PURE__ */ import_react11.default.createElement(
+      TextInput_default,
+      {
+        style: styles12.inputField,
+        value: appointmentDate,
+        onChangeText: setAppointmentDate,
+        placeholder: "e.g. 2026-10-15",
+        placeholderTextColor: "#94a3b8"
+      }
+    ), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.fieldLabel }, "TIME"), /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.timeChipsRow }, ["09:00:00", "10:30:00", "14:00:00", "16:00:00"].map((tm) => /* @__PURE__ */ import_react11.default.createElement(
+      TouchableOpacity_default,
+      {
+        key: tm,
+        style: [styles12.timeChip, appointmentTime === tm && styles12.timeChipActive],
+        onPress: () => setAppointmentTime(tm)
+      },
+      /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: [styles12.timeChipText, appointmentTime === tm && styles12.timeChipTextActive] }, tm.slice(0, 5))
+    ))), providers.length > 0 && /* @__PURE__ */ import_react11.default.createElement(import_react11.default.Fragment, null, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.fieldLabel }, "SELECT DOCTOR / SPECIALIST"), /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.providersList }, providers.slice(0, 4).map((p) => {
+      const isSelected = selectedProviderId === p.id.toString();
+      return /* @__PURE__ */ import_react11.default.createElement(
+        TouchableOpacity_default,
+        {
+          key: p.id,
+          style: [styles12.providerItem, isSelected && styles12.providerItemActive],
+          onPress: () => setSelectedProviderId(p.id.toString())
+        },
+        /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: [styles12.providerName, isSelected && styles12.providerNameActive] }, "Dr. ", p.first_name, " ", p.last_name),
+        /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.providerSpecialty }, p.specialty || "General Practitioner")
+      );
+    }))), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.fieldLabel }, "REASON FOR VISIT"), /* @__PURE__ */ import_react11.default.createElement(
+      TextInput_default,
+      {
+        style: [styles12.inputField, { height: 75, textAlignVertical: "top", paddingTop: 10 }],
+        value: reason,
+        onChangeText: setReason,
+        placeholder: "Describe your symptoms or reason for consult...",
+        placeholderTextColor: "#94a3b8",
+        multiline: true
+      }
+    ), /* @__PURE__ */ import_react11.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: [styles12.submitBtn, submitting && { opacity: 0.7 }],
+        onPress: handleBook,
+        disabled: submitting,
+        activeOpacity: 0.85
+      },
+      submitting ? /* @__PURE__ */ import_react11.default.createElement(ActivityIndicator_default, { color: "#ffffff", size: "small" }) : /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.submitBtnText }, "Confirm Appointment \u2192")
+    ))));
+  }
+  var styles12 = StyleSheet_default.create({
+    overlay: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(15, 23, 42, 0.45)",
+      zIndex: 999,
+      justifyContent: "flex-end"
+    },
+    sheetContainer: {
+      backgroundColor: "#ffffff",
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      height: "84%",
+      width: "100%",
+      paddingTop: 16
+    },
+    sheetHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 18,
+      paddingBottom: 14,
+      borderBottomWidth: 1,
+      borderBottomColor: "#f1f5f9"
+    },
+    headerTitleRow: {
+      flexDirection: "row",
+      alignItems: "center"
+    },
+    iconBadge: {
+      width: 32,
+      height: 32,
+      borderRadius: 8,
+      backgroundColor: "#eff6ff",
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: 10
+    },
+    headerTitle: {
+      fontSize: 17,
+      fontWeight: "800",
+      color: "#0f172a"
+    },
+    closeBtn: {
+      padding: 6
+    },
+    closeBtnText: {
+      fontSize: 16,
+      color: "#64748b",
+      fontWeight: "700"
+    },
+    tabBar: {
+      flexDirection: "row",
+      paddingHorizontal: 18,
+      paddingVertical: 10,
+      backgroundColor: "#f8fafc",
+      borderBottomWidth: 1,
+      borderBottomColor: "#e2e8f0"
+    },
+    tabBtn: {
+      flex: 1,
+      paddingVertical: 8,
+      alignItems: "center",
+      borderRadius: 6
+    },
+    tabBtnActive: {
+      backgroundColor: "#ffffff",
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.08,
+      shadowRadius: 2,
+      elevation: 1
+    },
+    tabBtnText: {
+      fontSize: 13,
+      fontWeight: "600",
+      color: "#64748b"
+    },
+    tabBtnTextActive: {
+      color: "#2563eb",
+      fontWeight: "800"
+    },
+    loadingArea: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 30
+    },
+    loadingText: {
+      marginTop: 10,
+      fontSize: 13,
+      color: "#64748b"
+    },
+    scrollList: {
+      padding: 18,
+      paddingBottom: 36
+    },
+    emptyBox: {
+      alignItems: "center",
+      justifyContent: "center",
+      paddingVertical: 40
+    },
+    emptyEmoji: {
+      fontSize: 36,
+      marginBottom: 8
+    },
+    emptyTitle: {
+      fontSize: 16,
+      fontWeight: "700",
+      color: "#0f172a",
+      marginBottom: 4
+    },
+    emptyDesc: {
+      fontSize: 13,
+      color: "#64748b",
+      textAlign: "center",
+      marginBottom: 16
+    },
+    bookFirstBtn: {
+      backgroundColor: "#2563eb",
+      paddingHorizontal: 18,
+      paddingVertical: 10,
+      borderRadius: 8
+    },
+    bookFirstBtnText: {
+      color: "#ffffff",
+      fontSize: 13,
+      fontWeight: "700"
+    },
+    apptCard: {
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 12,
+      padding: 14,
+      marginBottom: 12
+    },
+    apptCardHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 6
+    },
+    apptDateText: {
+      fontSize: 12.5,
+      fontWeight: "800",
+      color: "#2563eb"
+    },
+    statusPill: {
+      backgroundColor: "#eff6ff",
+      paddingHorizontal: 8,
+      paddingVertical: 2.5,
+      borderRadius: 999
+    },
+    statusPillText: {
+      fontSize: 10.5,
+      fontWeight: "700",
+      color: "#2563eb",
+      textTransform: "capitalize"
+    },
+    apptTitleText: {
+      fontSize: 14.5,
+      fontWeight: "700",
+      color: "#0f172a",
+      marginBottom: 4
+    },
+    apptDoctorText: {
+      fontSize: 12.5,
+      color: "#475569",
+      marginBottom: 2
+    },
+    apptReasonText: {
+      fontSize: 12,
+      color: "#64748b"
+    },
+    formScroll: {
+      padding: 18,
+      paddingBottom: 40
+    },
+    fieldLabel: {
+      fontSize: 11,
+      fontWeight: "800",
+      color: "#64748b",
+      letterSpacing: 0.6,
+      marginBottom: 6
+    },
+    inputField: {
+      height: 44,
+      backgroundColor: "#f8fafc",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 8,
+      paddingHorizontal: 12,
+      fontSize: 14,
+      color: "#0f172a",
+      marginBottom: 14
+    },
+    timeChipsRow: {
+      flexDirection: "row",
+      gap: 8,
+      marginBottom: 14
+    },
+    timeChip: {
+      flex: 1,
+      height: 38,
+      backgroundColor: "#f8fafc",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 8,
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    timeChipActive: {
+      backgroundColor: "#eff6ff",
+      borderColor: "#2563eb"
+    },
+    timeChipText: {
+      fontSize: 12.5,
+      fontWeight: "600",
+      color: "#475569"
+    },
+    timeChipTextActive: {
+      color: "#2563eb",
+      fontWeight: "800"
+    },
+    providersList: {
+      marginBottom: 14,
+      gap: 8
+    },
+    providerItem: {
+      padding: 10,
+      backgroundColor: "#f8fafc",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 8
+    },
+    providerItemActive: {
+      backgroundColor: "#eff6ff",
+      borderColor: "#2563eb"
+    },
+    providerName: {
+      fontSize: 13,
+      fontWeight: "700",
+      color: "#0f172a"
+    },
+    providerNameActive: {
+      color: "#2563eb"
+    },
+    providerSpecialty: {
+      fontSize: 11,
+      color: "#64748b"
+    },
+    submitBtn: {
+      height: 46,
+      backgroundColor: "#2563eb",
+      borderRadius: 8,
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 6
+    },
+    submitBtnText: {
+      color: "#ffffff",
+      fontSize: 14,
+      fontWeight: "700"
+    }
+  });
+
+  // src/screens/PatientDashboardScreen.js
   function PatientDashboardScreen({ user, onLogout }) {
-    const [drawerOpen, setDrawerOpen] = (0, import_react11.useState)(false);
-    const [reminderSet, setReminderSet] = (0, import_react11.useState)(false);
+    const [drawerOpen, setDrawerOpen] = (0, import_react12.useState)(false);
+    const [reminderSet, setReminderSet] = (0, import_react12.useState)(false);
+    const [showAppointments, setShowAppointments] = (0, import_react12.useState)(false);
     const firstName = user.first_name || "Patient";
     const lastName = user.last_name || "User";
     const fullName = `${firstName} ${lastName}`.trim();
@@ -32217,35 +32670,81 @@
       await AuthService.logout();
       onLogout();
     };
-    return /* @__PURE__ */ import_react11.default.createElement(SafeAreaView_default, { style: styles12.container }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.topNavBar }, /* @__PURE__ */ import_react11.default.createElement(
+    return /* @__PURE__ */ import_react12.default.createElement(SafeAreaView_default, { style: styles13.container }, /* @__PURE__ */ import_react12.default.createElement(View_default, { style: styles13.topNavBar }, /* @__PURE__ */ import_react12.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles12.hamburgerBtn,
+        style: styles13.hamburgerBtn,
         onPress: () => setDrawerOpen(!drawerOpen),
         activeOpacity: 0.7
       },
-      /* @__PURE__ */ import_react11.default.createElement(MenuIcon, { color: "#0f172a", size: 18 })
-    ), /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.userIdentityColumn }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.userFullNameText, numberOfLines: 1 }, fullName)), /* @__PURE__ */ import_react11.default.createElement(
+      /* @__PURE__ */ import_react12.default.createElement(MenuIcon, { color: "#0f172a", size: 18 })
+    ), /* @__PURE__ */ import_react12.default.createElement(View_default, { style: styles13.userIdentityColumn }, /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.userFullNameText, numberOfLines: 1 }, fullName)), /* @__PURE__ */ import_react12.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles12.avatarBadge,
+        style: styles13.avatarBadge,
         onPress: handleLogout,
         activeOpacity: 0.8
       },
-      /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.avatarInitialsText }, initials)
-    )), /* @__PURE__ */ import_react11.default.createElement(
+      /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.avatarInitialsText }, initials)
+    )), /* @__PURE__ */ import_react12.default.createElement(
       ScrollView_default,
       {
-        contentContainerStyle: styles12.contentScroll,
+        contentContainerStyle: styles13.contentScroll,
         showsVerticalScrollIndicator: false
       },
-      /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.statusCard }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
-      /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.sectionHeaderTitle }, "Services & Actions"),
-      /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.cardsGrid }, /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.gridCard, activeOpacity: 0.7 }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: [styles12.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react11.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardTitle }, "Appointments"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardDesc }, "View upcoming visits")), /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.gridCard, activeOpacity: 0.7 }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: [styles12.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react11.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardTitle }, "Prescriptions"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardDesc }, "Active medications")), /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.gridCard, activeOpacity: 0.7 }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: [styles12.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react11.default.createElement(RecordsIcon, { color: "#059669", size: 20 })), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardTitle }, "Health Records"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardDesc }, "Lab results & charts")), /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.gridCard, activeOpacity: 0.7 }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: [styles12.cardIconCircle, { backgroundColor: "#fff7ed" }] }, /* @__PURE__ */ import_react11.default.createElement(BellIcon, { color: "#ea580c", size: 20 })), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardTitle }, "Reminders"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardDesc }, "Clinical alerts"))),
-      /* @__PURE__ */ import_react11.default.createElement(
+      /* @__PURE__ */ import_react12.default.createElement(View_default, { style: styles13.statusCard }, /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
+      /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.sectionHeaderTitle }, "Services & Actions"),
+      /* @__PURE__ */ import_react12.default.createElement(View_default, { style: styles13.cardsGrid }, /* @__PURE__ */ import_react12.default.createElement(
         TouchableOpacity_default,
         {
-          style: [styles12.simpleRemindBtn, reminderSet && styles12.simpleRemindBtnActive],
+          style: styles13.gridCard,
+          activeOpacity: 0.7,
+          onPress: () => setShowAppointments(true)
+        },
+        /* @__PURE__ */ import_react12.default.createElement(View_default, { style: [styles13.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react12.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })),
+        /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.gridCardTitle }, "Appointments"),
+        /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.gridCardDesc }, "View upcoming visits")
+      ), /* @__PURE__ */ import_react12.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: styles13.gridCard,
+          activeOpacity: 0.7,
+          onPress: () => Alert_default.alert("Prescriptions", "Your active clinical prescriptions are up to date.")
+        },
+        /* @__PURE__ */ import_react12.default.createElement(View_default, { style: [styles13.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react12.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })),
+        /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.gridCardTitle }, "Prescriptions"),
+        /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.gridCardDesc }, "Active medications")
+      ), /* @__PURE__ */ import_react12.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: styles13.gridCard,
+          activeOpacity: 0.7,
+          onPress: () => Alert_default.alert("Health Records", "Your HIPAA digital health record is synced.")
+        },
+        /* @__PURE__ */ import_react12.default.createElement(View_default, { style: [styles13.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react12.default.createElement(RecordsIcon, { color: "#059669", size: 20 })),
+        /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.gridCardTitle }, "Health Records"),
+        /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.gridCardDesc }, "Lab results & charts")
+      ), /* @__PURE__ */ import_react12.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: styles13.gridCard,
+          activeOpacity: 0.7,
+          onPress: () => {
+            setReminderSet(!reminderSet);
+            Alert_default.alert(
+              !reminderSet ? "Reminders Active" : "Reminders Paused",
+              !reminderSet ? "You will be notified before scheduled appointments." : "Clinical alerts paused."
+            );
+          }
+        },
+        /* @__PURE__ */ import_react12.default.createElement(View_default, { style: [styles13.cardIconCircle, { backgroundColor: "#fff7ed" }] }, /* @__PURE__ */ import_react12.default.createElement(BellIcon, { color: "#ea580c", size: 20 })),
+        /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.gridCardTitle }, "Reminders"),
+        /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.gridCardDesc }, "Clinical alerts")
+      )),
+      /* @__PURE__ */ import_react12.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: [styles13.simpleRemindBtn, reminderSet && styles13.simpleRemindBtnActive],
           onPress: () => {
             setReminderSet(!reminderSet);
             Alert_default.alert(
@@ -32255,12 +32754,19 @@
           },
           activeOpacity: 0.8
         },
-        /* @__PURE__ */ import_react11.default.createElement(BellIcon, { color: reminderSet ? "#059669" : "#2563eb", size: 17 }),
-        /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: [styles12.simpleRemindText, reminderSet && styles12.simpleRemindTextActive] }, reminderSet ? "Reminders Set \u2713" : "Remind Me")
+        /* @__PURE__ */ import_react12.default.createElement(BellIcon, { color: reminderSet ? "#059669" : "#2563eb", size: 17 }),
+        /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: [styles13.simpleRemindText, reminderSet && styles13.simpleRemindTextActive] }, reminderSet ? "Reminders Set \u2713" : "Remind Me")
       )
-    ), drawerOpen && /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.drawerDropdown }, /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.drawerItemText }, "\u{1F3E0} Dashboard Home")), /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.drawerItemText }, "\u{1F4C1} My Medical Records")), /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.drawerItemText }, "\u2699\uFE0F Portal Settings")), /* @__PURE__ */ import_react11.default.createElement(View_default, { style: { height: 1, backgroundColor: "#e2e8f0", marginVertical: 6 } }), /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.drawerItem, onPress: handleLogout }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: [styles12.drawerItemText, { color: "#ef4444" }] }, "\u{1F6AA} Sign Out"))));
+    ), /* @__PURE__ */ import_react12.default.createElement(
+      AppointmentsModal,
+      {
+        visible: showAppointments,
+        onClose: () => setShowAppointments(false),
+        patientId: user.id
+      }
+    ), drawerOpen && /* @__PURE__ */ import_react12.default.createElement(View_default, { style: styles13.drawerDropdown }, /* @__PURE__ */ import_react12.default.createElement(TouchableOpacity_default, { style: styles13.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.drawerItemText }, "\u{1F3E0} Dashboard Home")), /* @__PURE__ */ import_react12.default.createElement(TouchableOpacity_default, { style: styles13.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.drawerItemText }, "\u{1F4C1} My Medical Records")), /* @__PURE__ */ import_react12.default.createElement(TouchableOpacity_default, { style: styles13.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: styles13.drawerItemText }, "\u2699\uFE0F Portal Settings")), /* @__PURE__ */ import_react12.default.createElement(View_default, { style: { height: 1, backgroundColor: "#e2e8f0", marginVertical: 6 } }), /* @__PURE__ */ import_react12.default.createElement(TouchableOpacity_default, { style: styles13.drawerItem, onPress: handleLogout }, /* @__PURE__ */ import_react12.default.createElement(Text_default, { style: [styles13.drawerItemText, { color: "#ef4444" }] }, "\u{1F6AA} Sign Out"))));
   }
-  var styles12 = StyleSheet_default.create({
+  var styles13 = StyleSheet_default.create({
     container: {
       flex: 1,
       width: "100%",
@@ -32449,16 +32955,16 @@
 
   // App.js
   function App() {
-    const [currentUser, setCurrentUser] = (0, import_react12.useState)(null);
-    return /* @__PURE__ */ import_react12.default.createElement(SafeAreaView_default, { style: styles13.root }, /* @__PURE__ */ import_react12.default.createElement(StatusBar_default, { barStyle: "dark-content", backgroundColor: "#ffffff" }), currentUser ? /* @__PURE__ */ import_react12.default.createElement(
+    const [currentUser, setCurrentUser] = (0, import_react13.useState)(null);
+    return /* @__PURE__ */ import_react13.default.createElement(SafeAreaView_default, { style: styles14.root }, /* @__PURE__ */ import_react13.default.createElement(StatusBar_default, { barStyle: "dark-content", backgroundColor: "#ffffff" }), currentUser ? /* @__PURE__ */ import_react13.default.createElement(
       PatientDashboardScreen,
       {
         user: currentUser,
         onLogout: () => setCurrentUser(null)
       }
-    ) : /* @__PURE__ */ import_react12.default.createElement(LoginScreen, { onLoginSuccess: (user) => setCurrentUser(user) }));
+    ) : /* @__PURE__ */ import_react13.default.createElement(LoginScreen, { onLoginSuccess: (user) => setCurrentUser(user) }));
   }
-  var styles13 = StyleSheet_default.create({
+  var styles14 = StyleSheet_default.create({
     root: {
       flex: 1,
       width: "100%",

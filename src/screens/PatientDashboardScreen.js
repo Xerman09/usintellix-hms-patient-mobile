@@ -20,12 +20,14 @@ import {
 } from '../components/Icons';
 import AppointmentsModal from '../components/AppointmentsModal';
 import PrescriptionsModal from '../components/PrescriptionsModal';
+import HealthRecordsModal from '../components/HealthRecordsModal';
 
 export default function PatientDashboardScreen({ user, onLogout }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [reminderSet, setReminderSet] = useState(false);
   const [showAppointments, setShowAppointments] = useState(false);
   const [showPrescriptions, setShowPrescriptions] = useState(false);
+  const [showHealthRecords, setShowHealthRecords] = useState(false);
 
   // Compute initials (e.g. "EA" for Erman Ace or from name)
   const firstName = user.first_name || 'Patient';
@@ -120,7 +122,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           <TouchableOpacity
             style={styles.gridCard}
             activeOpacity={0.7}
-            onPress={() => Alert.alert('Health Records', 'Your HIPAA digital health record is synced.')}
+            onPress={() => setShowHealthRecords(true)}
           >
             <View style={[styles.cardIconCircle, { backgroundColor: '#ecfdf5' }]}>
               <RecordsIcon color="#059669" size={20} />
@@ -183,6 +185,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
       <PrescriptionsModal
         visible={showPrescriptions}
         onClose={() => setShowPrescriptions(false)}
+      />
+
+      {/* Health Records Interactive Bottom Sheet */}
+      <HealthRecordsModal
+        visible={showHealthRecords}
+        onClose={() => setShowHealthRecords(false)}
       />
 
       {/* Dropdown Menu when hamburger is pressed */}

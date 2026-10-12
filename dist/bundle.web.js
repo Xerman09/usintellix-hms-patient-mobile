@@ -1088,7 +1088,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState8(initialState) {
+          function useState9(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1100,7 +1100,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect8(create2, deps) {
+          function useEffect9(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1883,7 +1883,7 @@
           exports.useContext = useContext5;
           exports.useDebugValue = useDebugValue3;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect8;
+          exports.useEffect = useEffect9;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1891,7 +1891,7 @@
           exports.useMemo = useMemo4;
           exports.useReducer = useReducer;
           exports.useRef = useRef10;
-          exports.useState = useState8;
+          exports.useState = useState9;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -3295,18 +3295,18 @@
           var className = "";
           var inlineStyle = null;
           var nextCache = disableCache ? null : cache4;
-          var styles16 = new Array(arguments.length);
+          var styles17 = new Array(arguments.length);
           for (var i = 0; i < arguments.length; i++) {
-            styles16[i] = arguments[i];
+            styles17[i] = arguments[i];
           }
-          while (styles16.length > 0) {
-            var possibleStyle = styles16.pop();
+          while (styles17.length > 0) {
+            var possibleStyle = styles17.pop();
             if (possibleStyle == null || possibleStyle === false) {
               continue;
             }
             if (Array.isArray(possibleStyle)) {
               for (var _i = 0; _i < possibleStyle.length; _i++) {
-                styles16.push(possibleStyle[_i]);
+                styles17.push(possibleStyle[_i]);
               }
               continue;
             }
@@ -4290,9 +4290,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React26 = require_react();
+          var React27 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React26.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React27.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -5899,7 +5899,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React26.Children.forEach(props.children, function(child) {
+                  React27.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -6395,15 +6395,15 @@
             };
           }
           var warnValidStyle$1 = warnValidStyle;
-          function createDangerousStringForStyles(styles16) {
+          function createDangerousStringForStyles(styles17) {
             {
               var serialized = "";
               var delimiter = "";
-              for (var styleName in styles16) {
-                if (!styles16.hasOwnProperty(styleName)) {
+              for (var styleName in styles17) {
+                if (!styles17.hasOwnProperty(styleName)) {
                   continue;
                 }
-                var styleValue = styles16[styleName];
+                var styleValue = styles17[styleName];
                 if (styleValue != null) {
                   var isCustomProperty = styleName.indexOf("--") === 0;
                   serialized += delimiter + (isCustomProperty ? styleName : hyphenateStyleName2(styleName)) + ":";
@@ -6414,19 +6414,19 @@
               return serialized || null;
             }
           }
-          function setValueForStyles2(node, styles16) {
+          function setValueForStyles2(node, styles17) {
             var style2 = node.style;
-            for (var styleName in styles16) {
-              if (!styles16.hasOwnProperty(styleName)) {
+            for (var styleName in styles17) {
+              if (!styles17.hasOwnProperty(styleName)) {
                 continue;
               }
               var isCustomProperty = styleName.indexOf("--") === 0;
               {
                 if (!isCustomProperty) {
-                  warnValidStyle$1(styleName, styles16[styleName]);
+                  warnValidStyle$1(styleName, styles17[styleName]);
                 }
               }
-              var styleValue = dangerousStyleValue2(styleName, styles16[styleName], isCustomProperty);
+              var styleValue = dangerousStyleValue2(styleName, styles17[styleName], isCustomProperty);
               if (styleName === "float") {
                 styleName = "cssFloat";
               }
@@ -6440,9 +6440,9 @@
           function isValueEmpty(value) {
             return value == null || typeof value === "boolean" || value === "";
           }
-          function expandShorthandMap(styles16) {
+          function expandShorthandMap(styles17) {
             var expanded = {};
-            for (var key in styles16) {
+            for (var key in styles17) {
               var longhands = shorthandToLonghand[key] || [key];
               for (var i = 0; i < longhands.length; i++) {
                 expanded[longhands[i]] = key;
@@ -25584,7 +25584,7 @@
   });
 
   // index.web.js
-  var import_react15 = __toESM(require_react());
+  var import_react16 = __toESM(require_react());
 
   // node_modules/react-native-web/dist/modules/AccessibilityUtil/isDisabled.js
   var isDisabled = (props) => props.disabled || Array.isArray(props.accessibilityStates) && props.accessibilityStates.indexOf("disabled") > -1;
@@ -26964,7 +26964,7 @@
     shadow: true,
     textShadow: true
   };
-  function customStyleq(styles16, options) {
+  function customStyleq(styles17, options) {
     if (options === void 0) {
       options = {};
     }
@@ -26978,7 +26978,7 @@
         }
         return preprocess(style, _objectSpread2(_objectSpread2({}, defaultPreprocessOptions), preprocessOptions));
       }
-    })(styles16);
+    })(styles17);
   }
   function insertRules(compiledOrderedRules) {
     compiledOrderedRules.forEach((_ref) => {
@@ -27010,9 +27010,9 @@
   var absoluteFill = create({
     x: _objectSpread2({}, absoluteFillObject)
   }).x;
-  function create(styles16) {
-    Object.keys(styles16).forEach((key) => {
-      var styleObj = styles16[key];
+  function create(styles17) {
+    Object.keys(styles17).forEach((key) => {
+      var styleObj = styles17[key];
       if (styleObj != null && styleObj.$$css !== true) {
         var compiledStyles;
         if (key.indexOf("$raw") > -1) {
@@ -27020,14 +27020,14 @@
         } else {
           if (true) {
             validate(styleObj);
-            styles16[key] = Object.freeze(styleObj);
+            styles17[key] = Object.freeze(styleObj);
           }
           compiledStyles = compileAndInsertAtomic(styleObj);
         }
         staticStyleMap.set(styleObj, compiledStyles);
       }
     });
-    return styles16;
+    return styles17;
   }
   function compose(style1, style2) {
     if (true) {
@@ -27040,10 +27040,10 @@
     return [style1, style2];
   }
   function flatten() {
-    for (var _len = arguments.length, styles16 = new Array(_len), _key = 0; _key < _len; _key++) {
-      styles16[_key] = arguments[_key];
+    for (var _len = arguments.length, styles17 = new Array(_len), _key = 0; _key < _len; _key++) {
+      styles17[_key] = arguments[_key];
     }
-    var flatArray = styles16.flat(Infinity);
+    var flatArray = styles17.flat(Infinity);
     var result = {};
     for (var i = 0; i < flatArray.length; i++) {
       var style = flatArray[i];
@@ -27059,12 +27059,12 @@
       textContent: sheet.getTextContent()
     };
   }
-  function StyleSheet(styles16, options) {
+  function StyleSheet(styles17, options) {
     if (options === void 0) {
       options = {};
     }
     var isRTL = options.writingDirection === "rtl";
-    var styleProps2 = customStyleq(styles16, options);
+    var styleProps2 = customStyleq(styles17, options);
     if (Array.isArray(styleProps2) && styleProps2[1] != null) {
       styleProps2[1] = inline(styleProps2[1], isRTL);
     }
@@ -27595,14 +27595,14 @@
   var dangerousStyleValue_default = dangerousStyleValue;
 
   // node_modules/react-native-web/dist/modules/setValueForStyles/index.js
-  function setValueForStyles(node, styles16) {
+  function setValueForStyles(node, styles17) {
     var style = node.style;
-    for (var styleName in styles16) {
-      if (!styles16.hasOwnProperty(styleName)) {
+    for (var styleName in styles17) {
+      if (!styles17.hasOwnProperty(styleName)) {
         continue;
       }
       var isCustomProperty = styleName.indexOf("--") === 0;
-      var styleValue = dangerousStyleValue_default(styleName, styles16[styleName], isCustomProperty);
+      var styleValue = dangerousStyleValue_default(styleName, styles17[styleName], isCustomProperty);
       if (styleName === "float") {
         styleName = "cssFloat";
       }
@@ -31282,7 +31282,7 @@
   var TextInput_default = TextInput;
 
   // App.js
-  var import_react14 = __toESM(require_react());
+  var import_react15 = __toESM(require_react());
 
   // src/screens/LoginScreen.js
   var import_react10 = __toESM(require_react());
@@ -32206,7 +32206,7 @@
   });
 
   // src/screens/PatientDashboardScreen.js
-  var import_react13 = __toESM(require_react());
+  var import_react14 = __toESM(require_react());
 
   // src/components/AppointmentsModal.js
   var import_react11 = __toESM(require_react());
@@ -32931,12 +32931,386 @@
     }
   });
 
+  // src/components/HealthRecordsModal.js
+  var import_react13 = __toESM(require_react());
+
+  // src/api/healthRecords.js
+  var HealthRecordsService = {
+    /**
+     * Fetch complete CCD health summary for the authenticated patient
+     */
+    async getHealthSummary() {
+      return await apiRequest("/health-summary", {
+        method: "GET"
+      });
+    }
+  };
+
+  // src/components/HealthRecordsModal.js
+  var TABS = [
+    { id: "summary", label: "Summary" },
+    { id: "allergies", label: "Allergies" },
+    { id: "problems", label: "Conditions" },
+    { id: "medications", label: "Medications" },
+    { id: "immunizations", label: "Vaccines" },
+    { id: "results", label: "Lab Results" },
+    { id: "encounters", label: "Visits" },
+    { id: "demographics", label: "Demographics" }
+  ];
+  function HealthRecordsModal({ visible, onClose }) {
+    const [activeTab, setActiveTab] = (0, import_react13.useState)("summary");
+    const [data, setData] = (0, import_react13.useState)(null);
+    const [loading, setLoading] = (0, import_react13.useState)(false);
+    (0, import_react13.useEffect)(() => {
+      if (visible) {
+        loadHealthSummary();
+      }
+    }, [visible]);
+    const loadHealthSummary = async () => {
+      setLoading(true);
+      try {
+        const res = await HealthRecordsService.getHealthSummary();
+        if (res.success && res.data) {
+          setData(res.data);
+        } else {
+          setData(null);
+        }
+      } catch (e) {
+        console.error("Failed to load health summary:", e);
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (!visible) return null;
+    const demographics = data?.demographics || {};
+    const careProvider = data?.care_provider;
+    const allergies = data?.allergies || [];
+    const problems = data?.problems || [];
+    const medications = data?.medications || [];
+    const prescriptions = data?.prescriptions || [];
+    const results = data?.results || [];
+    const immunizations = data?.immunizations || [];
+    const encounters = data?.encounters || [];
+    return /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.overlay }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sheetContainer }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sheetHeader }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.headerTitleRow }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.iconBadge }, /* @__PURE__ */ import_react13.default.createElement(RecordsIcon, { color: "#059669", size: 18 })), /* @__PURE__ */ import_react13.default.createElement(View_default, null, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.headerTitle }, "Health Records Summary"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.headerSub }, "Complete Clinical Continuity of Care (CCD)"))), /* @__PURE__ */ import_react13.default.createElement(TouchableOpacity_default, { onPress: onClose, style: styles14.closeBtn, hitSlop: { top: 10, bottom: 10, left: 10, right: 10 } }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.closeBtnText }, "\u2715"))), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.tabBarWrapper }, /* @__PURE__ */ import_react13.default.createElement(
+      ScrollView_default,
+      {
+        horizontal: true,
+        showsHorizontalScrollIndicator: false,
+        contentContainerStyle: styles14.tabBar
+      },
+      TABS.map((tab) => /* @__PURE__ */ import_react13.default.createElement(
+        TouchableOpacity_default,
+        {
+          key: tab.id,
+          style: [styles14.tabBtn, activeTab === tab.id && styles14.tabBtnActive],
+          onPress: () => setActiveTab(tab.id)
+        },
+        /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: [styles14.tabBtnText, activeTab === tab.id && styles14.tabBtnTextActive] }, tab.label)
+      ))
+    )), loading ? /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.loadingArea }, /* @__PURE__ */ import_react13.default.createElement(ActivityIndicator_default, { color: "#059669", size: "large" }), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.loadingText }, "Syncing medical records...")) : !data ? /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.emptyArea }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.emptyEmoji }, "\u{1F4CB}"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.emptyTitle }, "Unable to Load Records"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.emptyDesc }, "Could not retrieve medical charts from hospital database.")) : /* @__PURE__ */ import_react13.default.createElement(ScrollView_default, { contentContainerStyle: styles14.contentScroll, showsVerticalScrollIndicator: false }, activeTab === "summary" && /* @__PURE__ */ import_react13.default.createElement(import_react13.default.Fragment, null, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.profileCard }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.profileAvatar }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.profileAvatarText }, (demographics.first_name || "P")[0]?.toUpperCase())), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: { flex: 1, marginLeft: 12 } }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.profileName }, [demographics.first_name, demographics.middle_name, demographics.last_name].filter(Boolean).join(" ")), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.profileMeta }, "Chart #", demographics.patient_no || "N/A", "  \u2022  ", demographics.sex || "Not Specified"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.profileMeta }, "DOB: ", demographics.birthdate || "N/A"))), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sectionCard }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.cardHeaderTitle }, "Primary Care Provider"), careProvider ? /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.providerBox }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.providerName }, "Dr. ", careProvider.first_name, " ", careProvider.last_name), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.providerMeta }, careProvider.specialty || "General Practitioner", "  \u2022  ", careProvider.department_name || "Hospital Staff"), careProvider.npi_number && /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.providerMeta }, "NPI: ", careProvider.npi_number), careProvider.phone && /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.providerContact }, "Tel: ", careProvider.phone)) : /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.emptyText }, "No care provider assigned.")), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.sectionTitle }, "Medical Snapshot"), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.snapshotGrid }, /* @__PURE__ */ import_react13.default.createElement(TouchableOpacity_default, { style: styles14.snapshotTile, onPress: () => setActiveTab("allergies") }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotNum }, allergies.length), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotLabel }, "Allergies")), /* @__PURE__ */ import_react13.default.createElement(TouchableOpacity_default, { style: styles14.snapshotTile, onPress: () => setActiveTab("problems") }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotNum }, problems.length), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotLabel }, "Conditions")), /* @__PURE__ */ import_react13.default.createElement(TouchableOpacity_default, { style: styles14.snapshotTile, onPress: () => setActiveTab("medications") }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotNum }, medications.length || prescriptions.length), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotLabel }, "Medicines")), /* @__PURE__ */ import_react13.default.createElement(TouchableOpacity_default, { style: styles14.snapshotTile, onPress: () => setActiveTab("immunizations") }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotNum }, immunizations.length), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotLabel }, "Vaccines"))), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: [styles14.snapshotGrid, { marginTop: 8 }] }, /* @__PURE__ */ import_react13.default.createElement(TouchableOpacity_default, { style: styles14.snapshotTile, onPress: () => setActiveTab("results") }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotNum }, results.length), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotLabel }, "Lab Tests")), /* @__PURE__ */ import_react13.default.createElement(TouchableOpacity_default, { style: styles14.snapshotTile, onPress: () => setActiveTab("encounters") }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotNum }, encounters.length), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotLabel }, "Visits")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.snapshotTile }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotNum }, demographics.blood_type || "-"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotLabel }, "Blood Type")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.snapshotTile }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotNum }, demographics.civil_status || "Single"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.snapshotLabel }, "Status")))), activeTab === "allergies" && /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sectionCard }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.cardHeaderTitle }, "Medication & Environmental Allergies"), allergies.length === 0 ? /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.cleanBadge }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.cleanBadgeText }, "\u2713 No known allergies on record (NKDA)")) : allergies.map((item, idx) => /* @__PURE__ */ import_react13.default.createElement(View_default, { key: item.id || idx, style: styles14.recordItem }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: { flex: 1 } }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordTitle }, item.title || item.name || "Allergy"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Reported Date: ", item.begin_date || item.created_at?.slice(0, 10) || "On record"), item.referred_by && /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Referred By: ", item.referred_by)), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: [styles14.pillAlert, { backgroundColor: "#fef2f2" }] }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: [styles14.pillAlertText, { color: "#dc2626" }] }, item.severity || "Reported"))))), activeTab === "problems" && /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sectionCard }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.cardHeaderTitle }, "Current Problems & Diagnoses"), problems.length === 0 ? /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.emptyText }, "No records found.") : problems.map((p, idx) => /* @__PURE__ */ import_react13.default.createElement(View_default, { key: p.id || idx, style: styles14.recordItem }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: { flex: 1 } }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordTitle }, p.title || p.diagnosis || "Diagnosis"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Reported Date: ", p.created_at?.slice(0, 10) || "-"), p.begin_date && /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Start Date: ", p.begin_date), p.end_date && /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "End Date: ", p.end_date)), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: [styles14.pillAlert, { backgroundColor: "#f0fdf4" }] }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: [styles14.pillAlertText, { color: "#16a34a" }] }, p.status || "Active"))))), activeTab === "medications" && /* @__PURE__ */ import_react13.default.createElement(import_react13.default.Fragment, null, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sectionCard }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.cardHeaderTitle }, "Current Medications"), medications.length === 0 ? /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.emptyText }, "No records found.") : medications.map((m2, idx) => /* @__PURE__ */ import_react13.default.createElement(View_default, { key: m2.id || idx, style: styles14.recordItem }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: { flex: 1 } }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordTitle }, m2.title || m2.name || "Medication"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Start Date: ", m2.begin_date || "-"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "End Date: ", m2.end_date || "Ongoing"))))), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sectionCard }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.cardHeaderTitle }, "Active Prescriptions"), prescriptions.length === 0 ? /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.emptyText }, "No Results") : prescriptions.map((rx, idx) => /* @__PURE__ */ import_react13.default.createElement(View_default, { key: rx.id || idx, style: styles14.recordItem }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: { flex: 1 } }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordTitle }, rx.title || rx.drug_name || "Rx"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Dosage: ", rx.dosage || "-"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Duration: ", rx.begin_date || "-", " to ", rx.end_date || "-"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Refills: ", rx.refills_allowed ? `${rx.refills_remaining ?? rx.refills_allowed} of ${rx.refills_allowed} left` : "None")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: [styles14.pillAlert, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: [styles14.pillAlertText, { color: "#7c3aed" }] }, rx.prescription_status || "Active")))))), activeTab === "immunizations" && /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sectionCard }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.cardHeaderTitle }, "Patient Immunization History"), immunizations.length === 0 ? /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.emptyText }, "No records found.") : immunizations.map((imm, idx) => /* @__PURE__ */ import_react13.default.createElement(View_default, { key: imm.id || idx, style: styles14.recordItem }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: { flex: 1 } }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordTitle }, imm.vaccine_name || imm.cvx_code || "Vaccine"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Date Administered: ", imm.administered_at || "-"), imm.manufacturer && /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Manufacturer: ", imm.manufacturer), imm.administered_by_provider_name && /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Administered By: ", imm.administered_by_provider_name))))), activeTab === "results" && /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sectionCard }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.cardHeaderTitle }, "Diagnostic & Lab Results"), results.length === 0 ? /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.emptyText }, "No Results") : results.map((r, idx) => {
+      const isAbnormal = Number(r.is_abnormal) === 1;
+      return /* @__PURE__ */ import_react13.default.createElement(View_default, { key: r.id || idx, style: styles14.recordItem }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: { flex: 1 } }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordTitle }, r.name || r.test_name || "Lab Test"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Result: ", [r.value, r.units].filter(Boolean).join(" ") || "-"), r.reference_range && /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Ref Range: ", r.reference_range), r.result_date && /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Date: ", r.result_date)), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: [styles14.pillAlert, isAbnormal && { backgroundColor: "#fef2f2" }] }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: [styles14.pillAlertText, isAbnormal && { color: "#dc2626" }] }, r.flag === "critical" ? "\u26A0 Critical" : isAbnormal ? "Abnormal" : r.status || "Verified")));
+    })), activeTab === "encounters" && /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sectionCard }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.cardHeaderTitle }, "Clinical Encounters & Appointments"), encounters.length === 0 ? /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.emptyText }, "No encounters recorded.") : encounters.map((enc, idx) => /* @__PURE__ */ import_react13.default.createElement(View_default, { key: enc.id || idx, style: styles14.recordItem }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: { flex: 1 } }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordTitle }, enc.appointment_date, "  \u2022  ", enc.appointment_time?.slice(0, 5) || ""), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Provider: ", enc.provider_first_name, " ", enc.provider_last_name), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.recordDesc }, "Reason: ", enc.reason || enc.title || "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.pillAlert }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.pillAlertText }, enc.status || "Completed"))))), activeTab === "demographics" && /* @__PURE__ */ import_react13.default.createElement(import_react13.default.Fragment, null, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sectionCard }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.cardHeaderTitle }, "About & Identity"), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Full Name"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, [demographics.first_name, demographics.middle_name, demographics.last_name, demographics.suffix].filter(Boolean).join(" ") || "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Patient ID"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.patient_no || "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Sex"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.sex || "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Birthdate"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.birthdate || "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Civil Status"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.civil_status || "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Blood Type"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.blood_type || "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Height"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.height ? `${demographics.height} cm` : "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Weight"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.weight ? `${demographics.weight} kg` : "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Language"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.language || "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Ethnicity"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.ethnicity || "-"))), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.sectionCard }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.cardHeaderTitle }, "Contact Information"), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Address"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, [demographics.address_line, demographics.city, demographics.province, demographics.zip_code].filter(Boolean).join(", ") || "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Mobile Phone"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.mobile_phone || "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Home Phone"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.home_phone || "-")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.infoRow }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoKey }, "Email"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.infoVal }, demographics.email || "-")))))));
+  }
+  var styles14 = StyleSheet_default.create({
+    overlay: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(15, 23, 42, 0.45)",
+      zIndex: 999,
+      justifyContent: "flex-end"
+    },
+    sheetContainer: {
+      backgroundColor: "#ffffff",
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      height: "88%",
+      width: "100%",
+      paddingTop: 16
+    },
+    sheetHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 18,
+      paddingBottom: 14,
+      borderBottomWidth: 1,
+      borderBottomColor: "#f1f5f9"
+    },
+    headerTitleRow: {
+      flexDirection: "row",
+      alignItems: "center"
+    },
+    iconBadge: {
+      width: 34,
+      height: 34,
+      borderRadius: 8,
+      backgroundColor: "#ecfdf5",
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: 10
+    },
+    headerTitle: {
+      fontSize: 16.5,
+      fontWeight: "800",
+      color: "#0f172a"
+    },
+    headerSub: {
+      fontSize: 11,
+      color: "#64748b"
+    },
+    closeBtn: {
+      padding: 6
+    },
+    closeBtnText: {
+      fontSize: 16,
+      color: "#64748b",
+      fontWeight: "700"
+    },
+    tabBarWrapper: {
+      backgroundColor: "#f8fafc",
+      borderBottomWidth: 1,
+      borderBottomColor: "#e2e8f0",
+      height: 48
+    },
+    tabBar: {
+      paddingHorizontal: 12,
+      alignItems: "center",
+      gap: 6
+    },
+    tabBtn: {
+      paddingHorizontal: 14,
+      paddingVertical: 7,
+      borderRadius: 6
+    },
+    tabBtnActive: {
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0"
+    },
+    tabBtnText: {
+      fontSize: 12.5,
+      fontWeight: "600",
+      color: "#64748b"
+    },
+    tabBtnTextActive: {
+      color: "#059669",
+      fontWeight: "800"
+    },
+    loadingArea: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 30
+    },
+    loadingText: {
+      marginTop: 10,
+      fontSize: 13,
+      color: "#64748b"
+    },
+    emptyArea: {
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 40
+    },
+    emptyEmoji: {
+      fontSize: 36,
+      marginBottom: 8
+    },
+    emptyTitle: {
+      fontSize: 15,
+      fontWeight: "700",
+      color: "#0f172a",
+      marginBottom: 4
+    },
+    emptyDesc: {
+      fontSize: 12.5,
+      color: "#64748b",
+      textAlign: "center"
+    },
+    contentScroll: {
+      padding: 16,
+      paddingBottom: 40
+    },
+    profileCard: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: "#f8fafc",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 12,
+      padding: 14,
+      marginBottom: 14
+    },
+    profileAvatar: {
+      width: 44,
+      height: 44,
+      borderRadius: 22,
+      backgroundColor: "#059669",
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    profileAvatarText: {
+      color: "#ffffff",
+      fontSize: 18,
+      fontWeight: "800"
+    },
+    profileName: {
+      fontSize: 15,
+      fontWeight: "800",
+      color: "#0f172a",
+      marginBottom: 2
+    },
+    profileMeta: {
+      fontSize: 11.5,
+      color: "#64748b"
+    },
+    sectionTitle: {
+      fontSize: 13,
+      fontWeight: "800",
+      color: "#0f172a",
+      marginBottom: 8
+    },
+    sectionCard: {
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 12,
+      padding: 14,
+      marginBottom: 14
+    },
+    cardHeaderTitle: {
+      fontSize: 13.5,
+      fontWeight: "800",
+      color: "#0f172a",
+      marginBottom: 10
+    },
+    providerBox: {
+      backgroundColor: "#f8fafc",
+      padding: 10,
+      borderRadius: 8
+    },
+    providerName: {
+      fontSize: 13.5,
+      fontWeight: "700",
+      color: "#0f172a",
+      marginBottom: 2
+    },
+    providerMeta: {
+      fontSize: 11.5,
+      color: "#64748b",
+      marginBottom: 2
+    },
+    providerContact: {
+      fontSize: 11,
+      color: "#059669",
+      marginTop: 4,
+      fontWeight: "600"
+    },
+    emptyText: {
+      fontSize: 12.5,
+      color: "#94a3b8",
+      fontStyle: "italic",
+      paddingVertical: 8
+    },
+    snapshotGrid: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 6
+    },
+    snapshotTile: {
+      width: "23%",
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 10,
+      paddingVertical: 12,
+      alignItems: "center"
+    },
+    snapshotNum: {
+      fontSize: 17,
+      fontWeight: "800",
+      color: "#059669",
+      marginBottom: 2
+    },
+    snapshotLabel: {
+      fontSize: 10,
+      color: "#64748b",
+      fontWeight: "600"
+    },
+    cleanBadge: {
+      backgroundColor: "#ecfdf5",
+      borderWidth: 1,
+      borderColor: "#a7f3d0",
+      borderRadius: 8,
+      padding: 10
+    },
+    cleanBadgeText: {
+      color: "#059669",
+      fontSize: 12.5,
+      fontWeight: "700"
+    },
+    recordItem: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingVertical: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: "#f1f5f9"
+    },
+    recordTitle: {
+      fontSize: 13.5,
+      fontWeight: "700",
+      color: "#0f172a"
+    },
+    recordDesc: {
+      fontSize: 11.5,
+      color: "#64748b",
+      marginTop: 2
+    },
+    pillAlert: {
+      backgroundColor: "#f1f5f9",
+      paddingHorizontal: 8,
+      paddingVertical: 3,
+      borderRadius: 999
+    },
+    pillAlertText: {
+      fontSize: 10.5,
+      fontWeight: "700",
+      color: "#64748b"
+    },
+    infoRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 7,
+      borderBottomWidth: 1,
+      borderBottomColor: "#f1f5f9"
+    },
+    infoKey: {
+      fontSize: 12,
+      color: "#64748b",
+      fontWeight: "600"
+    },
+    infoVal: {
+      fontSize: 12,
+      color: "#0f172a",
+      fontWeight: "700",
+      maxWidth: "65%",
+      textAlign: "right"
+    }
+  });
+
   // src/screens/PatientDashboardScreen.js
   function PatientDashboardScreen({ user, onLogout }) {
-    const [drawerOpen, setDrawerOpen] = (0, import_react13.useState)(false);
-    const [reminderSet, setReminderSet] = (0, import_react13.useState)(false);
-    const [showAppointments, setShowAppointments] = (0, import_react13.useState)(false);
-    const [showPrescriptions, setShowPrescriptions] = (0, import_react13.useState)(false);
+    const [drawerOpen, setDrawerOpen] = (0, import_react14.useState)(false);
+    const [reminderSet, setReminderSet] = (0, import_react14.useState)(false);
+    const [showAppointments, setShowAppointments] = (0, import_react14.useState)(false);
+    const [showPrescriptions, setShowPrescriptions] = (0, import_react14.useState)(false);
+    const [showHealthRecords, setShowHealthRecords] = (0, import_react14.useState)(false);
     const firstName = user.first_name || "Patient";
     const lastName = user.last_name || "User";
     const fullName = `${firstName} ${lastName}`.trim();
@@ -32945,64 +33319,64 @@
       await AuthService.logout();
       onLogout();
     };
-    return /* @__PURE__ */ import_react13.default.createElement(SafeAreaView_default, { style: styles14.container }, /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.topNavBar }, /* @__PURE__ */ import_react13.default.createElement(
+    return /* @__PURE__ */ import_react14.default.createElement(SafeAreaView_default, { style: styles15.container }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.topNavBar }, /* @__PURE__ */ import_react14.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles14.hamburgerBtn,
+        style: styles15.hamburgerBtn,
         onPress: () => setDrawerOpen(!drawerOpen),
         activeOpacity: 0.7
       },
-      /* @__PURE__ */ import_react13.default.createElement(MenuIcon, { color: "#0f172a", size: 18 })
-    ), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.userIdentityColumn }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.userFullNameText, numberOfLines: 1 }, fullName)), /* @__PURE__ */ import_react13.default.createElement(
+      /* @__PURE__ */ import_react14.default.createElement(MenuIcon, { color: "#0f172a", size: 18 })
+    ), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.userIdentityColumn }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.userFullNameText, numberOfLines: 1 }, fullName)), /* @__PURE__ */ import_react14.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles14.avatarBadge,
+        style: styles15.avatarBadge,
         onPress: handleLogout,
         activeOpacity: 0.8
       },
-      /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.avatarInitialsText }, initials)
-    )), /* @__PURE__ */ import_react13.default.createElement(
+      /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.avatarInitialsText }, initials)
+    )), /* @__PURE__ */ import_react14.default.createElement(
       ScrollView_default,
       {
-        contentContainerStyle: styles14.contentScroll,
+        contentContainerStyle: styles15.contentScroll,
         showsVerticalScrollIndicator: false
       },
-      /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.statusCard }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
-      /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.sectionHeaderTitle }, "Services & Actions"),
-      /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.cardsGrid }, /* @__PURE__ */ import_react13.default.createElement(
+      /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.statusCard }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
+      /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.sectionHeaderTitle }, "Services & Actions"),
+      /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.cardsGrid }, /* @__PURE__ */ import_react14.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles14.gridCard,
+          style: styles15.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowAppointments(true)
         },
-        /* @__PURE__ */ import_react13.default.createElement(View_default, { style: [styles14.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react13.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })),
-        /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.gridCardTitle }, "Appointments"),
-        /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.gridCardDesc }, "View upcoming visits")
-      ), /* @__PURE__ */ import_react13.default.createElement(
+        /* @__PURE__ */ import_react14.default.createElement(View_default, { style: [styles15.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react14.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })),
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardTitle }, "Appointments"),
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardDesc }, "View upcoming visits")
+      ), /* @__PURE__ */ import_react14.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles14.gridCard,
+          style: styles15.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowPrescriptions(true)
         },
-        /* @__PURE__ */ import_react13.default.createElement(View_default, { style: [styles14.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react13.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })),
-        /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.gridCardTitle }, "Prescriptions"),
-        /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.gridCardDesc }, "Active medications")
-      ), /* @__PURE__ */ import_react13.default.createElement(
+        /* @__PURE__ */ import_react14.default.createElement(View_default, { style: [styles15.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react14.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })),
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardTitle }, "Prescriptions"),
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardDesc }, "Active medications")
+      ), /* @__PURE__ */ import_react14.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles14.gridCard,
+          style: styles15.gridCard,
           activeOpacity: 0.7,
-          onPress: () => Alert_default.alert("Health Records", "Your HIPAA digital health record is synced.")
+          onPress: () => setShowHealthRecords(true)
         },
-        /* @__PURE__ */ import_react13.default.createElement(View_default, { style: [styles14.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react13.default.createElement(RecordsIcon, { color: "#059669", size: 20 })),
-        /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.gridCardTitle }, "Health Records"),
-        /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.gridCardDesc }, "Lab results & charts")
-      ), /* @__PURE__ */ import_react13.default.createElement(
+        /* @__PURE__ */ import_react14.default.createElement(View_default, { style: [styles15.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react14.default.createElement(RecordsIcon, { color: "#059669", size: 20 })),
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardTitle }, "Health Records"),
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardDesc }, "Lab results & charts")
+      ), /* @__PURE__ */ import_react14.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles14.gridCard,
+          style: styles15.gridCard,
           activeOpacity: 0.7,
           onPress: () => {
             setReminderSet(!reminderSet);
@@ -33012,14 +33386,14 @@
             );
           }
         },
-        /* @__PURE__ */ import_react13.default.createElement(View_default, { style: [styles14.cardIconCircle, { backgroundColor: "#fff7ed" }] }, /* @__PURE__ */ import_react13.default.createElement(BellIcon, { color: "#ea580c", size: 20 })),
-        /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.gridCardTitle }, "Reminders"),
-        /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.gridCardDesc }, "Clinical alerts")
+        /* @__PURE__ */ import_react14.default.createElement(View_default, { style: [styles15.cardIconCircle, { backgroundColor: "#fff7ed" }] }, /* @__PURE__ */ import_react14.default.createElement(BellIcon, { color: "#ea580c", size: 20 })),
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardTitle }, "Reminders"),
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardDesc }, "Clinical alerts")
       )),
-      /* @__PURE__ */ import_react13.default.createElement(
+      /* @__PURE__ */ import_react14.default.createElement(
         TouchableOpacity_default,
         {
-          style: [styles14.simpleRemindBtn, reminderSet && styles14.simpleRemindBtnActive],
+          style: [styles15.simpleRemindBtn, reminderSet && styles15.simpleRemindBtnActive],
           onPress: () => {
             setReminderSet(!reminderSet);
             Alert_default.alert(
@@ -33029,25 +33403,31 @@
           },
           activeOpacity: 0.8
         },
-        /* @__PURE__ */ import_react13.default.createElement(BellIcon, { color: reminderSet ? "#059669" : "#2563eb", size: 17 }),
-        /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: [styles14.simpleRemindText, reminderSet && styles14.simpleRemindTextActive] }, reminderSet ? "Reminders Set \u2713" : "Remind Me")
+        /* @__PURE__ */ import_react14.default.createElement(BellIcon, { color: reminderSet ? "#059669" : "#2563eb", size: 17 }),
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: [styles15.simpleRemindText, reminderSet && styles15.simpleRemindTextActive] }, reminderSet ? "Reminders Set \u2713" : "Remind Me")
       )
-    ), /* @__PURE__ */ import_react13.default.createElement(
+    ), /* @__PURE__ */ import_react14.default.createElement(
       AppointmentsModal,
       {
         visible: showAppointments,
         onClose: () => setShowAppointments(false),
         patientId: user.id
       }
-    ), /* @__PURE__ */ import_react13.default.createElement(
+    ), /* @__PURE__ */ import_react14.default.createElement(
       PrescriptionsModal,
       {
         visible: showPrescriptions,
         onClose: () => setShowPrescriptions(false)
       }
-    ), drawerOpen && /* @__PURE__ */ import_react13.default.createElement(View_default, { style: styles14.drawerDropdown }, /* @__PURE__ */ import_react13.default.createElement(TouchableOpacity_default, { style: styles14.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.drawerItemText }, "\u{1F3E0} Dashboard Home")), /* @__PURE__ */ import_react13.default.createElement(TouchableOpacity_default, { style: styles14.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.drawerItemText }, "\u{1F4C1} My Medical Records")), /* @__PURE__ */ import_react13.default.createElement(TouchableOpacity_default, { style: styles14.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: styles14.drawerItemText }, "\u2699\uFE0F Portal Settings")), /* @__PURE__ */ import_react13.default.createElement(View_default, { style: { height: 1, backgroundColor: "#e2e8f0", marginVertical: 6 } }), /* @__PURE__ */ import_react13.default.createElement(TouchableOpacity_default, { style: styles14.drawerItem, onPress: handleLogout }, /* @__PURE__ */ import_react13.default.createElement(Text_default, { style: [styles14.drawerItemText, { color: "#ef4444" }] }, "\u{1F6AA} Sign Out"))));
+    ), /* @__PURE__ */ import_react14.default.createElement(
+      HealthRecordsModal,
+      {
+        visible: showHealthRecords,
+        onClose: () => setShowHealthRecords(false)
+      }
+    ), drawerOpen && /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.drawerDropdown }, /* @__PURE__ */ import_react14.default.createElement(TouchableOpacity_default, { style: styles15.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.drawerItemText }, "\u{1F3E0} Dashboard Home")), /* @__PURE__ */ import_react14.default.createElement(TouchableOpacity_default, { style: styles15.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.drawerItemText }, "\u{1F4C1} My Medical Records")), /* @__PURE__ */ import_react14.default.createElement(TouchableOpacity_default, { style: styles15.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.drawerItemText }, "\u2699\uFE0F Portal Settings")), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: { height: 1, backgroundColor: "#e2e8f0", marginVertical: 6 } }), /* @__PURE__ */ import_react14.default.createElement(TouchableOpacity_default, { style: styles15.drawerItem, onPress: handleLogout }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: [styles15.drawerItemText, { color: "#ef4444" }] }, "\u{1F6AA} Sign Out"))));
   }
-  var styles14 = StyleSheet_default.create({
+  var styles15 = StyleSheet_default.create({
     container: {
       flex: 1,
       width: "100%",
@@ -33236,16 +33616,16 @@
 
   // App.js
   function App() {
-    const [currentUser, setCurrentUser] = (0, import_react14.useState)(null);
-    return /* @__PURE__ */ import_react14.default.createElement(SafeAreaView_default, { style: styles15.root }, /* @__PURE__ */ import_react14.default.createElement(StatusBar_default, { barStyle: "dark-content", backgroundColor: "#ffffff" }), currentUser ? /* @__PURE__ */ import_react14.default.createElement(
+    const [currentUser, setCurrentUser] = (0, import_react15.useState)(null);
+    return /* @__PURE__ */ import_react15.default.createElement(SafeAreaView_default, { style: styles16.root }, /* @__PURE__ */ import_react15.default.createElement(StatusBar_default, { barStyle: "dark-content", backgroundColor: "#ffffff" }), currentUser ? /* @__PURE__ */ import_react15.default.createElement(
       PatientDashboardScreen,
       {
         user: currentUser,
         onLogout: () => setCurrentUser(null)
       }
-    ) : /* @__PURE__ */ import_react14.default.createElement(LoginScreen, { onLoginSuccess: (user) => setCurrentUser(user) }));
+    ) : /* @__PURE__ */ import_react15.default.createElement(LoginScreen, { onLoginSuccess: (user) => setCurrentUser(user) }));
   }
-  var styles15 = StyleSheet_default.create({
+  var styles16 = StyleSheet_default.create({
     root: {
       flex: 1,
       width: "100%",

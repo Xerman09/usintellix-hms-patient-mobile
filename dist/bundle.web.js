@@ -32239,7 +32239,7 @@
         contentContainerStyle: styles12.contentScroll,
         showsVerticalScrollIndicator: false
       },
-      /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.statusCard }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.statusHeaderRow }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.greenLivePill }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.greenDot }), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.greenPillText }, "CONNECTED"))), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
+      /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.statusCard }, /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
       /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.sectionHeaderTitle }, "Services & Actions"),
       /* @__PURE__ */ import_react11.default.createElement(View_default, { style: styles12.cardsGrid }, /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.gridCard, activeOpacity: 0.7 }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: [styles12.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react11.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardTitle }, "Appointments"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardDesc }, "View upcoming visits")), /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.gridCard, activeOpacity: 0.7 }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: [styles12.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react11.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardTitle }, "Prescriptions"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardDesc }, "Active medications")), /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.gridCard, activeOpacity: 0.7 }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: [styles12.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react11.default.createElement(RecordsIcon, { color: "#059669", size: 20 })), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardTitle }, "Health Records"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardDesc }, "Lab results & charts")), /* @__PURE__ */ import_react11.default.createElement(TouchableOpacity_default, { style: styles12.gridCard, activeOpacity: 0.7 }, /* @__PURE__ */ import_react11.default.createElement(View_default, { style: [styles12.cardIconCircle, { backgroundColor: "#fff7ed" }] }, /* @__PURE__ */ import_react11.default.createElement(BellIcon, { color: "#ea580c", size: 20 })), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardTitle }, "Reminders"), /* @__PURE__ */ import_react11.default.createElement(Text_default, { style: styles12.gridCardDesc }, "Clinical alerts"))),
       /* @__PURE__ */ import_react11.default.createElement(
@@ -32335,42 +32335,14 @@
       borderColor: "#e2e8f0",
       borderRadius: 8,
       padding: 16,
-      marginBottom: 24
-    },
-    statusHeaderRow: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 8
+      marginBottom: 20
     },
     statusCardLabel: {
       fontSize: 11,
       fontWeight: "800",
       color: "#64748b",
-      letterSpacing: 0.8
-    },
-    greenLivePill: {
-      flexDirection: "row",
-      alignItems: "center",
-      backgroundColor: "#ecfdf5",
-      paddingHorizontal: 8,
-      paddingVertical: 3,
-      borderRadius: 999,
-      borderWidth: 1,
-      borderColor: "#a7f3d0"
-    },
-    greenDot: {
-      width: 6,
-      height: 6,
-      borderRadius: 3,
-      backgroundColor: "#10b981",
-      marginRight: 5
-    },
-    greenPillText: {
-      color: "#059669",
-      fontSize: 9.5,
-      fontWeight: "700",
-      letterSpacing: 0.4
+      letterSpacing: 0.8,
+      marginBottom: 4
     },
     statusDescription: {
       fontSize: 13,

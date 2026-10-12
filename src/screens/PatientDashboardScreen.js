@@ -74,13 +74,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
       >
         {/* Quick Portal Status Banner */}
         <View style={styles.statusCard}>
-          <View style={styles.statusHeaderRow}>
-            <Text style={styles.statusCardLabel}>PATIENT PORTAL</Text>
-            <View style={styles.greenLivePill}>
-              <View style={styles.greenDot} />
-              <Text style={styles.greenPillText}>CONNECTED</Text>
-            </View>
-          </View>
+          <Text style={styles.statusCardLabel}>PATIENT PORTAL</Text>
           <Text style={styles.statusDescription}>
             Welcome, {firstName}. Your medical portal is synced.
           </Text>
@@ -249,42 +243,14 @@ const styles = StyleSheet.create({
     borderColor: '#e2e8f0',
     borderRadius: 8,
     padding: 16,
-    marginBottom: 24
-  },
-  statusHeaderRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8
+    marginBottom: 20
   },
   statusCardLabel: {
     fontSize: 11,
     fontWeight: '800',
     color: '#64748b',
-    letterSpacing: 0.8
-  },
-  greenLivePill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#ecfdf5',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: '#a7f3d0'
-  },
-  greenDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: '#10b981',
-    marginRight: 5
-  },
-  greenPillText: {
-    color: '#059669',
-    fontSize: 9.5,
-    fontWeight: '700',
-    letterSpacing: 0.4
+    letterSpacing: 0.8,
+    marginBottom: 4
   },
   statusDescription: {
     fontSize: 13,

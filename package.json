@@ -7,8 +7,8 @@
     "web": "node dev-server.js",
     "build:web": "node build-web.js",
     "start": "react-native start",
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "build:apk": "cd android && gradlew assembleRelease",
     "build:apk-debug": "cd android && gradlew assembleDebug",
     "build:apk:eas": "eas build -p android --profile preview"

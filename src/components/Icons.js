@@ -206,6 +206,38 @@ export function ChevronRightIcon({ color = '#94a3b8', size = 16 }) {
   );
 }
 
+// 11b. Chevron Left / Back Icon
+export function ChevronLeftIcon({ color = '#0f172a', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      strokeWidth={2.2}
+      paths={
+        <>
+          <polyline points="15 18 9 12 15 6" />
+        </>
+      }
+    />
+  );
+}
+
+export function ArrowLeftIcon({ color = '#0f172a', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      strokeWidth={2}
+      paths={
+        <>
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </>
+      }
+    />
+  );
+}
+
 // 12. Logout / Exit Icon
 export function LogOutIcon({ color = '#dc2626', size = 16 }) {
   return (
@@ -360,4 +392,53 @@ export function HelpCircleIcon({ color = '#ffffff', size = 32 }) {
     />
   );
 }
+
+// 21. User Icon
+export function UserIcon({ color = '#0284c7', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </>
+      }
+    />
+  );
+}
+
+// 22. Edit Pencil Icon
+export function EditIcon({ color = '#0284c7', size = 16 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+          <path d="m15 5 4 4" />
+        </>
+      }
+    />
+  );
+}
+
+// 23. Check Circle Icon
+export function CheckCircleIcon({ color = '#10b981', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <circle cx="12" cy="12" r="10" />
+          <path d="m9 12 2 2 4-4" />
+        </>
+      }
+    />
+  );
+}
+
 

@@ -25,9 +25,11 @@ import HealthRecordsModal from '../components/HealthRecordsModal';
 import MessagesModal from '../components/MessagesModal';
 import ClinicalRemindersModal from '../components/ClinicalRemindersModal';
 import MedicalReportsModal from '../components/MedicalReportsModal';
+import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 
 export default function PatientDashboardScreen({ user, onLogout }) {
+  const [currentView, setCurrentView] = useState('dashboard');
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [reminderSet, setReminderSet] = useState(false);
   const [showAppointments, setShowAppointments] = useState(false);
@@ -50,6 +52,16 @@ export default function PatientDashboardScreen({ user, onLogout }) {
     await AuthService.logout();
     onLogout();
   };
+
+  if (currentView === 'profile') {
+    return (
+      <ProfileSettingsScreen
+        user={user}
+        onBack={() => setCurrentView('dashboard')}
+        onLogout={handleLogout}
+      />
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -76,7 +88,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         {/* Right: Soft Blue Initials Avatar Badge */}
         <TouchableOpacity
           style={styles.avatarBadge}
-          onPress={handleLogout}
+          onPress={() => setCurrentView('profile')}
           activeOpacity={0.8}
         >
           <Text style={styles.avatarInitialsText}>{initials}</Text>
@@ -222,6 +234,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           else if (navId === 'messages') setShowMessages(true);
           else if (navId === 'reminders') setShowClinicalReminders(true);
           else if (navId === 'recalls') setShowClinicalReminders(true);
+          else if (navId === 'settings' || navId === 'profile') setCurrentView('profile');
         }}
         onLogout={handleLogout}
       />

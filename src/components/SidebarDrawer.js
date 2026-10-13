@@ -88,7 +88,7 @@ export default function SidebarDrawer({
     },
     {
       id: 'settings',
-      label: 'Account Settings',
+      label: 'Profile & Settings',
       IconComponent: SettingsIcon
     }
   ];
@@ -105,7 +105,14 @@ export default function SidebarDrawer({
       {/* Sidebar Content Panel */}
       <SafeAreaView style={styles.drawerPanel}>
         {/* Top Header: Square Teal Initials Badge, Full Name, Badges & Close X */}
-        <View style={styles.drawerHeader}>
+        <TouchableOpacity
+          style={styles.drawerHeader}
+          onPress={() => {
+            onClose();
+            onNavigate('settings');
+          }}
+          activeOpacity={0.8}
+        >
           {/* Avatar Square */}
           <View style={styles.avatarSquare}>
             <Text style={styles.avatarText}>{initials}</Text>
@@ -131,7 +138,7 @@ export default function SidebarDrawer({
           >
             <Text style={styles.closeBtnText}>✕</Text>
           </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
 
         {/* Section Heading: PORTAL NAVIGATION */}
         <View style={styles.sectionHeaderWrap}>

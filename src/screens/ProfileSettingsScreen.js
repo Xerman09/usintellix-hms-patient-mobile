@@ -7,9 +7,11 @@ import {
   ScrollView,
   TextInput,
   ActivityIndicator,
-  SafeAreaView
+  SafeAreaView,
+  Image
 } from 'react-native';
 import { ProfileService } from '../api/profile';
+import { getAvatarUrl } from '../constants/config';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -34,6 +36,7 @@ export default function ProfileSettingsScreen({
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const [statusMessage, setStatusMessage] = useState({ type: '', text: '' });
+  const [avatarError, setAvatarError] = useState(false);
 
   // Profile Edit Form State
   const [formData, setFormData] = useState({
@@ -199,6 +202,8 @@ export default function ProfileSettingsScreen({
   const fullName = `${firstName} ${lastName}`.trim();
   const initials = `${firstName[0] || 'P'}${lastName[0] || ''}`.toUpperCase();
   const patientNo = profileData?.patient_no || user?.id || '1';
+  const rawAvatar = profileData?.avatar || profileData?.photo || user?.avatar || user?.photo;
+  const avatarUrl = getAvatarUrl(rawAvatar);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -244,7 +249,16 @@ export default function ProfileSettingsScreen({
 
         {/* Right: Initials Badge */}
         <View style={styles.avatarBadge}>
-          <Text style={styles.avatarInitialsText}>{initials}</Text>
+          {avatarUrl && !avatarError ? (
+            <Image
+              source={{ uri: avatarUrl }}
+              style={styles.avatarImg}
+              onError={() => setAvatarError(true)}
+              resizeMode="cover"
+            />
+          ) : (
+            <Text style={styles.avatarInitialsText}>{initials}</Text>
+          )}
         </View>
       </View>
 
@@ -261,7 +275,16 @@ export default function ProfileSettingsScreen({
               {/* Patient Identity Top Card */}
               <View style={styles.menuHeaderCard}>
                 <View style={styles.avatarLargeCircle}>
-                  <Text style={styles.avatarLargeText}>{initials}</Text>
+                  {avatarUrl && !avatarError ? (
+                    <Image
+                      source={{ uri: avatarUrl }}
+                      style={styles.avatarLargeImg}
+                      onError={() => setAvatarError(true)}
+                      resizeMode="cover"
+                    />
+                  ) : (
+                    <Text style={styles.avatarLargeText}>{initials}</Text>
+                  )}
                 </View>
                 <View style={styles.menuIdentityCol}>
                   <Text style={styles.menuFullName}>{fullName}</Text>
@@ -357,7 +380,16 @@ export default function ProfileSettingsScreen({
               {/* Patient Identity Banner */}
               <View style={styles.profileHeaderCard}>
                 <View style={styles.avatarLargeCircle}>
-                  <Text style={styles.avatarLargeText}>{initials}</Text>
+                  {avatarUrl && !avatarError ? (
+                    <Image
+                      source={{ uri: avatarUrl }}
+                      style={styles.avatarLargeImg}
+                      onError={() => setAvatarError(true)}
+                      resizeMode="cover"
+                    />
+                  ) : (
+                    <Text style={styles.avatarLargeText}>{initials}</Text>
+                  )}
                 </View>
 
                 <View style={styles.profileIdentityCol}>
@@ -940,7 +972,13 @@ const styles = StyleSheet.create({
     borderRadius: 19,
     backgroundColor: '#0d9488',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    overflow: 'hidden'
+  },
+  avatarImg: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 19
   },
   avatarInitialsText: {
     fontSize: 14,
@@ -1066,7 +1104,13 @@ const styles = StyleSheet.create({
     borderRadius: 29,
     backgroundColor: '#0d9488',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    overflow: 'hidden'
+  },
+  avatarLargeImg: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 29
   },
   avatarLargeText: {
     fontSize: 22,

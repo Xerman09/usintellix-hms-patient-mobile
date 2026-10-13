@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView
+  SafeAreaView,
+  Image
 } from 'react-native';
+import { getAvatarUrl } from '../constants/config';
 import {
   HomeIcon,
   CalendarIcon,
@@ -28,6 +30,7 @@ export default function SidebarDrawer({
   onNavigate,
   onLogout
 }) {
+  const [avatarError, setAvatarError] = useState(false);
   if (!visible) return null;
 
   const firstName = user?.first_name || 'Patient';
@@ -38,6 +41,9 @@ export default function SidebarDrawer({
 
   const roleText = (user?.role || 'PATIENT').toUpperCase();
   const orgText = 'ENTERPRISE';
+
+  const rawAvatar = user?.avatarUrl || user?.avatar || user?.photo;
+  const avatarUrl = getAvatarUrl(rawAvatar);
 
   // System-aligned navigation items with pure vector SVG icons
   const navItems = [
@@ -115,7 +121,16 @@ export default function SidebarDrawer({
         >
           {/* Avatar Square */}
           <View style={styles.avatarSquare}>
-            <Text style={styles.avatarText}>{initials}</Text>
+            {avatarUrl && !avatarError ? (
+              <Image
+                source={{ uri: avatarUrl }}
+                style={styles.avatarDrawerImg}
+                onError={() => setAvatarError(true)}
+                resizeMode="cover"
+              />
+            ) : (
+              <Text style={styles.avatarText}>{initials}</Text>
+            )}
           </View>
 
           {/* User Details */}
@@ -246,7 +261,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#007b83', // Exact solid dark teal from screenshot
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12
+    marginRight: 12,
+    overflow: 'hidden'
+  },
+  avatarDrawerImg: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 6
   },
   avatarText: {
     color: '#ffffff',

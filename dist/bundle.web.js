@@ -1088,7 +1088,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState13(initialState) {
+          function useState14(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1100,7 +1100,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect12(create2, deps) {
+          function useEffect13(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1883,7 +1883,7 @@
           exports.useContext = useContext5;
           exports.useDebugValue = useDebugValue3;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect12;
+          exports.useEffect = useEffect13;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1891,7 +1891,7 @@
           exports.useMemo = useMemo4;
           exports.useReducer = useReducer;
           exports.useRef = useRef11;
-          exports.useState = useState13;
+          exports.useState = useState14;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -31299,6 +31299,11 @@
     APP_SUBTITLE: "Patient Mobile Portal",
     VERSION: "1.0.0"
   };
+  function getAvatarUrl(path) {
+    if (!path) return null;
+    if (path.startsWith("http://") || path.startsWith("https://")) return path;
+    return `${CONFIG.BASE_URL}${path.startsWith("/") ? "" : "/"}${path}`;
+  }
 
   // src/api/client.js
   var sessionCookies = "";
@@ -32394,6 +32399,37 @@
 
   // src/screens/PatientDashboardScreen.js
   var import_react19 = __toESM(require_react());
+
+  // src/api/profile.js
+  var ProfileService = {
+    /**
+     * Fetch current patient's profile from OpenEMR / hospital backend
+     */
+    async getProfile() {
+      return await apiRequest("/profile");
+    },
+    /**
+     * Update patient profile information (contact & name)
+     */
+    async updateProfile(data) {
+      return await apiRequest("/profile", {
+        method: "PUT",
+        body: JSON.stringify(data)
+      });
+    },
+    /**
+     * Change patient password
+     */
+    async changePassword(currentPassword, newPassword) {
+      return await apiRequest("/profile/password", {
+        method: "PUT",
+        body: JSON.stringify({
+          current_password: currentPassword,
+          new_password: newPassword
+        })
+      });
+    }
+  };
 
   // src/components/AppointmentsModal.js
   var import_react11 = __toESM(require_react());
@@ -36125,39 +36161,6 @@
 
   // src/screens/ProfileSettingsScreen.js
   var import_react17 = __toESM(require_react());
-
-  // src/api/profile.js
-  var ProfileService = {
-    /**
-     * Fetch current patient's profile from OpenEMR / hospital backend
-     */
-    async getProfile() {
-      return await apiRequest("/profile");
-    },
-    /**
-     * Update patient profile information (contact & name)
-     */
-    async updateProfile(data) {
-      return await apiRequest("/profile", {
-        method: "PUT",
-        body: JSON.stringify(data)
-      });
-    },
-    /**
-     * Change patient password
-     */
-    async changePassword(currentPassword, newPassword) {
-      return await apiRequest("/profile/password", {
-        method: "PUT",
-        body: JSON.stringify({
-          current_password: currentPassword,
-          new_password: newPassword
-        })
-      });
-    }
-  };
-
-  // src/screens/ProfileSettingsScreen.js
   function ProfileSettingsScreen({
     user,
     onBack,
@@ -36168,6 +36171,7 @@
     const [isEditing, setIsEditing] = (0, import_react17.useState)(false);
     const [profileData, setProfileData] = (0, import_react17.useState)(null);
     const [statusMessage, setStatusMessage] = (0, import_react17.useState)({ type: "", text: "" });
+    const [avatarError, setAvatarError] = (0, import_react17.useState)(false);
     const [formData, setFormData] = (0, import_react17.useState)({
       first_name: "",
       middle_name: "",
@@ -36312,6 +36316,8 @@
     const fullName = `${firstName} ${lastName}`.trim();
     const initials = `${firstName[0] || "P"}${lastName[0] || ""}`.toUpperCase();
     const patientNo = profileData?.patient_no || user?.id || "1";
+    const rawAvatar = profileData?.avatar || profileData?.photo || user?.avatar || user?.photo;
+    const avatarUrl = getAvatarUrl(rawAvatar);
     return /* @__PURE__ */ import_react17.default.createElement(SafeAreaView_default, { style: styles18.container }, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.topNavBar }, currentSection === "menu" ? /* @__PURE__ */ import_react17.default.createElement(
       TouchableOpacity_default,
       {
@@ -36335,14 +36341,30 @@
       },
       /* @__PURE__ */ import_react17.default.createElement(ChevronLeftIcon, { color: "#0f172a", size: 18 }),
       /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.backBtnText }, "Back")
-    ), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.titleColumn }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.pageTitleText }, currentSection === "menu" ? "Profile & Settings" : currentSection === "profile" ? "Profile" : "Setting and privacy")), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.avatarBadge }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.avatarInitialsText }, initials))), /* @__PURE__ */ import_react17.default.createElement(
+    ), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.titleColumn }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.pageTitleText }, currentSection === "menu" ? "Profile & Settings" : currentSection === "profile" ? "Profile" : "Setting and privacy")), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.avatarBadge }, avatarUrl && !avatarError ? /* @__PURE__ */ import_react17.default.createElement(
+      Image_default,
+      {
+        source: { uri: avatarUrl },
+        style: styles18.avatarImg,
+        onError: () => setAvatarError(true),
+        resizeMode: "cover"
+      }
+    ) : /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.avatarInitialsText }, initials))), /* @__PURE__ */ import_react17.default.createElement(
       ScrollView_default,
       {
         style: styles18.contentScroll,
         contentContainerStyle: styles18.contentScrollContainer,
         showsVerticalScrollIndicator: false
       },
-      /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.pageMaxContainer }, currentSection === "menu" && /* @__PURE__ */ import_react17.default.createElement(View_default, null, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.menuHeaderCard }, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.avatarLargeCircle }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.avatarLargeText }, initials)), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.menuIdentityCol }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.menuFullName }, fullName), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.badgeRow }, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.patientIdBadge }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.patientIdText }, "MRN #", patientNo)), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.activeStatusBadge }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.activeStatusText }, "Active Patient"))), /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.menuContactText }, profileData?.contact_email || profileData?.email || user?.email || "patient@hospital.org"))), /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.listSectionTitle }, "ACCOUNT & PREFERENCES"), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.menuListCard }, /* @__PURE__ */ import_react17.default.createElement(
+      /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.pageMaxContainer }, currentSection === "menu" && /* @__PURE__ */ import_react17.default.createElement(View_default, null, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.menuHeaderCard }, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.avatarLargeCircle }, avatarUrl && !avatarError ? /* @__PURE__ */ import_react17.default.createElement(
+        Image_default,
+        {
+          source: { uri: avatarUrl },
+          style: styles18.avatarLargeImg,
+          onError: () => setAvatarError(true),
+          resizeMode: "cover"
+        }
+      ) : /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.avatarLargeText }, initials)), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.menuIdentityCol }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.menuFullName }, fullName), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.badgeRow }, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.patientIdBadge }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.patientIdText }, "MRN #", patientNo)), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.activeStatusBadge }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.activeStatusText }, "Active Patient"))), /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.menuContactText }, profileData?.contact_email || profileData?.email || user?.email || "patient@hospital.org"))), /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.listSectionTitle }, "ACCOUNT & PREFERENCES"), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.menuListCard }, /* @__PURE__ */ import_react17.default.createElement(
         TouchableOpacity_default,
         {
           style: styles18.menuListItem,
@@ -36378,7 +36400,15 @@
         /* @__PURE__ */ import_react17.default.createElement(View_default, { style: [styles18.menuListItemIconBox, { backgroundColor: "#fef2f2" }] }, /* @__PURE__ */ import_react17.default.createElement(LogOutIcon, { color: "#dc2626", size: 19 })),
         /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.menuListItemTextCol }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: [styles18.menuListItemTitle, { color: "#dc2626" }] }, "logout"), /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.menuListItemDesc }, "Sign out of your active workstation session")),
         /* @__PURE__ */ import_react17.default.createElement(ChevronRightIcon, { color: "#f87171", size: 16 })
-      ))), currentSection === "profile" && /* @__PURE__ */ import_react17.default.createElement(View_default, null, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.profileHeaderCard }, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.avatarLargeCircle }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.avatarLargeText }, initials)), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.profileIdentityCol }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.profileFullName }, fullName), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.badgeRow }, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.patientIdBadge }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.patientIdText }, "MRN #", patientNo)), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.activeStatusBadge }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.activeStatusText }, "Active Patient")))), /* @__PURE__ */ import_react17.default.createElement(
+      ))), currentSection === "profile" && /* @__PURE__ */ import_react17.default.createElement(View_default, null, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.profileHeaderCard }, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.avatarLargeCircle }, avatarUrl && !avatarError ? /* @__PURE__ */ import_react17.default.createElement(
+        Image_default,
+        {
+          source: { uri: avatarUrl },
+          style: styles18.avatarLargeImg,
+          onError: () => setAvatarError(true),
+          resizeMode: "cover"
+        }
+      ) : /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.avatarLargeText }, initials)), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.profileIdentityCol }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.profileFullName }, fullName), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.badgeRow }, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.patientIdBadge }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.patientIdText }, "MRN #", patientNo)), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.activeStatusBadge }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.activeStatusText }, "Active Patient")))), /* @__PURE__ */ import_react17.default.createElement(
         TouchableOpacity_default,
         {
           style: [styles18.editToggleBtn, isEditing && styles18.editToggleBtnActive],
@@ -36679,7 +36709,13 @@
       borderRadius: 19,
       backgroundColor: "#0d9488",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      overflow: "hidden"
+    },
+    avatarImg: {
+      width: "100%",
+      height: "100%",
+      borderRadius: 19
     },
     avatarInitialsText: {
       fontSize: 14,
@@ -36805,7 +36841,13 @@
       borderRadius: 29,
       backgroundColor: "#0d9488",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      overflow: "hidden"
+    },
+    avatarLargeImg: {
+      width: "100%",
+      height: "100%",
+      borderRadius: 29
     },
     avatarLargeText: {
       fontSize: 22,
@@ -37109,6 +37151,7 @@
     onNavigate,
     onLogout
   }) {
+    const [avatarError, setAvatarError] = (0, import_react18.useState)(false);
     if (!visible) return null;
     const firstName = user?.first_name || "Patient";
     const lastName = user?.last_name || "User";
@@ -37117,6 +37160,8 @@
     const initials = `${firstName[0] || "P"}${lastName[0] || ""}`.toUpperCase();
     const roleText = (user?.role || "PATIENT").toUpperCase();
     const orgText = "ENTERPRISE";
+    const rawAvatar = user?.avatarUrl || user?.avatar || user?.photo;
+    const avatarUrl = getAvatarUrl(rawAvatar);
     const navItems = [
       {
         id: "dashboard",
@@ -37186,7 +37231,15 @@
         },
         activeOpacity: 0.8
       },
-      /* @__PURE__ */ import_react18.default.createElement(View_default, { style: styles19.avatarSquare }, /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.avatarText }, initials)),
+      /* @__PURE__ */ import_react18.default.createElement(View_default, { style: styles19.avatarSquare }, avatarUrl && !avatarError ? /* @__PURE__ */ import_react18.default.createElement(
+        Image_default,
+        {
+          source: { uri: avatarUrl },
+          style: styles19.avatarDrawerImg,
+          onError: () => setAvatarError(true),
+          resizeMode: "cover"
+        }
+      ) : /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.avatarText }, initials)),
       /* @__PURE__ */ import_react18.default.createElement(View_default, { style: styles19.userInfoCol }, /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.userName, numberOfLines: 2 }, fullName), /* @__PURE__ */ import_react18.default.createElement(View_default, { style: styles19.badgeRow }, /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.roleBadge }, roleText), /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.dotSeparator }, "\u2022"), /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.orgBadge }, orgText))),
       /* @__PURE__ */ import_react18.default.createElement(
         TouchableOpacity_default,
@@ -37286,7 +37339,13 @@
       // Exact solid dark teal from screenshot
       alignItems: "center",
       justifyContent: "center",
-      marginRight: 12
+      marginRight: 12,
+      overflow: "hidden"
+    },
+    avatarDrawerImg: {
+      width: "100%",
+      height: "100%",
+      borderRadius: 6
     },
     avatarText: {
       color: "#ffffff",
@@ -37417,6 +37476,18 @@
     const [showMessages, setShowMessages] = (0, import_react19.useState)(false);
     const [showClinicalReminders, setShowClinicalReminders] = (0, import_react19.useState)(false);
     const [showMedicalReports, setShowMedicalReports] = (0, import_react19.useState)(false);
+    const [profileData, setProfileData] = (0, import_react19.useState)(null);
+    const [avatarError, setAvatarError] = (0, import_react19.useState)(false);
+    (0, import_react19.useEffect)(() => {
+      ProfileService.getProfile().then((res) => {
+        if (res && res.success && res.data) {
+          setProfileData(res.data);
+        }
+      }).catch(() => {
+      });
+    }, []);
+    const rawAvatar = profileData?.avatar || profileData?.photo || user?.avatar || user?.photo;
+    const avatarUrl = getAvatarUrl(rawAvatar);
     const firstName = user.first_name || "Patient";
     const lastName = user.last_name || "User";
     const fullName = `${firstName} ${lastName}`.trim();
@@ -37450,7 +37521,15 @@
         onPress: () => setCurrentView("profile"),
         activeOpacity: 0.8
       },
-      /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.avatarInitialsText }, initials)
+      avatarUrl && !avatarError ? /* @__PURE__ */ import_react19.default.createElement(
+        Image_default,
+        {
+          source: { uri: avatarUrl },
+          style: styles20.avatarImg,
+          onError: () => setAvatarError(true),
+          resizeMode: "cover"
+        }
+      ) : /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.avatarInitialsText }, initials)
     )), /* @__PURE__ */ import_react19.default.createElement(
       ScrollView_default,
       {
@@ -37554,7 +37633,7 @@
       {
         visible: drawerOpen,
         onClose: () => setDrawerOpen(false),
-        user,
+        user: { ...user, ...profileData || {}, avatarUrl },
         onNavigate: (navId) => {
           if (navId === "appointments") setShowAppointments(true);
           else if (navId === "prescriptions") setShowPrescriptions(true);
@@ -37626,7 +37705,13 @@
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.2,
       shadowRadius: 4,
-      elevation: 2
+      elevation: 2,
+      overflow: "hidden"
+    },
+    avatarImg: {
+      width: "100%",
+      height: "100%",
+      borderRadius: 6
     },
     avatarInitialsText: {
       color: "#ffffff",

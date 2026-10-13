@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,10 +6,13 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
-  Alert
+  Alert,
+  Image
 } from 'react-native';
 import { THEME } from '../constants/theme';
 import { AuthService } from '../api/auth';
+import { ProfileService } from '../api/profile';
+import { getAvatarUrl } from '../constants/config';
 import {
   MenuIcon,
   CalendarIcon,
@@ -38,6 +41,19 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   const [showMessages, setShowMessages] = useState(false);
   const [showClinicalReminders, setShowClinicalReminders] = useState(false);
   const [showMedicalReports, setShowMedicalReports] = useState(false);
+  const [profileData, setProfileData] = useState(null);
+  const [avatarError, setAvatarError] = useState(false);
+
+  useEffect(() => {
+    ProfileService.getProfile().then((res) => {
+      if (res && res.success && res.data) {
+        setProfileData(res.data);
+      }
+    }).catch(() => {});
+  }, []);
+
+  const rawAvatar = profileData?.avatar || profileData?.photo || user?.avatar || user?.photo;
+  const avatarUrl = getAvatarUrl(rawAvatar);
 
 
 
@@ -91,7 +107,16 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           onPress={() => setCurrentView('profile')}
           activeOpacity={0.8}
         >
-          <Text style={styles.avatarInitialsText}>{initials}</Text>
+          {avatarUrl && !avatarError ? (
+            <Image
+              source={{ uri: avatarUrl }}
+              style={styles.avatarImg}
+              onError={() => setAvatarError(true)}
+              resizeMode="cover"
+            />
+          ) : (
+            <Text style={styles.avatarInitialsText}>{initials}</Text>
+          )}
         </TouchableOpacity>
       </View>
 
@@ -225,7 +250,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
       <SidebarDrawer
         visible={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        user={user}
+        user={{ ...user, ...(profileData || {}), avatarUrl }}
         onNavigate={(navId) => {
           if (navId === 'appointments') setShowAppointments(true);
           else if (navId === 'prescriptions') setShowPrescriptions(true);
@@ -301,7 +326,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 2
+    elevation: 2,
+    overflow: 'hidden'
+  },
+  avatarImg: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 6
   },
   avatarInitialsText: {
     color: '#ffffff',

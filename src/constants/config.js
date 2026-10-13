@@ -19,3 +19,10 @@ export const CONFIG = {
   APP_SUBTITLE: 'Patient Mobile Portal',
   VERSION: '1.0.0'
 };
+
+export function getAvatarUrl(path) {
+  if (!path) return null;
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  return `${CONFIG.BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+}
+

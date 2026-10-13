@@ -272,3 +272,92 @@ export function EyeOffIcon({ color = '#94a3b8', size = 18 }) {
     />
   );
 }
+
+// 16. Document Plus Icon (View Summary of Care)
+export function DocumentPlusIcon({ color = '#ffffff', size = 32 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="12" y1="18" x2="12" y2="12" />
+          <line x1="9" y1="15" x2="15" y2="15" />
+        </>
+      }
+    />
+  );
+}
+
+// 17. Download Care / Tray Icon (Download Summary of Care)
+export function DownloadTrayIcon({ color = '#ffffff', size = 32 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </>
+      }
+    />
+  );
+}
+
+// 18. Medical Clipboard Icon (Customized Medical History Report)
+export function MedicalClipboardIcon({ color = '#ffffff', size = 32 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+          <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+          <line x1="9" y1="14" x2="15" y2="14" />
+        </>
+      }
+    />
+  );
+}
+
+// 19. Document Folder Icon (Download Medical Record Documents)
+export function DocumentFolderIcon({ color = '#ffffff', size = 32 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <path d="M10 12v4" />
+          <path d="M14 12v4" />
+          <path d="M10 16h4" />
+        </>
+      }
+    />
+  );
+}
+
+// 20. Help Circle Icon (Help)
+export function HelpCircleIcon({ color = '#ffffff', size = 32 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <circle cx="12" cy="12" r="10" />
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </>
+      }
+    />
+  );
+}
+

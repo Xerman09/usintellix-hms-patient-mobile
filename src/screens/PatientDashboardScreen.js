@@ -23,6 +23,8 @@ import AppointmentsModal from '../components/AppointmentsModal';
 import PrescriptionsModal from '../components/PrescriptionsModal';
 import HealthRecordsModal from '../components/HealthRecordsModal';
 import MessagesModal from '../components/MessagesModal';
+import ClinicalRemindersModal from '../components/ClinicalRemindersModal';
+import MedicalReportsModal from '../components/MedicalReportsModal';
 import SidebarDrawer from '../components/SidebarDrawer';
 
 export default function PatientDashboardScreen({ user, onLogout }) {
@@ -32,6 +34,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   const [showPrescriptions, setShowPrescriptions] = useState(false);
   const [showHealthRecords, setShowHealthRecords] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
+  const [showClinicalReminders, setShowClinicalReminders] = useState(false);
+  const [showMedicalReports, setShowMedicalReports] = useState(false);
+
 
 
   // Compute initials (e.g. "EA" for Erman Ace or from name)
@@ -151,23 +156,15 @@ export default function PatientDashboardScreen({ user, onLogout }) {
 
         </View>
 
-        {/* Clean, Simple Remind Me Button */}
+        {/* Clean, Simple Clinical Reminders Button */}
         <TouchableOpacity
-          style={[styles.simpleRemindBtn, reminderSet && styles.simpleRemindBtnActive]}
-          onPress={() => {
-            setReminderSet(!reminderSet);
-            Alert.alert(
-              !reminderSet ? 'Reminder Activated' : 'Reminder Cancelled',
-              !reminderSet
-                ? 'Clinical notifications enabled for upcoming visits.'
-                : 'Reminders turned off.'
-            );
-          }}
+          style={styles.simpleRemindBtn}
+          onPress={() => setShowClinicalReminders(true)}
           activeOpacity={0.8}
         >
-          <BellIcon color={reminderSet ? '#059669' : '#2563eb'} size={17} />
-          <Text style={[styles.simpleRemindText, reminderSet && styles.simpleRemindTextActive]}>
-            {reminderSet ? 'Reminders Set ✓' : 'Remind Me'}
+          <BellIcon color="#0d9488" size={17} />
+          <Text style={[styles.simpleRemindText, { color: '#0d9488' }]}>
+            Clinical Reminders &amp; Guidelines
           </Text>
         </TouchableOpacity>
 
@@ -199,6 +196,19 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         currentUser={user}
       />
 
+      {/* Clinical Reminders Interactive Bottom Sheet */}
+      <ClinicalRemindersModal
+        visible={showClinicalReminders}
+        onClose={() => setShowClinicalReminders(false)}
+      />
+
+      {/* Medical Reports Interactive Bottom Sheet */}
+      <MedicalReportsModal
+        visible={showMedicalReports}
+        onClose={() => setShowMedicalReports(false)}
+        currentUser={user}
+      />
+
       {/* Full-Height Modern Sidebar Navigation Drawer */}
       <SidebarDrawer
         visible={drawerOpen}
@@ -208,24 +218,17 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           if (navId === 'appointments') setShowAppointments(true);
           else if (navId === 'prescriptions') setShowPrescriptions(true);
           else if (navId === 'health_records') setShowHealthRecords(true);
+          else if (navId === 'medical_reports') setShowMedicalReports(true);
           else if (navId === 'messages') setShowMessages(true);
-          else if (navId === 'reminders') {
-            setReminderSet(!reminderSet);
-            Alert.alert(
-              !reminderSet ? 'Reminders Active' : 'Reminders Paused',
-              !reminderSet
-                ? 'Clinical notifications enabled for upcoming visits.'
-                : 'Reminders turned off.'
-            );
-          } else if (navId === 'recalls') {
-            setShowMessages(true);
-          }
+          else if (navId === 'reminders') setShowClinicalReminders(true);
+          else if (navId === 'recalls') setShowClinicalReminders(true);
         }}
         onLogout={handleLogout}
       />
     </SafeAreaView>
   );
 }
+
 
 
 const styles = StyleSheet.create({

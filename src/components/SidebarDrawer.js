@@ -62,6 +62,11 @@ export default function SidebarDrawer({
       IconComponent: RecordsIcon
     },
     {
+      id: 'medical_reports',
+      label: 'Medical Reports',
+      IconComponent: ClipboardIcon
+    },
+    {
       id: 'messages',
       label: 'Care Team Messages',
       IconComponent: ChatIcon

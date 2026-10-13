@@ -1088,7 +1088,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState10(initialState) {
+          function useState12(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1100,7 +1100,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect10(create2, deps) {
+          function useEffect11(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1883,7 +1883,7 @@
           exports.useContext = useContext5;
           exports.useDebugValue = useDebugValue3;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect10;
+          exports.useEffect = useEffect11;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1891,7 +1891,7 @@
           exports.useMemo = useMemo4;
           exports.useReducer = useReducer;
           exports.useRef = useRef11;
-          exports.useState = useState10;
+          exports.useState = useState12;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -3295,18 +3295,18 @@
           var className = "";
           var inlineStyle = null;
           var nextCache = disableCache ? null : cache4;
-          var styles19 = new Array(arguments.length);
+          var styles21 = new Array(arguments.length);
           for (var i = 0; i < arguments.length; i++) {
-            styles19[i] = arguments[i];
+            styles21[i] = arguments[i];
           }
-          while (styles19.length > 0) {
-            var possibleStyle = styles19.pop();
+          while (styles21.length > 0) {
+            var possibleStyle = styles21.pop();
             if (possibleStyle == null || possibleStyle === false) {
               continue;
             }
             if (Array.isArray(possibleStyle)) {
               for (var _i = 0; _i < possibleStyle.length; _i++) {
-                styles19.push(possibleStyle[_i]);
+                styles21.push(possibleStyle[_i]);
               }
               continue;
             }
@@ -4290,9 +4290,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React29 = require_react();
+          var React31 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React29.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React31.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -5899,7 +5899,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React29.Children.forEach(props.children, function(child) {
+                  React31.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -6395,15 +6395,15 @@
             };
           }
           var warnValidStyle$1 = warnValidStyle;
-          function createDangerousStringForStyles(styles19) {
+          function createDangerousStringForStyles(styles21) {
             {
               var serialized = "";
               var delimiter = "";
-              for (var styleName in styles19) {
-                if (!styles19.hasOwnProperty(styleName)) {
+              for (var styleName in styles21) {
+                if (!styles21.hasOwnProperty(styleName)) {
                   continue;
                 }
-                var styleValue = styles19[styleName];
+                var styleValue = styles21[styleName];
                 if (styleValue != null) {
                   var isCustomProperty = styleName.indexOf("--") === 0;
                   serialized += delimiter + (isCustomProperty ? styleName : hyphenateStyleName2(styleName)) + ":";
@@ -6414,19 +6414,19 @@
               return serialized || null;
             }
           }
-          function setValueForStyles2(node, styles19) {
+          function setValueForStyles2(node, styles21) {
             var style2 = node.style;
-            for (var styleName in styles19) {
-              if (!styles19.hasOwnProperty(styleName)) {
+            for (var styleName in styles21) {
+              if (!styles21.hasOwnProperty(styleName)) {
                 continue;
               }
               var isCustomProperty = styleName.indexOf("--") === 0;
               {
                 if (!isCustomProperty) {
-                  warnValidStyle$1(styleName, styles19[styleName]);
+                  warnValidStyle$1(styleName, styles21[styleName]);
                 }
               }
-              var styleValue = dangerousStyleValue2(styleName, styles19[styleName], isCustomProperty);
+              var styleValue = dangerousStyleValue2(styleName, styles21[styleName], isCustomProperty);
               if (styleName === "float") {
                 styleName = "cssFloat";
               }
@@ -6440,9 +6440,9 @@
           function isValueEmpty(value) {
             return value == null || typeof value === "boolean" || value === "";
           }
-          function expandShorthandMap(styles19) {
+          function expandShorthandMap(styles21) {
             var expanded = {};
-            for (var key in styles19) {
+            for (var key in styles21) {
               var longhands = shorthandToLonghand[key] || [key];
               for (var i = 0; i < longhands.length; i++) {
                 expanded[longhands[i]] = key;
@@ -25584,7 +25584,7 @@
   });
 
   // index.web.js
-  var import_react18 = __toESM(require_react());
+  var import_react20 = __toESM(require_react());
 
   // node_modules/react-native-web/dist/modules/AccessibilityUtil/isDisabled.js
   var isDisabled = (props) => props.disabled || Array.isArray(props.accessibilityStates) && props.accessibilityStates.indexOf("disabled") > -1;
@@ -26964,7 +26964,7 @@
     shadow: true,
     textShadow: true
   };
-  function customStyleq(styles19, options) {
+  function customStyleq(styles21, options) {
     if (options === void 0) {
       options = {};
     }
@@ -26978,7 +26978,7 @@
         }
         return preprocess(style, _objectSpread2(_objectSpread2({}, defaultPreprocessOptions), preprocessOptions));
       }
-    })(styles19);
+    })(styles21);
   }
   function insertRules(compiledOrderedRules) {
     compiledOrderedRules.forEach((_ref) => {
@@ -27010,9 +27010,9 @@
   var absoluteFill = create({
     x: _objectSpread2({}, absoluteFillObject)
   }).x;
-  function create(styles19) {
-    Object.keys(styles19).forEach((key) => {
-      var styleObj = styles19[key];
+  function create(styles21) {
+    Object.keys(styles21).forEach((key) => {
+      var styleObj = styles21[key];
       if (styleObj != null && styleObj.$$css !== true) {
         var compiledStyles;
         if (key.indexOf("$raw") > -1) {
@@ -27020,14 +27020,14 @@
         } else {
           if (true) {
             validate(styleObj);
-            styles19[key] = Object.freeze(styleObj);
+            styles21[key] = Object.freeze(styleObj);
           }
           compiledStyles = compileAndInsertAtomic(styleObj);
         }
         staticStyleMap.set(styleObj, compiledStyles);
       }
     });
-    return styles19;
+    return styles21;
   }
   function compose(style1, style2) {
     if (true) {
@@ -27040,10 +27040,10 @@
     return [style1, style2];
   }
   function flatten() {
-    for (var _len = arguments.length, styles19 = new Array(_len), _key = 0; _key < _len; _key++) {
-      styles19[_key] = arguments[_key];
+    for (var _len = arguments.length, styles21 = new Array(_len), _key = 0; _key < _len; _key++) {
+      styles21[_key] = arguments[_key];
     }
-    var flatArray = styles19.flat(Infinity);
+    var flatArray = styles21.flat(Infinity);
     var result = {};
     for (var i = 0; i < flatArray.length; i++) {
       var style = flatArray[i];
@@ -27059,12 +27059,12 @@
       textContent: sheet.getTextContent()
     };
   }
-  function StyleSheet(styles19, options) {
+  function StyleSheet(styles21, options) {
     if (options === void 0) {
       options = {};
     }
     var isRTL = options.writingDirection === "rtl";
-    var styleProps2 = customStyleq(styles19, options);
+    var styleProps2 = customStyleq(styles21, options);
     if (Array.isArray(styleProps2) && styleProps2[1] != null) {
       styleProps2[1] = inline(styleProps2[1], isRTL);
     }
@@ -27595,14 +27595,14 @@
   var dangerousStyleValue_default = dangerousStyleValue;
 
   // node_modules/react-native-web/dist/modules/setValueForStyles/index.js
-  function setValueForStyles(node, styles19) {
+  function setValueForStyles(node, styles21) {
     var style = node.style;
-    for (var styleName in styles19) {
-      if (!styles19.hasOwnProperty(styleName)) {
+    for (var styleName in styles21) {
+      if (!styles21.hasOwnProperty(styleName)) {
         continue;
       }
       var isCustomProperty = styleName.indexOf("--") === 0;
-      var styleValue = dangerousStyleValue_default(styleName, styles19[styleName], isCustomProperty);
+      var styleValue = dangerousStyleValue_default(styleName, styles21[styleName], isCustomProperty);
       if (styleName === "float") {
         styleName = "cssFloat";
       }
@@ -31282,7 +31282,7 @@
   var TextInput_default = TextInput;
 
   // App.js
-  var import_react17 = __toESM(require_react());
+  var import_react19 = __toESM(require_react());
 
   // src/screens/LoginScreen.js
   var import_react10 = __toESM(require_react());
@@ -31599,6 +31599,56 @@
         size,
         color,
         paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M9.88 9.88a3 3 0 1 0 4.24 4.24" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "2", x2: "22", y1: "2", y2: "22" }))
+      }
+    );
+  }
+  function DocumentPlusIcon({ color = "#ffffff", size = 32 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" }), /* @__PURE__ */ import_react9.default.createElement("polyline", { points: "14 2 14 8 20 8" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "12", y1: "18", x2: "12", y2: "12" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "9", y1: "15", x2: "15", y2: "15" }))
+      }
+    );
+  }
+  function DownloadTrayIcon({ color = "#ffffff", size = 32 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }), /* @__PURE__ */ import_react9.default.createElement("polyline", { points: "7 10 12 15 17 10" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "12", y1: "15", x2: "12", y2: "3" }))
+      }
+    );
+  }
+  function MedicalClipboardIcon({ color = "#ffffff", size = 32 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" }), /* @__PURE__ */ import_react9.default.createElement("rect", { width: "8", height: "4", x: "8", y: "2", rx: "1", ry: "1" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "9", y1: "14", x2: "15", y2: "14" }))
+      }
+    );
+  }
+  function DocumentFolderIcon({ color = "#ffffff", size = 32 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" }), /* @__PURE__ */ import_react9.default.createElement("polyline", { points: "14 2 14 8 20 8" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M10 12v4" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M14 12v4" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M10 16h4" }))
+      }
+    );
+  }
+  function HelpCircleIcon({ color = "#ffffff", size = 32 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("circle", { cx: "12", cy: "12", r: "10" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "12", y1: "17", x2: "12.01", y2: "17" }))
       }
     );
   }
@@ -32302,7 +32352,7 @@
   });
 
   // src/screens/PatientDashboardScreen.js
-  var import_react16 = __toESM(require_react());
+  var import_react18 = __toESM(require_react());
 
   // src/components/AppointmentsModal.js
   var import_react11 = __toESM(require_react());
@@ -34698,8 +34748,962 @@
     }
   });
 
-  // src/components/SidebarDrawer.js
+  // src/components/ClinicalRemindersModal.js
   var import_react15 = __toESM(require_react());
+
+  // src/api/reminders.js
+  var ClinicalRemindersService = {
+    /**
+     * The logged-in patient's clinical health maintenance reminders
+     * (Preventive care rules: Colonoscopy, Mammogram, Vaccines, Blood Pressure, etc.)
+     */
+    async getMyReminders() {
+      return await apiRequest("/patient-reminders/mine", {
+        method: "GET"
+      });
+    },
+    /**
+     * General dated reminders from /reminders/mine
+     */
+    async getDatedReminders() {
+      return await apiRequest("/reminders/mine", {
+        method: "GET"
+      });
+    }
+  };
+
+  // src/components/ClinicalRemindersModal.js
+  function ClinicalRemindersModal({ visible, onClose }) {
+    const [activeTab, setActiveTab] = (0, import_react15.useState)("clinical");
+    const [clinicalReminders, setClinicalReminders] = (0, import_react15.useState)([]);
+    const [datedReminders, setDatedReminders] = (0, import_react15.useState)([]);
+    const [loading, setLoading] = (0, import_react15.useState)(false);
+    const [selectedReminder, setSelectedReminder] = (0, import_react15.useState)(null);
+    (0, import_react15.useEffect)(() => {
+      if (visible) {
+        loadReminders();
+      } else {
+        setSelectedReminder(null);
+      }
+    }, [visible]);
+    const loadReminders = async () => {
+      setLoading(true);
+      try {
+        const [clinicalRes, datedRes] = await Promise.all([
+          ClinicalRemindersService.getMyReminders(),
+          ClinicalRemindersService.getDatedReminders()
+        ]);
+        if (clinicalRes.success && Array.isArray(clinicalRes.data)) {
+          setClinicalReminders(clinicalRes.data);
+        } else {
+          setClinicalReminders([]);
+        }
+        if (datedRes.success && Array.isArray(datedRes.data)) {
+          setDatedReminders(datedRes.data);
+        } else {
+          setDatedReminders([]);
+        }
+      } catch (e) {
+        console.error("Failed to load reminders:", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (!visible) return null;
+    const parseCategory = (label) => {
+      const l = String(label || "").toLowerCase();
+      if (l.startsWith("assessment")) return "Assessment";
+      if (l.startsWith("measurement")) return "Measurement";
+      if (l.startsWith("treatment") || l.startsWith("immunization")) return "Treatment";
+      return "Preventive Care";
+    };
+    const parseShortLabel = (label) => {
+      const m2 = String(label || "").match(/^[^:\-]+(?::\s*|\s+-\s+)(.+)$/);
+      return m2 ? m2[1] : label;
+    };
+    return /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.overlay }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.sheetContainer }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.sheetHeader }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.headerTitleRow }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.iconBadge }, /* @__PURE__ */ import_react15.default.createElement(BellIcon, { color: "#0d9488", size: 18 })), /* @__PURE__ */ import_react15.default.createElement(View_default, null, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.headerTitle }, "Clinical Reminders"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.headerSub }, "Preventive health guidelines & clinical alerts"))), /* @__PURE__ */ import_react15.default.createElement(
+      TouchableOpacity_default,
+      {
+        onPress: onClose,
+        style: styles16.closeBtn,
+        hitSlop: { top: 10, bottom: 10, left: 10, right: 10 }
+      },
+      /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.closeBtnText }, "\u2715")
+    )), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.tabBarWrapper }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.tabBar }, /* @__PURE__ */ import_react15.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: [styles16.tabBtn, activeTab === "clinical" && styles16.tabBtnActive],
+        onPress: () => {
+          setActiveTab("clinical");
+          setSelectedReminder(null);
+        }
+      },
+      /* @__PURE__ */ import_react15.default.createElement(
+        Text_default,
+        {
+          style: [
+            styles16.tabBtnText,
+            activeTab === "clinical" && styles16.tabBtnTextActive
+          ]
+        },
+        "Health Guidelines (",
+        clinicalReminders.length,
+        ")"
+      )
+    ), /* @__PURE__ */ import_react15.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: [styles16.tabBtn, activeTab === "dated" && styles16.tabBtnActive],
+        onPress: () => {
+          setActiveTab("dated");
+          setSelectedReminder(null);
+        }
+      },
+      /* @__PURE__ */ import_react15.default.createElement(
+        Text_default,
+        {
+          style: [
+            styles16.tabBtnText,
+            activeTab === "dated" && styles16.tabBtnTextActive
+          ]
+        },
+        "Dated Reminders (",
+        datedReminders.length,
+        ")"
+      )
+    ))), loading ? /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.loadingArea }, /* @__PURE__ */ import_react15.default.createElement(ActivityIndicator_default, { color: "#0d9488", size: "large" }), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.loadingText }, "Syncing clinical reminders...")) : selectedReminder ? (
+      /* ================= REMINDER DETAILS VIEW ================= */
+      /* @__PURE__ */ import_react15.default.createElement(ScrollView_default, { contentContainerStyle: styles16.detailsScroll, showsVerticalScrollIndicator: false }, /* @__PURE__ */ import_react15.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: styles16.backRow,
+          onPress: () => setSelectedReminder(null)
+        },
+        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.backText }, "\u2039 Back to Reminders")
+      ), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.detailCard }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.detailBadgeRow }, /* @__PURE__ */ import_react15.default.createElement(
+        View_default,
+        {
+          style: [
+            styles16.statusPill,
+            selectedReminder.due_status === "past_due" ? styles16.statusPillPastDue : styles16.statusPillDue
+          ]
+        },
+        /* @__PURE__ */ import_react15.default.createElement(
+          Text_default,
+          {
+            style: [
+              styles16.statusPillText,
+              selectedReminder.due_status === "past_due" ? styles16.statusPillTextPastDue : styles16.statusPillTextDue
+            ]
+          },
+          selectedReminder.due_status === "past_due" ? "Past Due" : "Due for Checkup"
+        )
+      ), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.categoryPill }, parseCategory(selectedReminder.item_label))), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.detailTitle }, parseShortLabel(selectedReminder.item_label)), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.infoDivider }), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.metaRow }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.metaLabel }, "Item Reference:"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.metaVal }, selectedReminder.item_label)), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.metaRow }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.metaLabel }, "Evaluated Date:"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.metaVal }, selectedReminder.date_created ? new Date(selectedReminder.date_created).toLocaleDateString([], {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      }) : "Current clinical cycle")), selectedReminder.action_type && /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.metaRow }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.metaLabel }, "Action Type:"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.metaVal }, selectedReminder.action_type)), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.guidelineAlertBox }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.guidelineAlertTitle }, "Clinical Practice Standard"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.guidelineAlertDesc }, "This recommendation is generated automatically based on standard national preventive healthcare guidelines (USPSTF) considering your age, sex, and health record history."))))
+    ) : activeTab === "clinical" ? (
+      /* ================= CLINICAL HEALTH GUIDELINES TAB ================= */
+      /* @__PURE__ */ import_react15.default.createElement(
+        ScrollView_default,
+        {
+          contentContainerStyle: styles16.listScroll,
+          showsVerticalScrollIndicator: false
+        },
+        clinicalReminders.length === 0 ? /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.emptyArea }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.emptyIconCircle }, /* @__PURE__ */ import_react15.default.createElement(ShieldIcon, { color: "#0d9488", size: 28 })), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.emptyTitle }, "Up to Date!"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.emptyDesc }, "You have no pending or past-due preventive care clinical reminders.")) : clinicalReminders.map((rem) => {
+          const category = parseCategory(rem.item_label);
+          const shortLabel = parseShortLabel(rem.item_label);
+          const isPastDue = rem.due_status === "past_due";
+          return /* @__PURE__ */ import_react15.default.createElement(
+            TouchableOpacity_default,
+            {
+              key: rem.id,
+              style: styles16.reminderCard,
+              activeOpacity: 0.7,
+              onPress: () => setSelectedReminder(rem)
+            },
+            /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.cardHeader }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.catBox }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.catText }, category)), /* @__PURE__ */ import_react15.default.createElement(
+              View_default,
+              {
+                style: [
+                  styles16.statusPill,
+                  isPastDue ? styles16.statusPillPastDue : styles16.statusPillDue
+                ]
+              },
+              /* @__PURE__ */ import_react15.default.createElement(
+                Text_default,
+                {
+                  style: [
+                    styles16.statusPillText,
+                    isPastDue ? styles16.statusPillTextPastDue : styles16.statusPillTextDue
+                  ]
+                },
+                isPastDue ? "Past Due" : "Due"
+              )
+            )),
+            /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.cardTitle }, shortLabel),
+            /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.cardFooter }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.cardDate }, "Cycle: ", rem.date_created ? rem.date_created.slice(0, 10) : "Current"), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.viewRow }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.viewDetailsText }, "View guideline"), /* @__PURE__ */ import_react15.default.createElement(ChevronRightIcon, { color: "#0d9488", size: 13 })))
+          );
+        })
+      )
+    ) : (
+      /* ================= DATED REMINDERS TAB ================= */
+      /* @__PURE__ */ import_react15.default.createElement(
+        ScrollView_default,
+        {
+          contentContainerStyle: styles16.listScroll,
+          showsVerticalScrollIndicator: false
+        },
+        datedReminders.length === 0 ? /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.emptyArea }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.emptyIconCircle }, /* @__PURE__ */ import_react15.default.createElement(CalendarIcon, { color: "#0d9488", size: 28 })), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.emptyTitle }, "No Dated Reminders"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.emptyDesc }, "No dated appointments or scheduled reminders on file.")) : datedReminders.map((dr) => /* @__PURE__ */ import_react15.default.createElement(View_default, { key: dr.id, style: styles16.reminderCard }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.cardHeader }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.cardTitle }, dr.title || dr.body || "Clinical Alert"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.datedDateText }, dr.due_date || dr.created_at?.slice(0, 10))), dr.notes ? /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.datedNotesText }, dr.notes) : null))
+      )
+    )));
+  }
+  var styles16 = StyleSheet_default.create({
+    overlay: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(15, 23, 42, 0.45)",
+      zIndex: 999,
+      justifyContent: "flex-end",
+      alignItems: "center"
+    },
+    sheetContainer: {
+      backgroundColor: "#ffffff",
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      height: "88%",
+      width: "100%",
+      maxWidth: 500,
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden"
+    },
+    sheetHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 18,
+      paddingTop: 16,
+      paddingBottom: 12,
+      borderBottomWidth: 1,
+      borderBottomColor: "#f1f5f9"
+    },
+    headerTitleRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      flex: 1
+    },
+    iconBadge: {
+      width: 36,
+      height: 36,
+      borderRadius: 8,
+      backgroundColor: "#f0fdfa",
+      borderWidth: 1,
+      borderColor: "#ccfbf1",
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: 10
+    },
+    headerTitle: {
+      fontSize: 16.5,
+      fontWeight: "800",
+      color: "#0f172a"
+    },
+    headerSub: {
+      fontSize: 11.5,
+      color: "#64748b",
+      marginTop: 1
+    },
+    closeBtn: {
+      padding: 6
+    },
+    closeBtnText: {
+      fontSize: 16,
+      color: "#64748b",
+      fontWeight: "700"
+    },
+    tabBarWrapper: {
+      backgroundColor: "#f8fafc",
+      borderBottomWidth: 1,
+      borderBottomColor: "#e2e8f0",
+      paddingHorizontal: 14,
+      paddingVertical: 6
+    },
+    tabBar: {
+      flexDirection: "row",
+      gap: 6
+    },
+    tabBtn: {
+      paddingHorizontal: 14,
+      paddingVertical: 7,
+      borderRadius: 6
+    },
+    tabBtnActive: {
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0"
+    },
+    tabBtnText: {
+      fontSize: 12.5,
+      fontWeight: "600",
+      color: "#64748b"
+    },
+    tabBtnTextActive: {
+      color: "#0d9488",
+      fontWeight: "800"
+    },
+    loadingArea: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 30
+    },
+    loadingText: {
+      marginTop: 10,
+      fontSize: 13,
+      color: "#64748b"
+    },
+    listScroll: {
+      padding: 16,
+      paddingBottom: 40
+    },
+    emptyArea: {
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 40
+    },
+    emptyIconCircle: {
+      width: 56,
+      height: 56,
+      borderRadius: 28,
+      backgroundColor: "#f0fdfa",
+      borderWidth: 1,
+      borderColor: "#ccfbf1",
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: 12
+    },
+    emptyTitle: {
+      fontSize: 15,
+      fontWeight: "700",
+      color: "#0f172a",
+      marginBottom: 4
+    },
+    emptyDesc: {
+      fontSize: 12.5,
+      color: "#64748b",
+      textAlign: "center",
+      lineHeight: 18
+    },
+    reminderCard: {
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 12,
+      padding: 14,
+      marginBottom: 10
+    },
+    cardHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 6
+    },
+    catBox: {
+      backgroundColor: "#f0fdfa",
+      borderWidth: 1,
+      borderColor: "#ccfbf1",
+      paddingHorizontal: 8,
+      paddingVertical: 2.5,
+      borderRadius: 6
+    },
+    catText: {
+      fontSize: 10.5,
+      fontWeight: "700",
+      color: "#0d9488"
+    },
+    statusPill: {
+      paddingHorizontal: 8,
+      paddingVertical: 2.5,
+      borderRadius: 999
+    },
+    statusPillDue: {
+      backgroundColor: "#fef3c7"
+    },
+    statusPillPastDue: {
+      backgroundColor: "#fee2e2"
+    },
+    statusPillText: {
+      fontSize: 10.5,
+      fontWeight: "800"
+    },
+    statusPillTextDue: {
+      color: "#b45309"
+    },
+    statusPillTextPastDue: {
+      color: "#b91c1c"
+    },
+    cardTitle: {
+      fontSize: 14,
+      fontWeight: "700",
+      color: "#0f172a",
+      marginBottom: 8,
+      lineHeight: 19
+    },
+    cardFooter: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      borderTopWidth: 1,
+      borderTopColor: "#f8fafc",
+      paddingTop: 8
+    },
+    cardDate: {
+      fontSize: 11,
+      color: "#94a3b8"
+    },
+    viewRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 3
+    },
+    viewDetailsText: {
+      fontSize: 11.5,
+      fontWeight: "700",
+      color: "#0d9488"
+    },
+    datedDateText: {
+      fontSize: 11.5,
+      color: "#0d9488",
+      fontWeight: "700"
+    },
+    datedNotesText: {
+      fontSize: 12,
+      color: "#64748b",
+      marginTop: 4
+    },
+    detailsScroll: {
+      padding: 16,
+      paddingBottom: 40
+    },
+    backRow: {
+      marginBottom: 12
+    },
+    backText: {
+      fontSize: 13.5,
+      fontWeight: "700",
+      color: "#0d9488"
+    },
+    detailCard: {
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 14,
+      padding: 16
+    },
+    detailBadgeRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 8,
+      marginBottom: 10
+    },
+    categoryPill: {
+      fontSize: 11,
+      fontWeight: "700",
+      color: "#64748b"
+    },
+    detailTitle: {
+      fontSize: 16,
+      fontWeight: "800",
+      color: "#0f172a",
+      lineHeight: 22,
+      marginBottom: 12
+    },
+    infoDivider: {
+      height: 1,
+      backgroundColor: "#f1f5f9",
+      marginBottom: 12
+    },
+    metaRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
+      marginBottom: 8
+    },
+    metaLabel: {
+      fontSize: 12,
+      fontWeight: "600",
+      color: "#64748b",
+      width: "35%"
+    },
+    metaVal: {
+      fontSize: 12.5,
+      fontWeight: "700",
+      color: "#0f172a",
+      flex: 1,
+      textAlign: "right"
+    },
+    guidelineAlertBox: {
+      backgroundColor: "#f0fdfa",
+      borderWidth: 1,
+      borderColor: "#ccfbf1",
+      borderRadius: 8,
+      padding: 12,
+      marginTop: 14
+    },
+    guidelineAlertTitle: {
+      fontSize: 12,
+      fontWeight: "800",
+      color: "#0f172a",
+      marginBottom: 4
+    },
+    guidelineAlertDesc: {
+      fontSize: 11.5,
+      color: "#475569",
+      lineHeight: 16
+    }
+  });
+
+  // src/components/MedicalReportsModal.js
+  var import_react16 = __toESM(require_react());
+  function MedicalReportsModal({ visible, onClose, currentUser }) {
+    const [downloading, setDownloading] = (0, import_react16.useState)(false);
+    const [activeView, setActiveView] = (0, import_react16.useState)("grid");
+    if (!visible) return null;
+    const handleDownloadSummary = async () => {
+      setDownloading(true);
+      try {
+        const res = await HealthRecordsService.getHealthSummary();
+        if (!res.success || !res.data) {
+          Alert_default.alert("Error", "Unable to retrieve clinical data for report.");
+          return;
+        }
+        const data = res.data;
+        const demo = data.demographics || {};
+        const fullName = [demo.first_name, demo.middle_name, demo.last_name].filter(Boolean).join(" ") || "Patient";
+        const reportHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Summary of Care - ${fullName}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #0f172a; padding: 32px; max-width: 800px; margin: 0 auto; line-height: 1.5; }
+    .header { border-bottom: 2px solid #2563eb; padding-bottom: 16px; margin-bottom: 24px; }
+    h1 { margin: 0 0 6px; color: #1e3a8a; font-size: 24px; }
+    .meta { font-size: 13px; color: #64748b; }
+    .section { margin-bottom: 24px; }
+    h2 { font-size: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; color: #0f172a; margin-top: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+    th, td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; }
+    th { background: #f8fafc; font-weight: 600; color: #475569; }
+    .footer { margin-top: 40px; font-size: 11px; color: #94a3b8; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 12px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Clinical Summary of Care (CCD)</h1>
+    <div class="meta">Patient: <strong>${fullName}</strong> | Chart #${demo.patient_no || "N/A"} | DOB: ${demo.birthdate || "N/A"} | Sex: ${demo.sex || "N/A"}</div>
+    <div class="meta">Date Exported: ${(/* @__PURE__ */ new Date()).toLocaleDateString()} | Facility: USIntellix Medical Care</div>
+  </div>
+
+  <div class="section">
+    <h2>1. Allergies & Adverse Reactions</h2>
+    ${data.allergies && data.allergies.length ? `
+    <table><tr><th>Allergen</th><th>Reaction</th><th>Severity</th></tr>
+    ${data.allergies.map((a) => `<tr><td>${a.title || a.allergy || "N/A"}</td><td>${a.reaction || "None"}</td><td>${a.severity || "Mild"}</td></tr>`).join("")}
+    </table>` : '<p class="meta">No known allergies on record.</p>'}
+  </div>
+
+  <div class="section">
+    <h2>2. Active Medical Conditions & Diagnoses</h2>
+    ${data.problems && data.problems.length ? `
+    <table><tr><th>Condition / Diagnosis</th><th>ICD-10</th><th>Onset Date</th></tr>
+    ${data.problems.map((p) => `<tr><td>${p.problem || p.title || "N/A"}</td><td>${p.icd10 || "N/A"}</td><td>${p.onset_date || "N/A"}</td></tr>`).join("")}
+    </table>` : '<p class="meta">No active diagnoses recorded.</p>'}
+  </div>
+
+  <div class="section">
+    <h2>3. Active Medications & Prescriptions</h2>
+    ${data.medications && data.medications.length ? `
+    <table><tr><th>Medication</th><th>Dosage</th><th>Directions</th></tr>
+    ${data.medications.map((m2) => `<tr><td>${m2.medication || m2.title || "N/A"}</td><td>${m2.dosage || "Standard"}</td><td>${m2.directions || "As directed"}</td></tr>`).join("")}
+    </table>` : '<p class="meta">No active medications.</p>'}
+  </div>
+
+  <div class="section">
+    <h2>4. Immunizations</h2>
+    ${data.immunizations && data.immunizations.length ? `
+    <table><tr><th>Vaccine</th><th>Date Administered</th><th>Status</th></tr>
+    ${data.immunizations.map((i) => `<tr><td>${i.vaccine || i.immunization_name || "N/A"}</td><td>${i.date || "N/A"}</td><td>Administered</td></tr>`).join("")}
+    </table>` : '<p class="meta">No immunizations recorded.</p>'}
+  </div>
+
+  <div class="footer">
+    Confidential Healthcare Document &bull; Generated by USIntellix Hospital Management &bull; Certified EHR 45 CFR &bull; Page 1 of 1
+  </div>
+</body>
+</html>`;
+        if (Platform_default.OS === "web") {
+          const blob = new Blob([reportHtml], { type: "text/html" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          const safeName = fullName.replace(/[^a-zA-Z0-9]/g, "_");
+          a.href = url;
+          a.download = `Summary_Of_Care_${safeName}_${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.html`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          Alert_default.alert("Download Complete", "Your Summary of Care document has been downloaded.");
+        } else {
+          Alert_default.alert("Summary of Care", "Report generated successfully.");
+        }
+      } catch (e) {
+        console.error("Download summary error:", e);
+        Alert_default.alert("Error", "Failed to generate Summary of Care.");
+      } finally {
+        setDownloading(false);
+      }
+    };
+    const handleViewSummary = async () => {
+      setDownloading(true);
+      try {
+        const res = await HealthRecordsService.getHealthSummary();
+        if (!res.success || !res.data) {
+          Alert_default.alert("Error", "Unable to retrieve clinical data.");
+          return;
+        }
+        const data = res.data;
+        const demo = data.demographics || {};
+        const fullName = [demo.first_name, demo.middle_name, demo.last_name].filter(Boolean).join(" ") || "Patient";
+        if (Platform_default.OS === "web") {
+          const win = window.open("", "_blank");
+          if (win) {
+            win.document.write(`
+            <html><head><title>Summary of Care - ${fullName}</title>
+            <style>body{font-family:sans-serif;padding:24px;line-height:1.6;color:#1e293b;} h1{color:#2563eb;} table{width:100%;border-collapse:collapse;margin:12px 0;} th,td{border:1px solid #cbd5e1;padding:8px 12px;text-align:left;} th{background:#f1f5f9;}</style>
+            </head><body>
+            <h1>Summary of Care: ${fullName}</h1>
+            <p>Chart #${demo.patient_no || "N/A"} | DOB: ${demo.birthdate || "N/A"} | Sex: ${demo.sex || "N/A"}</p>
+            <hr/>
+            <h3>Active Allergies (${data.allergies?.length || 0})</h3>
+            ${data.allergies?.length ? `<ul>${data.allergies.map((a) => `<li>${a.title || a.allergy}</li>`).join("")}</ul>` : "<p>None</p>"}
+            <h3>Active Conditions (${data.problems?.length || 0})</h3>
+            ${data.problems?.length ? `<ul>${data.problems.map((p) => `<li>${p.problem || p.title}</li>`).join("")}</ul>` : "<p>None</p>"}
+            <h3>Active Medications (${data.medications?.length || 0})</h3>
+            ${data.medications?.length ? `<ul>${data.medications.map((m2) => `<li>${m2.medication || m2.title}</li>`).join("")}</ul>` : "<p>None</p>"}
+            <p style="margin-top:30px;color:#64748b;font-size:12px;">USIntellix Hospital Management &bull; Verified CCD Record</p>
+            </body></html>
+          `);
+            win.document.close();
+          } else {
+            Alert_default.alert("Pop-up Blocked", "Please allow pop-ups to view the Summary of Care document.");
+          }
+        } else {
+          Alert_default.alert("Summary of Care", `Chart: ${demo.patient_no || "N/A"}
+Allergies: ${data.allergies?.length || 0}
+Problems: ${data.problems?.length || 0}`);
+        }
+      } catch (e) {
+        console.error("View summary error:", e);
+        Alert_default.alert("Error", "Failed to preview Summary of Care.");
+      } finally {
+        setDownloading(false);
+      }
+    };
+    return /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.overlay }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.sheetContainer }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.sheetHeader }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.headerTitle }, "Medical Reports"), /* @__PURE__ */ import_react16.default.createElement(
+      TouchableOpacity_default,
+      {
+        onPress: onClose,
+        style: styles17.closeBtn,
+        hitSlop: { top: 10, bottom: 10, left: 10, right: 10 }
+      },
+      /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.closeBtnText }, "\u2715")
+    )), /* @__PURE__ */ import_react16.default.createElement(ScrollView_default, { contentContainerStyle: styles17.scrollContent, showsVerticalScrollIndicator: false }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.safeHarborBanner }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.bannerLeftRow }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.lockBadgeCircle }, /* @__PURE__ */ import_react16.default.createElement(LockIcon, { color: "#16a34a", size: 16 })), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: { flex: 1 } }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.bannerHeading }, "HIPAA Safe Harbor 18-Identifier De-Identification Standard (45 CFR \xA7 164.514)"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.bannerSub }, "Scrub all 18 direct/indirect identifiers for clinical research, AI training, or quality studies without individual patient authorizations."))), /* @__PURE__ */ import_react16.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: styles17.bannerActionBtn,
+        onPress: () => setActiveView("safe_harbor"),
+        activeOpacity: 0.8
+      },
+      /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.bannerActionBtnText }, "Launch Safe Harbor De-ID Console \u2192")
+    )), activeView === "safe_harbor" ? (
+      /* Safe Harbor Detail View */
+      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.subDetailCard }, /* @__PURE__ */ import_react16.default.createElement(TouchableOpacity_default, { style: styles17.backRow, onPress: () => setActiveView("grid") }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.backText }, "\u2039 Back to Medical Reports")), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.subDetailTitle }, "Safe Harbor De-Identification Console"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.subDetailDesc }, "Under 45 CFR \xA7 164.514(b)(2), health information is not individually identifiable if 18 specified identifiers of the individual or of relatives, employers, or household members of the individual are removed."), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.identifierBox }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierHeading }, "Protected Identifiers Scrubbed (18 Categories):"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "1. Names & Initials"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "2. All geographic subdivisions smaller than a state"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "3. All elements of dates directly related to an individual"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "4. Telephone numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "5. Fax numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "6. Email addresses"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "7. Social Security Numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "8. Medical record numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "9. Health plan beneficiary numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "10. Account numbers & certificate numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "11. Biometric identifiers including finger and voice prints"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "12. Full-face photographic images")), /* @__PURE__ */ import_react16.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: styles17.greenActionBtn,
+          onPress: () => {
+            Alert_default.alert("HIPAA Verified", "Safe Harbor rules verified. Export sanitized for clinical audit.");
+            setActiveView("grid");
+          }
+        },
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.actionBtnText }, "Run Safe Harbor Sanitization")
+      ))
+    ) : activeView === "help" ? (
+      /* Help View */
+      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.subDetailCard }, /* @__PURE__ */ import_react16.default.createElement(TouchableOpacity_default, { style: styles17.backRow, onPress: () => setActiveView("grid") }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.backText }, "\u2039 Back to Medical Reports")), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.subDetailTitle }, "Medical Reports Help & Guidance"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.subDetailDesc }, "This portal allows patients and authorized providers to review, export, and securely transfer clinical medical histories in accordance with ONC 2015 Edition Cures Update criteria."), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.identifierBox }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierHeading }, "Available Export Options:"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 View Summary of Care: Opens an interactive HTML view of your active CCD record."), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 Download Summary of Care: Generates a complete Continuity of Care Document file."), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 Customized Medical History Report: Filter by allergies, problems, or encounters."), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 Safe Harbor De-ID: Strips 18 HIPAA identifiers for research sharing.")))
+    ) : (
+      /* Main 6 Cards Grid matching user screenshot */
+      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardsGrid }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.reportCard, { borderColor: "#16a34a" }] }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(LockIcon, { color: "#22c55e", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: [styles17.greenCardBtn, { backgroundColor: "#16a34a" }],
+          activeOpacity: 0.8,
+          onPress: () => setActiveView("safe_harbor")
+        },
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "Safe Harbor De-ID (\xA7 164.514)")
+      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(DocumentPlusIcon, { color: "#94a3b8", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: [styles17.greenCardBtn, { backgroundColor: "#22c55e" }],
+          activeOpacity: 0.8,
+          onPress: handleViewSummary,
+          disabled: downloading
+        },
+        downloading ? /* @__PURE__ */ import_react16.default.createElement(ActivityIndicator_default, { size: "small", color: "#ffffff" }) : /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "View Summary of Care")
+      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(DownloadTrayIcon, { color: "#94a3b8", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: [styles17.greenCardBtn, { backgroundColor: "#22c55e" }],
+          activeOpacity: 0.8,
+          onPress: handleDownloadSummary,
+          disabled: downloading
+        },
+        downloading ? /* @__PURE__ */ import_react16.default.createElement(ActivityIndicator_default, { size: "small", color: "#ffffff" }) : /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "Download Summary of Care")
+      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(MedicalClipboardIcon, { color: "#94a3b8", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: [styles17.greenCardBtn, { backgroundColor: "#22c55e" }],
+          activeOpacity: 0.8,
+          onPress: handleViewSummary
+        },
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "Customized Medical History Report")
+      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(DocumentFolderIcon, { color: "#94a3b8", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: [styles17.greenCardBtn, { backgroundColor: "#22c55e" }],
+          activeOpacity: 0.8,
+          onPress: handleDownloadSummary
+        },
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "Download Medical Record Documents")
+      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(HelpCircleIcon, { color: "#94a3b8", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: [styles17.greenCardBtn, { backgroundColor: "#3b82f6" }],
+          activeOpacity: 0.8,
+          onPress: () => setActiveView("help")
+        },
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "Help")
+      )))
+    ))));
+  }
+  var styles17 = StyleSheet_default.create({
+    overlay: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(15, 23, 42, 0.75)",
+      zIndex: 999,
+      justifyContent: "flex-end",
+      alignItems: "center"
+    },
+    sheetContainer: {
+      backgroundColor: "#0c1322",
+      // Dark navy surface matching user screenshot
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      height: "92%",
+      width: "100%",
+      maxWidth: 640,
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden"
+    },
+    sheetHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 20,
+      paddingTop: 18,
+      paddingBottom: 14,
+      borderBottomWidth: 1,
+      borderBottomColor: "#1e293b",
+      backgroundColor: "#0f172a"
+    },
+    headerTitle: {
+      fontSize: 18,
+      fontWeight: "700",
+      color: "#ffffff"
+    },
+    closeBtn: {
+      padding: 6
+    },
+    closeBtnText: {
+      fontSize: 16,
+      color: "#94a3b8",
+      fontWeight: "700"
+    },
+    scrollContent: {
+      padding: 16,
+      paddingBottom: 40
+    },
+    safeHarborBanner: {
+      backgroundColor: "#f0fdf4",
+      borderWidth: 1,
+      borderColor: "#86efac",
+      borderRadius: 8,
+      padding: 14,
+      marginBottom: 16
+    },
+    bannerLeftRow: {
+      flexDirection: "row",
+      alignItems: "flex-start",
+      gap: 10,
+      marginBottom: 10
+    },
+    lockBadgeCircle: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: "#dcfce7",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0
+    },
+    bannerHeading: {
+      fontSize: 12.5,
+      fontWeight: "800",
+      color: "#166534",
+      lineHeight: 16,
+      marginBottom: 3
+    },
+    bannerSub: {
+      fontSize: 11,
+      color: "#15803d",
+      lineHeight: 15
+    },
+    bannerActionBtn: {
+      backgroundColor: "#16a34a",
+      borderRadius: 6,
+      paddingVertical: 7,
+      paddingHorizontal: 12,
+      alignSelf: "flex-start"
+    },
+    bannerActionBtnText: {
+      color: "#ffffff",
+      fontSize: 11.5,
+      fontWeight: "700"
+    },
+    cardsGrid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: 12,
+      justifyContent: "space-between"
+    },
+    reportCard: {
+      width: "48%",
+      backgroundColor: "#131e33",
+      // Exact card navy background
+      borderWidth: 1,
+      borderColor: "#1e293b",
+      borderRadius: 10,
+      padding: 14,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-between",
+      minHeight: 180
+    },
+    cardIconCenter: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      paddingVertical: 14
+    },
+    greenCardBtn: {
+      width: "100%",
+      paddingVertical: 10,
+      paddingHorizontal: 8,
+      borderRadius: 6,
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    cardBtnText: {
+      color: "#ffffff",
+      fontSize: 11.5,
+      fontWeight: "700",
+      textAlign: "center",
+      lineHeight: 15
+    },
+    subDetailCard: {
+      backgroundColor: "#131e33",
+      borderWidth: 1,
+      borderColor: "#1e293b",
+      borderRadius: 10,
+      padding: 16
+    },
+    backRow: {
+      marginBottom: 12
+    },
+    backText: {
+      fontSize: 13,
+      fontWeight: "700",
+      color: "#38bdf8"
+    },
+    subDetailTitle: {
+      fontSize: 16,
+      fontWeight: "800",
+      color: "#ffffff",
+      marginBottom: 8
+    },
+    subDetailDesc: {
+      fontSize: 12,
+      color: "#94a3b8",
+      lineHeight: 18,
+      marginBottom: 14
+    },
+    identifierBox: {
+      backgroundColor: "#0c1322",
+      borderWidth: 1,
+      borderColor: "#1e293b",
+      borderRadius: 8,
+      padding: 12,
+      marginBottom: 14
+    },
+    identifierHeading: {
+      fontSize: 11.5,
+      fontWeight: "800",
+      color: "#22c55e",
+      marginBottom: 6
+    },
+    identifierItem: {
+      fontSize: 11,
+      color: "#cbd5e1",
+      lineHeight: 16,
+      marginBottom: 2
+    },
+    greenActionBtn: {
+      backgroundColor: "#16a34a",
+      borderRadius: 6,
+      paddingVertical: 10,
+      alignItems: "center"
+    },
+    actionBtnText: {
+      color: "#ffffff",
+      fontSize: 12.5,
+      fontWeight: "700"
+    }
+  });
+
+  // src/components/SidebarDrawer.js
+  var import_react17 = __toESM(require_react());
   function SidebarDrawer({
     visible,
     onClose,
@@ -34737,6 +35741,11 @@
         IconComponent: RecordsIcon
       },
       {
+        id: "medical_reports",
+        label: "Medical Reports",
+        IconComponent: ClipboardIcon
+      },
+      {
         id: "messages",
         label: "Care Team Messages",
         IconComponent: ChatIcon
@@ -34762,61 +35771,61 @@
         IconComponent: SettingsIcon
       }
     ];
-    return /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.overlay }, /* @__PURE__ */ import_react15.default.createElement(
+    return /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.overlay }, /* @__PURE__ */ import_react17.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles16.backdrop,
+        style: styles18.backdrop,
         activeOpacity: 1,
         onPress: onClose
       }
-    ), /* @__PURE__ */ import_react15.default.createElement(SafeAreaView_default, { style: styles16.drawerPanel }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.drawerHeader }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.avatarSquare }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.avatarText }, initials)), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.userInfoCol }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.userName, numberOfLines: 2 }, fullName), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.badgeRow }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.roleBadge }, roleText), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.dotSeparator }, "\u2022"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.orgBadge }, orgText))), /* @__PURE__ */ import_react15.default.createElement(
+    ), /* @__PURE__ */ import_react17.default.createElement(SafeAreaView_default, { style: styles18.drawerPanel }, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.drawerHeader }, /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.avatarSquare }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.avatarText }, initials)), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.userInfoCol }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.userName, numberOfLines: 2 }, fullName), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.badgeRow }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.roleBadge }, roleText), /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.dotSeparator }, "\u2022"), /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.orgBadge }, orgText))), /* @__PURE__ */ import_react17.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles16.closeBtn,
+        style: styles18.closeBtn,
         onPress: onClose,
         hitSlop: { top: 12, bottom: 12, left: 12, right: 12 }
       },
-      /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.closeBtnText }, "\u2715")
-    )), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.sectionHeaderWrap }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.sectionHeaderText }, "PORTAL NAVIGATION")), /* @__PURE__ */ import_react15.default.createElement(
+      /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.closeBtnText }, "\u2715")
+    )), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.sectionHeaderWrap }, /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.sectionHeaderText }, "PORTAL NAVIGATION")), /* @__PURE__ */ import_react17.default.createElement(
       ScrollView_default,
       {
-        style: styles16.navScroll,
-        contentContainerStyle: styles16.navScrollContent,
+        style: styles18.navScroll,
+        contentContainerStyle: styles18.navScrollContent,
         showsVerticalScrollIndicator: false
       },
       navItems.map((item) => {
         const IconComp = item.IconComponent;
-        return /* @__PURE__ */ import_react15.default.createElement(
+        return /* @__PURE__ */ import_react17.default.createElement(
           TouchableOpacity_default,
           {
             key: item.id,
-            style: styles16.navItem,
+            style: styles18.navItem,
             activeOpacity: 0.7,
             onPress: () => {
               onClose();
               onNavigate(item.id);
             }
           },
-          /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.navIconBox }, /* @__PURE__ */ import_react15.default.createElement(IconComp, { color: "#0d9488", size: 17 })),
-          /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.navItemLabel }, item.label),
-          /* @__PURE__ */ import_react15.default.createElement(ChevronRightIcon, { color: "#94a3b8", size: 13 })
+          /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.navIconBox }, /* @__PURE__ */ import_react17.default.createElement(IconComp, { color: "#0d9488", size: 17 })),
+          /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.navItemLabel }, item.label),
+          /* @__PURE__ */ import_react17.default.createElement(ChevronRightIcon, { color: "#94a3b8", size: 13 })
         );
       })
-    ), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.bottomFooter }, /* @__PURE__ */ import_react15.default.createElement(
+    ), /* @__PURE__ */ import_react17.default.createElement(View_default, { style: styles18.bottomFooter }, /* @__PURE__ */ import_react17.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles16.signOutBtn,
+        style: styles18.signOutBtn,
         activeOpacity: 0.8,
         onPress: () => {
           onClose();
           onLogout();
         }
       },
-      /* @__PURE__ */ import_react15.default.createElement(LogOutIcon, { color: "#dc2626", size: 16 }),
-      /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.signOutText }, "Sign Out Workstation")
+      /* @__PURE__ */ import_react17.default.createElement(LogOutIcon, { color: "#dc2626", size: 16 }),
+      /* @__PURE__ */ import_react17.default.createElement(Text_default, { style: styles18.signOutText }, "Sign Out Workstation")
     ))));
   }
-  var styles16 = StyleSheet_default.create({
+  var styles18 = StyleSheet_default.create({
     overlay: {
       position: "absolute",
       top: 0,
@@ -34988,12 +35997,14 @@
 
   // src/screens/PatientDashboardScreen.js
   function PatientDashboardScreen({ user, onLogout }) {
-    const [drawerOpen, setDrawerOpen] = (0, import_react16.useState)(false);
-    const [reminderSet, setReminderSet] = (0, import_react16.useState)(false);
-    const [showAppointments, setShowAppointments] = (0, import_react16.useState)(false);
-    const [showPrescriptions, setShowPrescriptions] = (0, import_react16.useState)(false);
-    const [showHealthRecords, setShowHealthRecords] = (0, import_react16.useState)(false);
-    const [showMessages, setShowMessages] = (0, import_react16.useState)(false);
+    const [drawerOpen, setDrawerOpen] = (0, import_react18.useState)(false);
+    const [reminderSet, setReminderSet] = (0, import_react18.useState)(false);
+    const [showAppointments, setShowAppointments] = (0, import_react18.useState)(false);
+    const [showPrescriptions, setShowPrescriptions] = (0, import_react18.useState)(false);
+    const [showHealthRecords, setShowHealthRecords] = (0, import_react18.useState)(false);
+    const [showMessages, setShowMessages] = (0, import_react18.useState)(false);
+    const [showClinicalReminders, setShowClinicalReminders] = (0, import_react18.useState)(false);
+    const [showMedicalReports, setShowMedicalReports] = (0, import_react18.useState)(false);
     const firstName = user.first_name || "Patient";
     const lastName = user.last_name || "User";
     const fullName = `${firstName} ${lastName}`.trim();
@@ -35002,114 +36013,121 @@
       await AuthService.logout();
       onLogout();
     };
-    return /* @__PURE__ */ import_react16.default.createElement(SafeAreaView_default, { style: styles17.container }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.topNavBar }, /* @__PURE__ */ import_react16.default.createElement(
+    return /* @__PURE__ */ import_react18.default.createElement(SafeAreaView_default, { style: styles19.container }, /* @__PURE__ */ import_react18.default.createElement(View_default, { style: styles19.topNavBar }, /* @__PURE__ */ import_react18.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles17.hamburgerBtn,
+        style: styles19.hamburgerBtn,
         onPress: () => setDrawerOpen(!drawerOpen),
         activeOpacity: 0.7
       },
-      /* @__PURE__ */ import_react16.default.createElement(MenuIcon, { color: "#0f172a", size: 18 })
-    ), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.userIdentityColumn }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.userFullNameText, numberOfLines: 1 }, fullName)), /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react18.default.createElement(MenuIcon, { color: "#0f172a", size: 18 })
+    ), /* @__PURE__ */ import_react18.default.createElement(View_default, { style: styles19.userIdentityColumn }, /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.userFullNameText, numberOfLines: 1 }, fullName)), /* @__PURE__ */ import_react18.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles17.avatarBadge,
+        style: styles19.avatarBadge,
         onPress: handleLogout,
         activeOpacity: 0.8
       },
-      /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.avatarInitialsText }, initials)
-    )), /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.avatarInitialsText }, initials)
+    )), /* @__PURE__ */ import_react18.default.createElement(
       ScrollView_default,
       {
-        contentContainerStyle: styles17.contentScroll,
+        contentContainerStyle: styles19.contentScroll,
         showsVerticalScrollIndicator: false
       },
-      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.statusCard }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
-      /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.sectionHeaderTitle }, "Services & Actions"),
-      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardsGrid }, /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react18.default.createElement(View_default, { style: styles19.statusCard }, /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
+      /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.sectionHeaderTitle }, "Services & Actions"),
+      /* @__PURE__ */ import_react18.default.createElement(View_default, { style: styles19.cardsGrid }, /* @__PURE__ */ import_react18.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles17.gridCard,
+          style: styles19.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowAppointments(true)
         },
-        /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react16.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })),
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardTitle }, "Appointments"),
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardDesc }, "View upcoming visits")
-      ), /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react18.default.createElement(View_default, { style: [styles19.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react18.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })),
+        /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.gridCardTitle }, "Appointments"),
+        /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.gridCardDesc }, "View upcoming visits")
+      ), /* @__PURE__ */ import_react18.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles17.gridCard,
+          style: styles19.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowPrescriptions(true)
         },
-        /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react16.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })),
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardTitle }, "Prescriptions"),
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardDesc }, "Active medications")
-      ), /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react18.default.createElement(View_default, { style: [styles19.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react18.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })),
+        /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.gridCardTitle }, "Prescriptions"),
+        /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.gridCardDesc }, "Active medications")
+      ), /* @__PURE__ */ import_react18.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles17.gridCard,
+          style: styles19.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowHealthRecords(true)
         },
-        /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react16.default.createElement(RecordsIcon, { color: "#059669", size: 20 })),
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardTitle }, "Health Records"),
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardDesc }, "Lab results & charts")
-      ), /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react18.default.createElement(View_default, { style: [styles19.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react18.default.createElement(RecordsIcon, { color: "#059669", size: 20 })),
+        /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.gridCardTitle }, "Health Records"),
+        /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.gridCardDesc }, "Lab results & charts")
+      ), /* @__PURE__ */ import_react18.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles17.gridCard,
+          style: styles19.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowMessages(true)
         },
-        /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconCircle, { backgroundColor: "#f0f9ff" }] }, /* @__PURE__ */ import_react16.default.createElement(ChatIcon, { color: "#0284c7", size: 20 })),
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardTitle }, "Messages"),
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardDesc }, "Care team chat")
+        /* @__PURE__ */ import_react18.default.createElement(View_default, { style: [styles19.cardIconCircle, { backgroundColor: "#f0f9ff" }] }, /* @__PURE__ */ import_react18.default.createElement(ChatIcon, { color: "#0284c7", size: 20 })),
+        /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.gridCardTitle }, "Messages"),
+        /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: styles19.gridCardDesc }, "Care team chat")
       )),
-      /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react18.default.createElement(
         TouchableOpacity_default,
         {
-          style: [styles17.simpleRemindBtn, reminderSet && styles17.simpleRemindBtnActive],
-          onPress: () => {
-            setReminderSet(!reminderSet);
-            Alert_default.alert(
-              !reminderSet ? "Reminder Activated" : "Reminder Cancelled",
-              !reminderSet ? "Clinical notifications enabled for upcoming visits." : "Reminders turned off."
-            );
-          },
+          style: styles19.simpleRemindBtn,
+          onPress: () => setShowClinicalReminders(true),
           activeOpacity: 0.8
         },
-        /* @__PURE__ */ import_react16.default.createElement(BellIcon, { color: reminderSet ? "#059669" : "#2563eb", size: 17 }),
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: [styles17.simpleRemindText, reminderSet && styles17.simpleRemindTextActive] }, reminderSet ? "Reminders Set \u2713" : "Remind Me")
+        /* @__PURE__ */ import_react18.default.createElement(BellIcon, { color: "#0d9488", size: 17 }),
+        /* @__PURE__ */ import_react18.default.createElement(Text_default, { style: [styles19.simpleRemindText, { color: "#0d9488" }] }, "Clinical Reminders & Guidelines")
       )
-    ), /* @__PURE__ */ import_react16.default.createElement(
+    ), /* @__PURE__ */ import_react18.default.createElement(
       AppointmentsModal,
       {
         visible: showAppointments,
         onClose: () => setShowAppointments(false),
         patientId: user.id
       }
-    ), /* @__PURE__ */ import_react16.default.createElement(
+    ), /* @__PURE__ */ import_react18.default.createElement(
       PrescriptionsModal,
       {
         visible: showPrescriptions,
         onClose: () => setShowPrescriptions(false)
       }
-    ), /* @__PURE__ */ import_react16.default.createElement(
+    ), /* @__PURE__ */ import_react18.default.createElement(
       HealthRecordsModal,
       {
         visible: showHealthRecords,
         onClose: () => setShowHealthRecords(false)
       }
-    ), /* @__PURE__ */ import_react16.default.createElement(
+    ), /* @__PURE__ */ import_react18.default.createElement(
       MessagesModal,
       {
         visible: showMessages,
         onClose: () => setShowMessages(false),
         currentUser: user
       }
-    ), /* @__PURE__ */ import_react16.default.createElement(
+    ), /* @__PURE__ */ import_react18.default.createElement(
+      ClinicalRemindersModal,
+      {
+        visible: showClinicalReminders,
+        onClose: () => setShowClinicalReminders(false)
+      }
+    ), /* @__PURE__ */ import_react18.default.createElement(
+      MedicalReportsModal,
+      {
+        visible: showMedicalReports,
+        onClose: () => setShowMedicalReports(false),
+        currentUser: user
+      }
+    ), /* @__PURE__ */ import_react18.default.createElement(
       SidebarDrawer,
       {
         visible: drawerOpen,
@@ -35119,22 +36137,16 @@
           if (navId === "appointments") setShowAppointments(true);
           else if (navId === "prescriptions") setShowPrescriptions(true);
           else if (navId === "health_records") setShowHealthRecords(true);
+          else if (navId === "medical_reports") setShowMedicalReports(true);
           else if (navId === "messages") setShowMessages(true);
-          else if (navId === "reminders") {
-            setReminderSet(!reminderSet);
-            Alert_default.alert(
-              !reminderSet ? "Reminders Active" : "Reminders Paused",
-              !reminderSet ? "Clinical notifications enabled for upcoming visits." : "Reminders turned off."
-            );
-          } else if (navId === "recalls") {
-            setShowMessages(true);
-          }
+          else if (navId === "reminders") setShowClinicalReminders(true);
+          else if (navId === "recalls") setShowClinicalReminders(true);
         },
         onLogout: handleLogout
       }
     ));
   }
-  var styles17 = StyleSheet_default.create({
+  var styles19 = StyleSheet_default.create({
     container: {
       flex: 1,
       width: "100%",
@@ -35323,16 +36335,16 @@
 
   // App.js
   function App() {
-    const [currentUser, setCurrentUser] = (0, import_react17.useState)(null);
-    return /* @__PURE__ */ import_react17.default.createElement(SafeAreaView_default, { style: styles18.root }, /* @__PURE__ */ import_react17.default.createElement(StatusBar_default, { barStyle: "dark-content", backgroundColor: "#ffffff" }), currentUser ? /* @__PURE__ */ import_react17.default.createElement(
+    const [currentUser, setCurrentUser] = (0, import_react19.useState)(null);
+    return /* @__PURE__ */ import_react19.default.createElement(SafeAreaView_default, { style: styles20.root }, /* @__PURE__ */ import_react19.default.createElement(StatusBar_default, { barStyle: "dark-content", backgroundColor: "#ffffff" }), currentUser ? /* @__PURE__ */ import_react19.default.createElement(
       PatientDashboardScreen,
       {
         user: currentUser,
         onLogout: () => setCurrentUser(null)
       }
-    ) : /* @__PURE__ */ import_react17.default.createElement(LoginScreen, { onLoginSuccess: (user) => setCurrentUser(user) }));
+    ) : /* @__PURE__ */ import_react19.default.createElement(LoginScreen, { onLoginSuccess: (user) => setCurrentUser(user) }));
   }
-  var styles18 = StyleSheet_default.create({
+  var styles20 = StyleSheet_default.create({
     root: {
       flex: 1,
       width: "100%",

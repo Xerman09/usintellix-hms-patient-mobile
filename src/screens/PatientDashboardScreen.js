@@ -20,6 +20,7 @@ import {
   RecordsIcon,
   BellIcon,
   ChatIcon,
+  ClipboardIcon,
   ChevronRightIcon
 } from '../components/Icons';
 import AppointmentsModal from '../components/AppointmentsModal';
@@ -57,12 +58,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
 
 
 
-  // Compute initials (e.g. "EA" for Erman Ace or from name)
-  const firstName = user.first_name || 'Patient';
-  const lastName = user.last_name || 'User';
-  const fullName = `${firstName} ${lastName}`.trim();
-  
-  const initials = `${firstName[0] || 'P'}${lastName[0] || ''}`.toUpperCase();
+  // Compute display names and initials
+  const currentFirstName = profileData?.first_name || user?.first_name || 'Patient';
+  const currentLastName = profileData?.last_name || user?.last_name || 'User';
+  const fullName = `${currentFirstName} ${currentLastName}`.trim();
+  const initials = `${currentFirstName[0] || 'P'}${currentLastName[0] || ''}`.toUpperCase();
+  const patientNo = profileData?.patient_no || user?.patient_no || user?.id || 'PAT-000003';
 
   const handleLogout = async () => {
     await AuthService.logout();
@@ -81,16 +82,15 @@ export default function PatientDashboardScreen({ user, onLogout }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* ================= EXACT MATCH TOP NAVIGATION BAR ================= */}
+      {/* ================= TOP NAVIGATION BAR ================= */}
       <View style={styles.topNavBar}>
-        
         {/* Left: Hamburger Menu Icon in soft square frame */}
         <TouchableOpacity
           style={styles.hamburgerBtn}
           onPress={() => setDrawerOpen(!drawerOpen)}
           activeOpacity={0.7}
         >
-          <MenuIcon color="#0f172a" size={18} />
+          <MenuIcon color="#0f172a" size={19} />
         </TouchableOpacity>
 
         {/* Center: Top Portal Label & Bold User Name */}
@@ -101,7 +101,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           </Text>
         </View>
 
-        {/* Right: Soft Blue Initials Avatar Badge */}
+        {/* Right: Modern Circular Avatar with Online Dot */}
         <TouchableOpacity
           style={styles.avatarBadge}
           onPress={() => setCurrentView('profile')}
@@ -117,6 +117,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           ) : (
             <Text style={styles.avatarInitialsText}>{initials}</Text>
           )}
+          <View style={styles.onlineStatusDot} />
         </TouchableOpacity>
       </View>
 
@@ -125,31 +126,69 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         contentContainerStyle={styles.contentScroll}
         showsVerticalScrollIndicator={false}
       >
-        {/* Quick Portal Status Banner */}
-        <View style={styles.statusCard}>
-          <Text style={styles.statusCardLabel}>PATIENT PORTAL</Text>
-          <Text style={styles.statusDescription}>
-            Welcome, {firstName}. Your medical portal is synced.
+        {/* ================= PATIENT HERO STATUS BANNER ================= */}
+        <View style={styles.heroCard}>
+          <View style={styles.heroHeaderRow}>
+            <View style={styles.heroStatusPill}>
+              <View style={styles.statusLiveDot} />
+              <Text style={styles.heroStatusText}>LIVE EHR SYNCED</Text>
+            </View>
+            <View style={styles.mrnBadge}>
+              <Text style={styles.mrnBadgeText}>MRN #{patientNo}</Text>
+            </View>
+          </View>
+
+          <Text style={styles.heroGreetingText}>Welcome, {currentFirstName}</Text>
+          <Text style={styles.heroSubText}>
+            Your health records, prescriptions, and lab charts are synchronized.
           </Text>
+
+          {/* Quick Metrics / Clinical Snapshot Bar */}
+          <View style={styles.heroMetricsBar}>
+            <View style={styles.metricItem}>
+              <Text style={styles.metricLabel}>PRIMARY CARE</Text>
+              <Text style={styles.metricValue} numberOfLines={1}>Dr. C. Sullivan</Text>
+            </View>
+            <View style={styles.metricDivider} />
+            <View style={styles.metricItem}>
+              <Text style={styles.metricLabel}>PORTAL STATUS</Text>
+              <Text style={[styles.metricValue, { color: '#059669' }]}>Verified Patient</Text>
+            </View>
+            <View style={styles.metricDivider} />
+            <View style={styles.metricItem}>
+              <Text style={styles.metricLabel}>RECORDS</Text>
+              <Text style={styles.metricValue}>CCD Active</Text>
+            </View>
+          </View>
         </View>
 
         {/* Section Header */}
-        <Text style={styles.sectionHeaderTitle}>Services &amp; Actions</Text>
+        <View style={styles.sectionHeaderRow}>
+          <Text style={styles.sectionHeaderTitle}>Services &amp; Actions</Text>
+          <Text style={styles.sectionHeaderSub}>Self-service care</Text>
+        </View>
 
-        {/* 4 Clean Minimalist Action Boxes */}
+        {/* 4 Interactive Service Action Cards (2x2 Grid) */}
         <View style={styles.cardsGrid}>
-          
           {/* Card 1: Appointments */}
           <TouchableOpacity
             style={styles.gridCard}
             activeOpacity={0.7}
             onPress={() => setShowAppointments(true)}
           >
-            <View style={[styles.cardIconCircle, { backgroundColor: '#eff6ff' }]}>
-              <CalendarIcon color="#2563eb" size={20} />
+            <View style={styles.gridCardTopRow}>
+              <View style={[styles.cardIconCircle, { backgroundColor: '#eff6ff' }]}>
+                <CalendarIcon color="#2563eb" size={20} />
+              </View>
+              <View style={styles.cardArrowCircle}>
+                <ChevronRightIcon color="#94a3b8" size={13} />
+              </View>
             </View>
             <Text style={styles.gridCardTitle}>Appointments</Text>
-            <Text style={styles.gridCardDesc}>View upcoming visits</Text>
+            <Text style={styles.gridCardDesc}>View upcoming visits &amp; schedule</Text>
+            <View style={styles.gridCardActionRow}>
+              <Text style={[styles.gridCardActionText, { color: '#2563eb' }]}>Manage visits →</Text>
+            </View>
           </TouchableOpacity>
 
           {/* Card 2: Prescriptions */}
@@ -158,11 +197,19 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             activeOpacity={0.7}
             onPress={() => setShowPrescriptions(true)}
           >
-            <View style={[styles.cardIconCircle, { backgroundColor: '#f5f3ff' }]}>
-              <PillIcon color="#7c3aed" size={20} />
+            <View style={styles.gridCardTopRow}>
+              <View style={[styles.cardIconCircle, { backgroundColor: '#f5f3ff' }]}>
+                <PillIcon color="#7c3aed" size={20} />
+              </View>
+              <View style={styles.cardArrowCircle}>
+                <ChevronRightIcon color="#94a3b8" size={13} />
+              </View>
             </View>
             <Text style={styles.gridCardTitle}>Prescriptions</Text>
-            <Text style={styles.gridCardDesc}>Active medications</Text>
+            <Text style={styles.gridCardDesc}>Active medications &amp; refills</Text>
+            <View style={styles.gridCardActionRow}>
+              <Text style={[styles.gridCardActionText, { color: '#7c3aed' }]}>Active Rx →</Text>
+            </View>
           </TouchableOpacity>
 
           {/* Card 3: Health Records */}
@@ -171,11 +218,19 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             activeOpacity={0.7}
             onPress={() => setShowHealthRecords(true)}
           >
-            <View style={[styles.cardIconCircle, { backgroundColor: '#ecfdf5' }]}>
-              <RecordsIcon color="#059669" size={20} />
+            <View style={styles.gridCardTopRow}>
+              <View style={[styles.cardIconCircle, { backgroundColor: '#ecfdf5' }]}>
+                <RecordsIcon color="#059669" size={20} />
+              </View>
+              <View style={styles.cardArrowCircle}>
+                <ChevronRightIcon color="#94a3b8" size={13} />
+              </View>
             </View>
             <Text style={styles.gridCardTitle}>Health Records</Text>
-            <Text style={styles.gridCardDesc}>Lab results &amp; charts</Text>
+            <Text style={styles.gridCardDesc}>Lab results &amp; CCD charts</Text>
+            <View style={styles.gridCardActionRow}>
+              <Text style={[styles.gridCardActionText, { color: '#059669' }]}>View chart →</Text>
+            </View>
           </TouchableOpacity>
 
           {/* Card 4: Messages */}
@@ -184,27 +239,62 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             activeOpacity={0.7}
             onPress={() => setShowMessages(true)}
           >
-            <View style={[styles.cardIconCircle, { backgroundColor: '#f0f9ff' }]}>
-              <ChatIcon color="#0284c7" size={20} />
+            <View style={styles.gridCardTopRow}>
+              <View style={[styles.cardIconCircle, { backgroundColor: '#f0f9ff' }]}>
+                <ChatIcon color="#0284c7" size={20} />
+              </View>
+              <View style={styles.cardArrowCircle}>
+                <ChevronRightIcon color="#94a3b8" size={13} />
+              </View>
             </View>
             <Text style={styles.gridCardTitle}>Messages</Text>
-            <Text style={styles.gridCardDesc}>Care team chat</Text>
+            <Text style={styles.gridCardDesc}>Direct secure care team chat</Text>
+            <View style={styles.gridCardActionRow}>
+              <Text style={[styles.gridCardActionText, { color: '#0284c7' }]}>Open chat →</Text>
+            </View>
           </TouchableOpacity>
-
         </View>
 
-        {/* Clean, Simple Clinical Reminders Button */}
+        {/* ================= CLINICAL REMINDERS CARD ================= */}
         <TouchableOpacity
-          style={styles.simpleRemindBtn}
+          style={styles.featuredRemindCard}
           onPress={() => setShowClinicalReminders(true)}
           activeOpacity={0.8}
         >
-          <BellIcon color="#0d9488" size={17} />
-          <Text style={[styles.simpleRemindText, { color: '#0d9488' }]}>
-            Clinical Reminders &amp; Guidelines
-          </Text>
+          <View style={styles.featuredRemindIconBox}>
+            <BellIcon color="#0d9488" size={20} />
+          </View>
+          <View style={styles.featuredRemindContent}>
+            <View style={styles.featuredRemindHeaderRow}>
+              <Text style={styles.featuredRemindTitle}>Clinical Reminders &amp; Guidelines</Text>
+              <View style={styles.preventiveBadge}>
+                <Text style={styles.preventiveBadgeText}>USPSTF</Text>
+              </View>
+            </View>
+            <Text style={styles.featuredRemindDesc}>
+              Preventive care guidelines, wellness alerts &amp; screenings
+            </Text>
+          </View>
+          <ChevronRightIcon color="#0d9488" size={16} />
         </TouchableOpacity>
 
+        {/* ================= MEDICAL REPORTS CARD ================= */}
+        <TouchableOpacity
+          style={styles.featuredReportCard}
+          onPress={() => setShowMedicalReports(true)}
+          activeOpacity={0.8}
+        >
+          <View style={styles.featuredReportIconBox}>
+            <ClipboardIcon color="#4f46e5" size={20} />
+          </View>
+          <View style={styles.featuredReportContent}>
+            <Text style={styles.featuredReportTitle}>Medical Reports &amp; Summaries</Text>
+            <Text style={styles.featuredReportDesc}>
+              Safe Harbor de-identification &amp; Summary of Care exports
+            </Text>
+          </View>
+          <ChevronRightIcon color="#94a3b8" size={16} />
+        </TouchableOpacity>
       </ScrollView>
 
       {/* Appointments Interactive Bottom Sheet */}
@@ -274,26 +364,26 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#f8fafc'
   },
   topNavBar: {
     width: '100%',
-    height: 68,
+    height: 70,
     backgroundColor: '#ffffff',
     borderBottomWidth: 1,
     borderBottomColor: '#f1f5f9',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     zIndex: 10
   },
   hamburgerBtn: {
-    width: 38,
-    height: 38,
+    width: 40,
+    height: 40,
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    borderRadius: 4,
-    backgroundColor: '#ffffff',
+    borderRadius: 10,
+    backgroundColor: '#f8fafc',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 14
@@ -303,161 +393,326 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   portalTagText: {
-    fontSize: 10,
+    fontSize: 10.5,
     fontWeight: '800',
-    color: '#2563eb',
+    color: '#0284c7',
     letterSpacing: 0.8,
     marginBottom: 2
   },
   userFullNameText: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '800',
     color: '#0f172a',
-    letterSpacing: -0.2
+    letterSpacing: -0.3
   },
   avatarBadge: {
-    width: 38,
-    height: 38,
-    borderRadius: 6,
-    backgroundColor: '#2563eb',
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: '#0d9488',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#2563eb',
+    borderWidth: 2,
+    borderColor: '#ffffff',
+    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 2,
-    overflow: 'hidden'
+    shadowOpacity: 0.12,
+    shadowRadius: 5,
+    elevation: 3,
+    position: 'relative'
   },
   avatarImg: {
     width: '100%',
     height: '100%',
-    borderRadius: 6
+    borderRadius: 21
   },
   avatarInitialsText: {
     color: '#ffffff',
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: '800',
     letterSpacing: 0.5
   },
+  onlineStatusDot: {
+    position: 'absolute',
+    bottom: -1,
+    right: -1,
+    width: 11,
+    height: 11,
+    borderRadius: 5.5,
+    backgroundColor: '#10b981',
+    borderWidth: 2,
+    borderColor: '#ffffff'
+  },
   contentScroll: {
     padding: 20,
-    paddingBottom: 36
+    paddingBottom: 40
   },
-  statusCard: {
-    backgroundColor: '#f8fafc',
+  heroCard: {
+    backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 20
+    borderRadius: 16,
+    padding: 18,
+    marginBottom: 20,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
+    elevation: 2
   },
-  statusCardLabel: {
-    fontSize: 11,
+  heroHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10
+  },
+  heroStatusPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: '#ecfdf5',
+    paddingHorizontal: 9,
+    paddingVertical: 4,
+    borderRadius: 20
+  },
+  statusLiveDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 3.5,
+    backgroundColor: '#10b981'
+  },
+  heroStatusText: {
+    fontSize: 10.5,
     fontWeight: '800',
-    color: '#64748b',
-    letterSpacing: 0.8,
-    marginBottom: 4
+    color: '#047857',
+    letterSpacing: 0.5
   },
-  statusDescription: {
-    fontSize: 13,
-    color: '#334155',
-    lineHeight: 18
+  mrnBadge: {
+    backgroundColor: '#eff6ff',
+    paddingHorizontal: 9,
+    paddingVertical: 4,
+    borderRadius: 6
+  },
+  mrnBadgeText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#2563eb'
+  },
+  heroGreetingText: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#0f172a',
+    marginBottom: 3,
+    letterSpacing: -0.3
+  },
+  heroSubText: {
+    fontSize: 12.5,
+    color: '#64748b',
+    lineHeight: 18,
+    marginBottom: 14
+  },
+  heroMetricsBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8fafc',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#f1f5f9',
+    paddingVertical: 9,
+    paddingHorizontal: 12
+  },
+  metricItem: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  metricLabel: {
+    fontSize: 9.5,
+    fontWeight: '700',
+    color: '#94a3b8',
+    letterSpacing: 0.5,
+    marginBottom: 2
+  },
+  metricValue: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#1e293b'
+  },
+  metricDivider: {
+    width: 1,
+    height: 20,
+    backgroundColor: '#e2e8f0'
   },
   sectionHeaderRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'baseline',
-    marginBottom: 14
+    marginBottom: 12,
+    paddingHorizontal: 2
   },
   sectionHeaderTitle: {
-    fontSize: 15,
-    fontWeight: '700',
+    fontSize: 16,
+    fontWeight: '800',
     color: '#0f172a',
-    marginBottom: 12
+    letterSpacing: -0.3
+  },
+  sectionHeaderSub: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#94a3b8'
   },
   cardsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginBottom: 16
+    marginBottom: 14
   },
   gridCard: {
     width: '48.5%',
     backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: 14,
+    padding: 15,
+    marginBottom: 12,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 3,
+    elevation: 1
+  },
+  gridCardTopRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 12
   },
   cardIconCircle: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 42,
+    height: 42,
+    borderRadius: 12,
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 12
+    justifyContent: 'center'
+  },
+  cardArrowCircle: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: '#f8fafc',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   gridCardTitle: {
-    fontSize: 14,
+    fontSize: 14.5,
     fontWeight: '700',
     color: '#0f172a',
     marginBottom: 3
   },
   gridCardDesc: {
-    fontSize: 12,
-    color: '#64748b'
+    fontSize: 11.5,
+    color: '#64748b',
+    lineHeight: 16,
+    marginBottom: 10
   },
-  simpleRemindBtn: {
+  gridCardActionRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#eff6ff',
-    borderWidth: 1,
-    borderColor: '#bfdbfe',
-    height: 46,
-    borderRadius: 10,
-    gap: 8,
-    marginTop: 4
+    alignItems: 'center'
   },
-  simpleRemindBtnActive: {
-    backgroundColor: '#ecfdf5',
-    borderColor: '#a7f3d0'
-  },
-  simpleRemindText: {
-    color: '#2563eb',
-    fontSize: 14,
+  gridCardActionText: {
+    fontSize: 11.5,
     fontWeight: '700'
   },
-  simpleRemindTextActive: {
-    color: '#059669'
-  },
-  drawerDropdown: {
-    position: 'absolute',
-    top: 68,
-    left: 16,
-    width: 220,
-    backgroundColor: '#ffffff',
-    borderRadius: 8,
+  featuredRemindCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f0fdfa',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    padding: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 10,
-    elevation: 8,
-    zIndex: 99
+    borderColor: '#ccfbf1',
+    borderRadius: 14,
+    padding: 16,
+    marginBottom: 12,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 3,
+    elevation: 1
   },
-  drawerItem: {
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+  featuredRemindIconBox: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: '#ccfbf1',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14
+  },
+  featuredRemindContent: {
+    flex: 1,
+    marginRight: 8
+  },
+  featuredRemindHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 3
+  },
+  featuredRemindTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#0f766e'
+  },
+  preventiveBadge: {
+    backgroundColor: '#0d9488',
+    paddingHorizontal: 6,
+    paddingVertical: 1.5,
     borderRadius: 4
   },
-  drawerItemText: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#1e293b'
+  preventiveBadgeText: {
+    fontSize: 9.5,
+    fontWeight: '800',
+    color: '#ffffff'
+  },
+  featuredRemindDesc: {
+    fontSize: 11.5,
+    color: '#115e59',
+    lineHeight: 16
+  },
+  featuredReportCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    borderRadius: 14,
+    padding: 16,
+    marginBottom: 20,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 3,
+    elevation: 1
+  },
+  featuredReportIconBox: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: '#eef2ff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14
+  },
+  featuredReportContent: {
+    flex: 1,
+    marginRight: 8
+  },
+  featuredReportTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#0f172a',
+    marginBottom: 2
+  },
+  featuredReportDesc: {
+    fontSize: 11.5,
+    color: '#64748b',
+    lineHeight: 16
   }
 });

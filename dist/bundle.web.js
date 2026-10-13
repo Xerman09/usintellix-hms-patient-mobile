@@ -37488,10 +37488,11 @@
     }, []);
     const rawAvatar = profileData?.avatar || profileData?.photo || user?.avatar || user?.photo;
     const avatarUrl = getAvatarUrl(rawAvatar);
-    const firstName = user.first_name || "Patient";
-    const lastName = user.last_name || "User";
-    const fullName = `${firstName} ${lastName}`.trim();
-    const initials = `${firstName[0] || "P"}${lastName[0] || ""}`.toUpperCase();
+    const currentFirstName = profileData?.first_name || user?.first_name || "Patient";
+    const currentLastName = profileData?.last_name || user?.last_name || "User";
+    const fullName = `${currentFirstName} ${currentLastName}`.trim();
+    const initials = `${currentFirstName[0] || "P"}${currentLastName[0] || ""}`.toUpperCase();
+    const patientNo = profileData?.patient_no || user?.patient_no || user?.id || "PAT-000003";
     const handleLogout = async () => {
       await AuthService.logout();
       onLogout();
@@ -37513,7 +37514,7 @@
         onPress: () => setDrawerOpen(!drawerOpen),
         activeOpacity: 0.7
       },
-      /* @__PURE__ */ import_react19.default.createElement(MenuIcon, { color: "#0f172a", size: 18 })
+      /* @__PURE__ */ import_react19.default.createElement(MenuIcon, { color: "#0f172a", size: 19 })
     ), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.userIdentityColumn }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.userFullNameText, numberOfLines: 1 }, fullName)), /* @__PURE__ */ import_react19.default.createElement(
       TouchableOpacity_default,
       {
@@ -37529,15 +37530,16 @@
           onError: () => setAvatarError(true),
           resizeMode: "cover"
         }
-      ) : /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.avatarInitialsText }, initials)
+      ) : /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.avatarInitialsText }, initials),
+      /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.onlineStatusDot })
     )), /* @__PURE__ */ import_react19.default.createElement(
       ScrollView_default,
       {
         contentContainerStyle: styles20.contentScroll,
         showsVerticalScrollIndicator: false
       },
-      /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.statusCard }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
-      /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.sectionHeaderTitle }, "Services & Actions"),
+      /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.heroCard }, /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.heroHeaderRow }, /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.heroStatusPill }, /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.statusLiveDot }), /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.heroStatusText }, "LIVE EHR SYNCED")), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.mrnBadge }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.mrnBadgeText }, "MRN #", patientNo))), /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.heroGreetingText }, "Welcome, ", currentFirstName), /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.heroSubText }, "Your health records, prescriptions, and lab charts are synchronized."), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.heroMetricsBar }, /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.metricItem }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.metricLabel }, "PRIMARY CARE"), /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.metricValue, numberOfLines: 1 }, "Dr. C. Sullivan")), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.metricDivider }), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.metricItem }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.metricLabel }, "PORTAL STATUS"), /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: [styles20.metricValue, { color: "#059669" }] }, "Verified Patient")), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.metricDivider }), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.metricItem }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.metricLabel }, "RECORDS"), /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.metricValue }, "CCD Active")))),
+      /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.sectionHeaderRow }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.sectionHeaderTitle }, "Services & Actions"), /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.sectionHeaderSub }, "Self-service care")),
       /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.cardsGrid }, /* @__PURE__ */ import_react19.default.createElement(
         TouchableOpacity_default,
         {
@@ -37545,9 +37547,10 @@
           activeOpacity: 0.7,
           onPress: () => setShowAppointments(true)
         },
-        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: [styles20.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react19.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })),
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.gridCardTopRow }, /* @__PURE__ */ import_react19.default.createElement(View_default, { style: [styles20.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react19.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.cardArrowCircle }, /* @__PURE__ */ import_react19.default.createElement(ChevronRightIcon, { color: "#94a3b8", size: 13 }))),
         /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardTitle }, "Appointments"),
-        /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardDesc }, "View upcoming visits")
+        /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardDesc }, "View upcoming visits & schedule"),
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.gridCardActionRow }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: [styles20.gridCardActionText, { color: "#2563eb" }] }, "Manage visits \u2192"))
       ), /* @__PURE__ */ import_react19.default.createElement(
         TouchableOpacity_default,
         {
@@ -37555,9 +37558,10 @@
           activeOpacity: 0.7,
           onPress: () => setShowPrescriptions(true)
         },
-        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: [styles20.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react19.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })),
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.gridCardTopRow }, /* @__PURE__ */ import_react19.default.createElement(View_default, { style: [styles20.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react19.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.cardArrowCircle }, /* @__PURE__ */ import_react19.default.createElement(ChevronRightIcon, { color: "#94a3b8", size: 13 }))),
         /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardTitle }, "Prescriptions"),
-        /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardDesc }, "Active medications")
+        /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardDesc }, "Active medications & refills"),
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.gridCardActionRow }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: [styles20.gridCardActionText, { color: "#7c3aed" }] }, "Active Rx \u2192"))
       ), /* @__PURE__ */ import_react19.default.createElement(
         TouchableOpacity_default,
         {
@@ -37565,9 +37569,10 @@
           activeOpacity: 0.7,
           onPress: () => setShowHealthRecords(true)
         },
-        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: [styles20.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react19.default.createElement(RecordsIcon, { color: "#059669", size: 20 })),
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.gridCardTopRow }, /* @__PURE__ */ import_react19.default.createElement(View_default, { style: [styles20.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react19.default.createElement(RecordsIcon, { color: "#059669", size: 20 })), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.cardArrowCircle }, /* @__PURE__ */ import_react19.default.createElement(ChevronRightIcon, { color: "#94a3b8", size: 13 }))),
         /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardTitle }, "Health Records"),
-        /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardDesc }, "Lab results & charts")
+        /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardDesc }, "Lab results & CCD charts"),
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.gridCardActionRow }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: [styles20.gridCardActionText, { color: "#059669" }] }, "View chart \u2192"))
       ), /* @__PURE__ */ import_react19.default.createElement(
         TouchableOpacity_default,
         {
@@ -37575,19 +37580,32 @@
           activeOpacity: 0.7,
           onPress: () => setShowMessages(true)
         },
-        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: [styles20.cardIconCircle, { backgroundColor: "#f0f9ff" }] }, /* @__PURE__ */ import_react19.default.createElement(ChatIcon, { color: "#0284c7", size: 20 })),
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.gridCardTopRow }, /* @__PURE__ */ import_react19.default.createElement(View_default, { style: [styles20.cardIconCircle, { backgroundColor: "#f0f9ff" }] }, /* @__PURE__ */ import_react19.default.createElement(ChatIcon, { color: "#0284c7", size: 20 })), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.cardArrowCircle }, /* @__PURE__ */ import_react19.default.createElement(ChevronRightIcon, { color: "#94a3b8", size: 13 }))),
         /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardTitle }, "Messages"),
-        /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardDesc }, "Care team chat")
+        /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.gridCardDesc }, "Direct secure care team chat"),
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.gridCardActionRow }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: [styles20.gridCardActionText, { color: "#0284c7" }] }, "Open chat \u2192"))
       )),
       /* @__PURE__ */ import_react19.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles20.simpleRemindBtn,
+          style: styles20.featuredRemindCard,
           onPress: () => setShowClinicalReminders(true),
           activeOpacity: 0.8
         },
-        /* @__PURE__ */ import_react19.default.createElement(BellIcon, { color: "#0d9488", size: 17 }),
-        /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: [styles20.simpleRemindText, { color: "#0d9488" }] }, "Clinical Reminders & Guidelines")
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.featuredRemindIconBox }, /* @__PURE__ */ import_react19.default.createElement(BellIcon, { color: "#0d9488", size: 20 })),
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.featuredRemindContent }, /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.featuredRemindHeaderRow }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.featuredRemindTitle }, "Clinical Reminders & Guidelines"), /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.preventiveBadge }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.preventiveBadgeText }, "USPSTF"))), /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.featuredRemindDesc }, "Preventive care guidelines, wellness alerts & screenings")),
+        /* @__PURE__ */ import_react19.default.createElement(ChevronRightIcon, { color: "#0d9488", size: 16 })
+      ),
+      /* @__PURE__ */ import_react19.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: styles20.featuredReportCard,
+          onPress: () => setShowMedicalReports(true),
+          activeOpacity: 0.8
+        },
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.featuredReportIconBox }, /* @__PURE__ */ import_react19.default.createElement(ClipboardIcon, { color: "#4f46e5", size: 20 })),
+        /* @__PURE__ */ import_react19.default.createElement(View_default, { style: styles20.featuredReportContent }, /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.featuredReportTitle }, "Medical Reports & Summaries"), /* @__PURE__ */ import_react19.default.createElement(Text_default, { style: styles20.featuredReportDesc }, "Safe Harbor de-identification & Summary of Care exports")),
+        /* @__PURE__ */ import_react19.default.createElement(ChevronRightIcon, { color: "#94a3b8", size: 16 })
       )
     ), /* @__PURE__ */ import_react19.default.createElement(
       AppointmentsModal,
@@ -37653,26 +37671,26 @@
       flex: 1,
       width: "100%",
       height: "100%",
-      backgroundColor: "#ffffff"
+      backgroundColor: "#f8fafc"
     },
     topNavBar: {
       width: "100%",
-      height: 68,
+      height: 70,
       backgroundColor: "#ffffff",
       borderBottomWidth: 1,
       borderBottomColor: "#f1f5f9",
       flexDirection: "row",
       alignItems: "center",
-      paddingHorizontal: 16,
+      paddingHorizontal: 20,
       zIndex: 10
     },
     hamburgerBtn: {
-      width: 38,
-      height: 38,
+      width: 40,
+      height: 40,
       borderWidth: 1,
       borderColor: "#e2e8f0",
-      borderRadius: 4,
-      backgroundColor: "#ffffff",
+      borderRadius: 10,
+      backgroundColor: "#f8fafc",
       alignItems: "center",
       justifyContent: "center",
       marginRight: 14
@@ -37682,162 +37700,327 @@
       justifyContent: "center"
     },
     portalTagText: {
-      fontSize: 10,
+      fontSize: 10.5,
       fontWeight: "800",
-      color: "#2563eb",
+      color: "#0284c7",
       letterSpacing: 0.8,
       marginBottom: 2
     },
     userFullNameText: {
-      fontSize: 15,
+      fontSize: 16,
       fontWeight: "800",
       color: "#0f172a",
-      letterSpacing: -0.2
+      letterSpacing: -0.3
     },
     avatarBadge: {
-      width: 38,
-      height: 38,
-      borderRadius: 6,
-      backgroundColor: "#2563eb",
+      width: 42,
+      height: 42,
+      borderRadius: 21,
+      backgroundColor: "#0d9488",
       alignItems: "center",
       justifyContent: "center",
-      shadowColor: "#2563eb",
+      borderWidth: 2,
+      borderColor: "#ffffff",
+      shadowColor: "#000000",
       shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 4,
-      elevation: 2,
-      overflow: "hidden"
+      shadowOpacity: 0.12,
+      shadowRadius: 5,
+      elevation: 3,
+      position: "relative"
     },
     avatarImg: {
       width: "100%",
       height: "100%",
-      borderRadius: 6
+      borderRadius: 21
     },
     avatarInitialsText: {
       color: "#ffffff",
-      fontSize: 13,
+      fontSize: 15,
       fontWeight: "800",
       letterSpacing: 0.5
     },
+    onlineStatusDot: {
+      position: "absolute",
+      bottom: -1,
+      right: -1,
+      width: 11,
+      height: 11,
+      borderRadius: 5.5,
+      backgroundColor: "#10b981",
+      borderWidth: 2,
+      borderColor: "#ffffff"
+    },
     contentScroll: {
       padding: 20,
-      paddingBottom: 36
+      paddingBottom: 40
     },
-    statusCard: {
-      backgroundColor: "#f8fafc",
+    heroCard: {
+      backgroundColor: "#ffffff",
       borderWidth: 1,
       borderColor: "#e2e8f0",
-      borderRadius: 8,
-      padding: 16,
-      marginBottom: 20
+      borderRadius: 16,
+      padding: 18,
+      marginBottom: 20,
+      shadowColor: "#000000",
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.04,
+      shadowRadius: 4,
+      elevation: 2
     },
-    statusCardLabel: {
-      fontSize: 11,
+    heroHeaderRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 10
+    },
+    heroStatusPill: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 6,
+      backgroundColor: "#ecfdf5",
+      paddingHorizontal: 9,
+      paddingVertical: 4,
+      borderRadius: 20
+    },
+    statusLiveDot: {
+      width: 7,
+      height: 7,
+      borderRadius: 3.5,
+      backgroundColor: "#10b981"
+    },
+    heroStatusText: {
+      fontSize: 10.5,
       fontWeight: "800",
-      color: "#64748b",
-      letterSpacing: 0.8,
-      marginBottom: 4
+      color: "#047857",
+      letterSpacing: 0.5
     },
-    statusDescription: {
-      fontSize: 13,
-      color: "#334155",
-      lineHeight: 18
+    mrnBadge: {
+      backgroundColor: "#eff6ff",
+      paddingHorizontal: 9,
+      paddingVertical: 4,
+      borderRadius: 6
+    },
+    mrnBadgeText: {
+      fontSize: 11,
+      fontWeight: "700",
+      color: "#2563eb"
+    },
+    heroGreetingText: {
+      fontSize: 18,
+      fontWeight: "800",
+      color: "#0f172a",
+      marginBottom: 3,
+      letterSpacing: -0.3
+    },
+    heroSubText: {
+      fontSize: 12.5,
+      color: "#64748b",
+      lineHeight: 18,
+      marginBottom: 14
+    },
+    heroMetricsBar: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: "#f8fafc",
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: "#f1f5f9",
+      paddingVertical: 9,
+      paddingHorizontal: 12
+    },
+    metricItem: {
+      flex: 1,
+      alignItems: "center"
+    },
+    metricLabel: {
+      fontSize: 9.5,
+      fontWeight: "700",
+      color: "#94a3b8",
+      letterSpacing: 0.5,
+      marginBottom: 2
+    },
+    metricValue: {
+      fontSize: 12,
+      fontWeight: "700",
+      color: "#1e293b"
+    },
+    metricDivider: {
+      width: 1,
+      height: 20,
+      backgroundColor: "#e2e8f0"
     },
     sectionHeaderRow: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "baseline",
-      marginBottom: 14
+      marginBottom: 12,
+      paddingHorizontal: 2
     },
     sectionHeaderTitle: {
-      fontSize: 15,
-      fontWeight: "700",
+      fontSize: 16,
+      fontWeight: "800",
       color: "#0f172a",
-      marginBottom: 12
+      letterSpacing: -0.3
+    },
+    sectionHeaderSub: {
+      fontSize: 12,
+      fontWeight: "500",
+      color: "#94a3b8"
     },
     cardsGrid: {
       flexDirection: "row",
       flexWrap: "wrap",
       justifyContent: "space-between",
-      marginBottom: 16
+      marginBottom: 14
     },
     gridCard: {
       width: "48.5%",
       backgroundColor: "#ffffff",
       borderWidth: 1,
       borderColor: "#e2e8f0",
-      borderRadius: 12,
-      padding: 16,
+      borderRadius: 14,
+      padding: 15,
+      marginBottom: 12,
+      shadowColor: "#000000",
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.04,
+      shadowRadius: 3,
+      elevation: 1
+    },
+    gridCardTopRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       marginBottom: 12
     },
     cardIconCircle: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
+      width: 42,
+      height: 42,
+      borderRadius: 12,
       alignItems: "center",
-      justifyContent: "center",
-      marginBottom: 12
+      justifyContent: "center"
+    },
+    cardArrowCircle: {
+      width: 22,
+      height: 22,
+      borderRadius: 11,
+      backgroundColor: "#f8fafc",
+      alignItems: "center",
+      justifyContent: "center"
     },
     gridCardTitle: {
-      fontSize: 14,
+      fontSize: 14.5,
       fontWeight: "700",
       color: "#0f172a",
       marginBottom: 3
     },
     gridCardDesc: {
-      fontSize: 12,
-      color: "#64748b"
+      fontSize: 11.5,
+      color: "#64748b",
+      lineHeight: 16,
+      marginBottom: 10
     },
-    simpleRemindBtn: {
+    gridCardActionRow: {
       flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: "#eff6ff",
-      borderWidth: 1,
-      borderColor: "#bfdbfe",
-      height: 46,
-      borderRadius: 10,
-      gap: 8,
-      marginTop: 4
+      alignItems: "center"
     },
-    simpleRemindBtnActive: {
-      backgroundColor: "#ecfdf5",
-      borderColor: "#a7f3d0"
-    },
-    simpleRemindText: {
-      color: "#2563eb",
-      fontSize: 14,
+    gridCardActionText: {
+      fontSize: 11.5,
       fontWeight: "700"
     },
-    simpleRemindTextActive: {
-      color: "#059669"
-    },
-    drawerDropdown: {
-      position: "absolute",
-      top: 68,
-      left: 16,
-      width: 220,
-      backgroundColor: "#ffffff",
-      borderRadius: 8,
+    featuredRemindCard: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: "#f0fdfa",
       borderWidth: 1,
-      borderColor: "#e2e8f0",
-      padding: 8,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.12,
-      shadowRadius: 10,
-      elevation: 8,
-      zIndex: 99
+      borderColor: "#ccfbf1",
+      borderRadius: 14,
+      padding: 16,
+      marginBottom: 12,
+      shadowColor: "#000000",
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.03,
+      shadowRadius: 3,
+      elevation: 1
     },
-    drawerItem: {
-      paddingVertical: 10,
-      paddingHorizontal: 12,
+    featuredRemindIconBox: {
+      width: 44,
+      height: 44,
+      borderRadius: 12,
+      backgroundColor: "#ccfbf1",
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: 14
+    },
+    featuredRemindContent: {
+      flex: 1,
+      marginRight: 8
+    },
+    featuredRemindHeaderRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 6,
+      marginBottom: 3
+    },
+    featuredRemindTitle: {
+      fontSize: 14,
+      fontWeight: "700",
+      color: "#0f766e"
+    },
+    preventiveBadge: {
+      backgroundColor: "#0d9488",
+      paddingHorizontal: 6,
+      paddingVertical: 1.5,
       borderRadius: 4
     },
-    drawerItemText: {
-      fontSize: 13,
-      fontWeight: "600",
-      color: "#1e293b"
+    preventiveBadgeText: {
+      fontSize: 9.5,
+      fontWeight: "800",
+      color: "#ffffff"
+    },
+    featuredRemindDesc: {
+      fontSize: 11.5,
+      color: "#115e59",
+      lineHeight: 16
+    },
+    featuredReportCard: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 14,
+      padding: 16,
+      marginBottom: 20,
+      shadowColor: "#000000",
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.04,
+      shadowRadius: 3,
+      elevation: 1
+    },
+    featuredReportIconBox: {
+      width: 44,
+      height: 44,
+      borderRadius: 12,
+      backgroundColor: "#eef2ff",
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: 14
+    },
+    featuredReportContent: {
+      flex: 1,
+      marginRight: 8
+    },
+    featuredReportTitle: {
+      fontSize: 14,
+      fontWeight: "700",
+      color: "#0f172a",
+      marginBottom: 2
+    },
+    featuredReportDesc: {
+      fontSize: 11.5,
+      color: "#64748b",
+      lineHeight: 16
     }
   });
 

@@ -49,6 +49,13 @@ async function startServer() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="USIntellix">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  <link rel="icon" type="image/png" href="/assets/logo.png">
   <title>USIntellix Patient Mobile App (React Native)</title>
   <style>
     html, body {
@@ -122,14 +129,33 @@ async function startServer() {
       }
     }
 
+    if (filePath === '/manifest.json') {
+      const manifestPath = path.resolve(__dirname, 'manifest.json');
+      if (fs.existsSync(manifestPath)) {
+        res.writeHead(200, { 'Content-Type': 'application/manifest+json' });
+        res.end(fs.readFileSync(manifestPath));
+        return;
+      }
+    }
+
+    if (filePath === '/assets/logo.png' || filePath === '/logo.png') {
+      const logoPath = path.resolve(__dirname, 'assets', 'logo.png');
+      if (fs.existsSync(logoPath)) {
+        res.writeHead(200, { 'Content-Type': 'image/png' });
+        res.end(fs.readFileSync(logoPath));
+        return;
+      }
+    }
+
     res.writeHead(404);
     res.end('Not Found');
   });
 
-  server.listen(PORT, () => {
+  server.listen(PORT, '0.0.0.0', () => {
     console.log(`\n======================================================`);
     console.log(`🚀 React Native Mobile App Running in Web Mode!`);
-    console.log(`👉 Open: http://localhost:${PORT}/`);
+    console.log(`👉 Local: http://localhost:${PORT}/`);
+    console.log(`👉 On Phone (same Wi-Fi): http://192.168.0.72:${PORT}/`);
     console.log(`======================================================\n`);
   });
 }

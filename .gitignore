@@ -1,18 +1,9 @@
-@"
 node_modules/
-ios/Pods/
-*.pbxuser
-*.mode1v3
-*.mode2v3
-*.perspectivev3
-xcuserdata/
-*.xcworkspace
-DerivedData/
-android/.gradle
-android/local.properties
-android/app/build/
-android/.idea/
+android_bak/
+android/
+ios/
 .expo/
 dist/
 web-build/
-"@ | Out-File -Encoding utf8 .gitignore
+*.log
+.DS_Store

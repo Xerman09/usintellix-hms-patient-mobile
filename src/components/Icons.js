@@ -1,182 +1,274 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 
-export function MailIcon({ color = '#94a3b8', size = 18 }) {
+/**
+ * Universal SVG Icon component for React Native Web & Native
+ * Renders standard scalable vector paths matching Lucide/Heroicons
+ */
+export function SvgIcon({ paths, size = 18, color = '#0284c7', viewBox = '0 0 24 24', strokeWidth = 2, fill = 'none' }) {
+  if (Platform.OS === 'web') {
+    return (
+      <svg
+        width={size}
+        height={size}
+        viewBox={viewBox}
+        fill={fill}
+        stroke={color}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ display: 'block', flexShrink: 0 }}
+      >
+        {paths}
+      </svg>
+    );
+  }
+
+  // Fallback for native view rendering if needed
+  return <View style={{ width: size, height: size }} />;
+}
+
+// 1. Dashboard / Home Icon
+export function HomeIcon({ color = '#0284c7', size = 18 }) {
   return (
-    <View style={{ width: size, height: size * 0.75, borderWidth: 1.6, borderColor: color, borderRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{
-        width: size * 0.55,
-        height: size * 0.45,
-        borderBottomWidth: 1.6,
-        borderRightWidth: 1.6,
-        borderColor: color,
-        transform: [{ rotate: '45deg' }],
-        marginTop: -size * 0.25
-      }} />
-    </View>
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </>
+      }
+    />
   );
 }
 
-export function LockIcon({ color = '#94a3b8', size = 18 }) {
+// 2. Calendar / Appointments Icon
+export function CalendarIcon({ color = '#0284c7', size = 18 }) {
   return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      {/* Shackle */}
-      <View style={{
-        width: size * 0.5,
-        height: size * 0.45,
-        borderTopLeftRadius: size * 0.25,
-        borderTopRightRadius: size * 0.25,
-        borderWidth: 1.6,
-        borderBottomWidth: 0,
-        borderColor: color,
-        marginBottom: -1
-      }} />
-      {/* Body */}
-      <View style={{
-        width: size * 0.72,
-        height: size * 0.52,
-        borderRadius: 3,
-        borderWidth: 1.6,
-        borderColor: color,
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <View style={{ width: 2, height: 3, backgroundColor: color, borderRadius: 1 }} />
-      </View>
-    </View>
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+          <line x1="16" x2="16" y1="2" y2="6" />
+          <line x1="8" x2="8" y1="2" y2="6" />
+          <line x1="3" x2="21" y1="10" y2="10" />
+        </>
+      }
+    />
   );
 }
 
-export function EyeOffIcon({ color = '#94a3b8', size = 18 }) {
+// 3. Pill / Medication Icon
+export function PillIcon({ color = '#0284c7', size = 18 }) {
   return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{
-        width: size * 0.85,
-        height: size * 0.5,
-        borderWidth: 1.6,
-        borderColor: color,
-        borderRadius: size * 0.25,
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <View style={{ width: 4, height: 4, borderRadius: 2, backgroundColor: color }} />
-      </View>
-      <View style={{
-        position: 'absolute',
-        width: size * 0.95,
-        height: 1.6,
-        backgroundColor: color,
-        transform: [{ rotate: '-45deg' }]
-      }} />
-    </View>
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z" />
+          <path d="m8.5 8.5 7 7" />
+        </>
+      }
+    />
   );
 }
 
-export function ShieldIcon({ color = '#0d9488', size = 18 }) {
+// 4. Folder / Records / CCD Icon
+export function RecordsIcon({ color = '#0284c7', size = 18 }) {
   return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{
-        width: size * 0.75,
-        height: size * 0.85,
-        borderWidth: 1.6,
-        borderColor: color,
-        borderTopLeftRadius: size * 0.15,
-        borderTopRightRadius: size * 0.15,
-        borderBottomLeftRadius: size * 0.45,
-        borderBottomRightRadius: size * 0.45
-      }} />
-    </View>
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+        </>
+      }
+    />
   );
 }
 
+// 5. Chat / Message Bubble Icon
+export function ChatIcon({ color = '#0284c7', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </>
+      }
+    />
+  );
+}
+
+// 6. Bell / Reminder Icon
+export function BellIcon({ color = '#0284c7', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+        </>
+      }
+    />
+  );
+}
+
+// 7. Clipboard / Document / Recalls Icon
+export function ClipboardIcon({ color = '#0284c7', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+          <path d="M9 12h6" />
+          <path d="M9 16h6" />
+        </>
+      }
+    />
+  );
+}
+
+// 8. Shield / Policy / NPP Icon
+export function ShieldIcon({ color = '#0284c7', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+        </>
+      }
+    />
+  );
+}
+
+// 9. Settings / Gear Icon
+export function SettingsIcon({ color = '#0284c7', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+          <circle cx="12" cy="12" r="3" />
+        </>
+      }
+    />
+  );
+}
+
+// 10. Hamburger Menu Icon
 export function MenuIcon({ color = '#0f172a', size = 20 }) {
   return (
-    <View style={{ width: size, height: size * 0.75, justifyContent: 'space-between' }}>
-      <View style={{ width: '100%', height: 2, backgroundColor: color, borderRadius: 1 }} />
-      <View style={{ width: '100%', height: 2, backgroundColor: color, borderRadius: 1 }} />
-      <View style={{ width: '100%', height: 2, backgroundColor: color, borderRadius: 1 }} />
-    </View>
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <line x1="4" x2="20" y1="12" y2="12" />
+          <line x1="4" x2="20" y1="6" y2="6" />
+          <line x1="4" x2="20" y1="18" y2="18" />
+        </>
+      }
+    />
   );
 }
 
-export function CalendarIcon({ color = '#2563eb', size = 20 }) {
-  return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{ width: size * 0.88, height: size * 0.82, borderWidth: 1.8, borderColor: color, borderRadius: 4, padding: 2 }}>
-        <View style={{ width: '100%', height: 2, backgroundColor: color, marginBottom: 2 }} />
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 1 }}>
-          <View style={{ width: 2.5, height: 2.5, backgroundColor: color, borderRadius: 1 }} />
-          <View style={{ width: 2.5, height: 2.5, backgroundColor: color, borderRadius: 1 }} />
-          <View style={{ width: 2.5, height: 2.5, backgroundColor: color, borderRadius: 1 }} />
-        </View>
-      </View>
-    </View>
-  );
-}
-
-export function PillIcon({ color = '#8b5cf6', size = 20 }) {
-  return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{ width: size * 0.46, height: size * 0.88, borderWidth: 1.8, borderColor: color, borderRadius: size * 0.23, overflow: 'hidden' }}>
-        <View style={{ width: '100%', height: '50%', backgroundColor: color }} />
-      </View>
-    </View>
-  );
-}
-
-export function RecordsIcon({ color = '#059669', size = 20 }) {
-  return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{ width: size * 0.75, height: size * 0.9, borderWidth: 1.8, borderColor: color, borderRadius: 3, padding: 3, justifyContent: 'space-around' }}>
-        <View style={{ width: '60%', height: 1.8, backgroundColor: color, borderRadius: 1 }} />
-        <View style={{ width: '80%', height: 1.8, backgroundColor: color, borderRadius: 1 }} />
-        <View style={{ width: '50%', height: 1.8, backgroundColor: color, borderRadius: 1 }} />
-      </View>
-    </View>
-  );
-}
-
-export function BellIcon({ color = '#ea580c', size = 20 }) {
-  return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{ width: size * 0.7, height: size * 0.75, borderTopLeftRadius: size * 0.35, borderTopRightRadius: size * 0.35, borderWidth: 1.8, borderColor: color, borderBottomWidth: 2.5, alignItems: 'center', justifyContent: 'flex-end' }}>
-        <View style={{ width: 3, height: 2, backgroundColor: color, borderRadius: 1 }} />
-      </View>
-    </View>
-  );
-}
-
+// 11. Chevron Right Icon
 export function ChevronRightIcon({ color = '#94a3b8', size = 16 }) {
   return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{
-        width: size * 0.45,
-        height: size * 0.45,
-        borderTopWidth: 2,
-        borderRightWidth: 2,
-        borderColor: color,
-        transform: [{ rotate: '45deg' }]
-      }} />
-    </View>
+    <SvgIcon
+      size={size}
+      color={color}
+      strokeWidth={2.2}
+      paths={
+        <>
+          <polyline points="9 18 15 12 9 6" />
+        </>
+      }
+    />
   );
 }
 
-export function ChatIcon({ color = '#0284c7', size = 20 }) {
+// 12. Logout / Exit Icon
+export function LogOutIcon({ color = '#dc2626', size = 16 }) {
   return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{
-        width: size * 0.88,
-        height: size * 0.72,
-        borderWidth: 1.8,
-        borderColor: color,
-        borderRadius: 4,
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <View style={{ width: size * 0.45, height: 1.6, backgroundColor: color, marginBottom: 2 }} />
-        <View style={{ width: size * 0.3, height: 1.6, backgroundColor: color }} />
-      </View>
-    </View>
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" x2="9" y1="12" y2="12" />
+        </>
+      }
+    />
   );
 }
 
+// 13. Mail Icon
+export function MailIcon({ color = '#94a3b8', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <rect width="20" height="16" x="2" y="4" rx="2" />
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        </>
+      }
+    />
+  );
+}
+
+// 14. Lock Icon
+export function LockIcon({ color = '#94a3b8', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </>
+      }
+    />
+  );
+}
+
+// 15. Eye Off Icon
+export function EyeOffIcon({ color = '#94a3b8', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+          <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+          <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+          <line x1="2" x2="22" y1="2" y2="22" />
+        </>
+      }
+    />
+  );
+}

@@ -23,6 +23,7 @@ import AppointmentsModal from '../components/AppointmentsModal';
 import PrescriptionsModal from '../components/PrescriptionsModal';
 import HealthRecordsModal from '../components/HealthRecordsModal';
 import MessagesModal from '../components/MessagesModal';
+import SidebarDrawer from '../components/SidebarDrawer';
 
 export default function PatientDashboardScreen({ user, onLogout }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -198,30 +199,34 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         currentUser={user}
       />
 
-      {/* Dropdown Menu when hamburger is pressed */}
-      {drawerOpen && (
-        <View style={styles.drawerDropdown}>
-          <TouchableOpacity style={styles.drawerItem} onPress={() => setDrawerOpen(false)}>
-            <Text style={styles.drawerItemText}>🏠 Dashboard Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerItem} onPress={() => { setDrawerOpen(false); setShowHealthRecords(true); }}>
-            <Text style={styles.drawerItemText}>📁 My Medical Records</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerItem} onPress={() => { setDrawerOpen(false); setShowMessages(true); }}>
-            <Text style={styles.drawerItemText}>💬 Care Team Messages</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerItem} onPress={() => setDrawerOpen(false)}>
-            <Text style={styles.drawerItemText}>⚙️ Portal Settings</Text>
-          </TouchableOpacity>
-          <View style={{ height: 1, backgroundColor: '#e2e8f0', marginVertical: 6 }} />
-          <TouchableOpacity style={styles.drawerItem} onPress={handleLogout}>
-            <Text style={[styles.drawerItemText, { color: '#ef4444' }]}>🚪 Sign Out</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      {/* Full-Height Modern Sidebar Navigation Drawer */}
+      <SidebarDrawer
+        visible={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        user={user}
+        onNavigate={(navId) => {
+          if (navId === 'appointments') setShowAppointments(true);
+          else if (navId === 'prescriptions') setShowPrescriptions(true);
+          else if (navId === 'health_records') setShowHealthRecords(true);
+          else if (navId === 'messages') setShowMessages(true);
+          else if (navId === 'reminders') {
+            setReminderSet(!reminderSet);
+            Alert.alert(
+              !reminderSet ? 'Reminders Active' : 'Reminders Paused',
+              !reminderSet
+                ? 'Clinical notifications enabled for upcoming visits.'
+                : 'Reminders turned off.'
+            );
+          } else if (navId === 'recalls') {
+            setShowMessages(true);
+          }
+        }}
+        onLogout={handleLogout}
+      />
     </SafeAreaView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

@@ -3295,18 +3295,18 @@
           var className = "";
           var inlineStyle = null;
           var nextCache = disableCache ? null : cache4;
-          var styles18 = new Array(arguments.length);
+          var styles19 = new Array(arguments.length);
           for (var i = 0; i < arguments.length; i++) {
-            styles18[i] = arguments[i];
+            styles19[i] = arguments[i];
           }
-          while (styles18.length > 0) {
-            var possibleStyle = styles18.pop();
+          while (styles19.length > 0) {
+            var possibleStyle = styles19.pop();
             if (possibleStyle == null || possibleStyle === false) {
               continue;
             }
             if (Array.isArray(possibleStyle)) {
               for (var _i = 0; _i < possibleStyle.length; _i++) {
-                styles18.push(possibleStyle[_i]);
+                styles19.push(possibleStyle[_i]);
               }
               continue;
             }
@@ -4290,9 +4290,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React28 = require_react();
+          var React29 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React28.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React29.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -5899,7 +5899,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React28.Children.forEach(props.children, function(child) {
+                  React29.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -6395,15 +6395,15 @@
             };
           }
           var warnValidStyle$1 = warnValidStyle;
-          function createDangerousStringForStyles(styles18) {
+          function createDangerousStringForStyles(styles19) {
             {
               var serialized = "";
               var delimiter = "";
-              for (var styleName in styles18) {
-                if (!styles18.hasOwnProperty(styleName)) {
+              for (var styleName in styles19) {
+                if (!styles19.hasOwnProperty(styleName)) {
                   continue;
                 }
-                var styleValue = styles18[styleName];
+                var styleValue = styles19[styleName];
                 if (styleValue != null) {
                   var isCustomProperty = styleName.indexOf("--") === 0;
                   serialized += delimiter + (isCustomProperty ? styleName : hyphenateStyleName2(styleName)) + ":";
@@ -6414,19 +6414,19 @@
               return serialized || null;
             }
           }
-          function setValueForStyles2(node, styles18) {
+          function setValueForStyles2(node, styles19) {
             var style2 = node.style;
-            for (var styleName in styles18) {
-              if (!styles18.hasOwnProperty(styleName)) {
+            for (var styleName in styles19) {
+              if (!styles19.hasOwnProperty(styleName)) {
                 continue;
               }
               var isCustomProperty = styleName.indexOf("--") === 0;
               {
                 if (!isCustomProperty) {
-                  warnValidStyle$1(styleName, styles18[styleName]);
+                  warnValidStyle$1(styleName, styles19[styleName]);
                 }
               }
-              var styleValue = dangerousStyleValue2(styleName, styles18[styleName], isCustomProperty);
+              var styleValue = dangerousStyleValue2(styleName, styles19[styleName], isCustomProperty);
               if (styleName === "float") {
                 styleName = "cssFloat";
               }
@@ -6440,9 +6440,9 @@
           function isValueEmpty(value) {
             return value == null || typeof value === "boolean" || value === "";
           }
-          function expandShorthandMap(styles18) {
+          function expandShorthandMap(styles19) {
             var expanded = {};
-            for (var key in styles18) {
+            for (var key in styles19) {
               var longhands = shorthandToLonghand[key] || [key];
               for (var i = 0; i < longhands.length; i++) {
                 expanded[longhands[i]] = key;
@@ -25584,7 +25584,7 @@
   });
 
   // index.web.js
-  var import_react17 = __toESM(require_react());
+  var import_react18 = __toESM(require_react());
 
   // node_modules/react-native-web/dist/modules/AccessibilityUtil/isDisabled.js
   var isDisabled = (props) => props.disabled || Array.isArray(props.accessibilityStates) && props.accessibilityStates.indexOf("disabled") > -1;
@@ -26964,7 +26964,7 @@
     shadow: true,
     textShadow: true
   };
-  function customStyleq(styles18, options) {
+  function customStyleq(styles19, options) {
     if (options === void 0) {
       options = {};
     }
@@ -26978,7 +26978,7 @@
         }
         return preprocess(style, _objectSpread2(_objectSpread2({}, defaultPreprocessOptions), preprocessOptions));
       }
-    })(styles18);
+    })(styles19);
   }
   function insertRules(compiledOrderedRules) {
     compiledOrderedRules.forEach((_ref) => {
@@ -27010,9 +27010,9 @@
   var absoluteFill = create({
     x: _objectSpread2({}, absoluteFillObject)
   }).x;
-  function create(styles18) {
-    Object.keys(styles18).forEach((key) => {
-      var styleObj = styles18[key];
+  function create(styles19) {
+    Object.keys(styles19).forEach((key) => {
+      var styleObj = styles19[key];
       if (styleObj != null && styleObj.$$css !== true) {
         var compiledStyles;
         if (key.indexOf("$raw") > -1) {
@@ -27020,14 +27020,14 @@
         } else {
           if (true) {
             validate(styleObj);
-            styles18[key] = Object.freeze(styleObj);
+            styles19[key] = Object.freeze(styleObj);
           }
           compiledStyles = compileAndInsertAtomic(styleObj);
         }
         staticStyleMap.set(styleObj, compiledStyles);
       }
     });
-    return styles18;
+    return styles19;
   }
   function compose(style1, style2) {
     if (true) {
@@ -27040,10 +27040,10 @@
     return [style1, style2];
   }
   function flatten() {
-    for (var _len = arguments.length, styles18 = new Array(_len), _key = 0; _key < _len; _key++) {
-      styles18[_key] = arguments[_key];
+    for (var _len = arguments.length, styles19 = new Array(_len), _key = 0; _key < _len; _key++) {
+      styles19[_key] = arguments[_key];
     }
-    var flatArray = styles18.flat(Infinity);
+    var flatArray = styles19.flat(Infinity);
     var result = {};
     for (var i = 0; i < flatArray.length; i++) {
       var style = flatArray[i];
@@ -27059,12 +27059,12 @@
       textContent: sheet.getTextContent()
     };
   }
-  function StyleSheet(styles18, options) {
+  function StyleSheet(styles19, options) {
     if (options === void 0) {
       options = {};
     }
     var isRTL = options.writingDirection === "rtl";
-    var styleProps2 = customStyleq(styles18, options);
+    var styleProps2 = customStyleq(styles19, options);
     if (Array.isArray(styleProps2) && styleProps2[1] != null) {
       styleProps2[1] = inline(styleProps2[1], isRTL);
     }
@@ -27595,14 +27595,14 @@
   var dangerousStyleValue_default = dangerousStyleValue;
 
   // node_modules/react-native-web/dist/modules/setValueForStyles/index.js
-  function setValueForStyles(node, styles18) {
+  function setValueForStyles(node, styles19) {
     var style = node.style;
-    for (var styleName in styles18) {
-      if (!styles18.hasOwnProperty(styleName)) {
+    for (var styleName in styles19) {
+      if (!styles19.hasOwnProperty(styleName)) {
         continue;
       }
       var isCustomProperty = styleName.indexOf("--") === 0;
-      var styleValue = dangerousStyleValue_default(styleName, styles18[styleName], isCustomProperty);
+      var styleValue = dangerousStyleValue_default(styleName, styles19[styleName], isCustomProperty);
       if (styleName === "float") {
         styleName = "cssFloat";
       }
@@ -31282,7 +31282,7 @@
   var TextInput_default = TextInput;
 
   // App.js
-  var import_react16 = __toESM(require_react());
+  var import_react17 = __toESM(require_react());
 
   // src/screens/LoginScreen.js
   var import_react10 = __toESM(require_react());
@@ -31431,91 +31431,176 @@
 
   // src/components/Icons.js
   var import_react9 = __toESM(require_react());
-  function MailIcon({ color = "#94a3b8", size = 18 }) {
-    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size * 0.75, borderWidth: 1.6, borderColor: color, borderRadius: 2, alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: {
-      width: size * 0.55,
-      height: size * 0.45,
-      borderBottomWidth: 1.6,
-      borderRightWidth: 1.6,
-      borderColor: color,
-      transform: [{ rotate: "45deg" }],
-      marginTop: -size * 0.25
-    } }));
+  function SvgIcon({ paths, size = 18, color = "#0284c7", viewBox = "0 0 24 24", strokeWidth = 2, fill = "none" }) {
+    if (Platform_default.OS === "web") {
+      return /* @__PURE__ */ import_react9.default.createElement(
+        "svg",
+        {
+          width: size,
+          height: size,
+          viewBox,
+          fill,
+          stroke: color,
+          strokeWidth,
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          style: { display: "block", flexShrink: 0 }
+        },
+        paths
+      );
+    }
+    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size } });
   }
-  function LockIcon({ color = "#94a3b8", size = 18 }) {
-    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size, alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: {
-      width: size * 0.5,
-      height: size * 0.45,
-      borderTopLeftRadius: size * 0.25,
-      borderTopRightRadius: size * 0.25,
-      borderWidth: 1.6,
-      borderBottomWidth: 0,
-      borderColor: color,
-      marginBottom: -1
-    } }), /* @__PURE__ */ import_react9.default.createElement(View_default, { style: {
-      width: size * 0.72,
-      height: size * 0.52,
-      borderRadius: 3,
-      borderWidth: 1.6,
-      borderColor: color,
-      alignItems: "center",
-      justifyContent: "center"
-    } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: 2, height: 3, backgroundColor: color, borderRadius: 1 } })));
+  function HomeIcon({ color = "#0284c7", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" }), /* @__PURE__ */ import_react9.default.createElement("polyline", { points: "9 22 9 12 15 12 15 22" }))
+      }
+    );
   }
-  function EyeOffIcon({ color = "#94a3b8", size = 18 }) {
-    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size, alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: {
-      width: size * 0.85,
-      height: size * 0.5,
-      borderWidth: 1.6,
-      borderColor: color,
-      borderRadius: size * 0.25,
-      alignItems: "center",
-      justifyContent: "center"
-    } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: 4, height: 4, borderRadius: 2, backgroundColor: color } })), /* @__PURE__ */ import_react9.default.createElement(View_default, { style: {
-      position: "absolute",
-      width: size * 0.95,
-      height: 1.6,
-      backgroundColor: color,
-      transform: [{ rotate: "-45deg" }]
-    } }));
+  function CalendarIcon({ color = "#0284c7", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("rect", { width: "18", height: "18", x: "3", y: "4", rx: "2", ry: "2" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "16", x2: "16", y1: "2", y2: "6" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "8", x2: "8", y1: "2", y2: "6" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "3", x2: "21", y1: "10", y2: "10" }))
+      }
+    );
   }
-  function ShieldIcon({ color = "#0d9488", size = 18 }) {
-    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size, alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: {
-      width: size * 0.75,
-      height: size * 0.85,
-      borderWidth: 1.6,
-      borderColor: color,
-      borderTopLeftRadius: size * 0.15,
-      borderTopRightRadius: size * 0.15,
-      borderBottomLeftRadius: size * 0.45,
-      borderBottomRightRadius: size * 0.45
-    } }));
+  function PillIcon({ color = "#0284c7", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "m8.5 8.5 7 7" }))
+      }
+    );
+  }
+  function RecordsIcon({ color = "#0284c7", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" }))
+      }
+    );
+  }
+  function ChatIcon({ color = "#0284c7", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" }))
+      }
+    );
+  }
+  function BellIcon({ color = "#0284c7", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M10.3 21a1.94 1.94 0 0 0 3.4 0" }))
+      }
+    );
+  }
+  function ClipboardIcon({ color = "#0284c7", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("rect", { width: "8", height: "4", x: "8", y: "2", rx: "1", ry: "1" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M9 12h6" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M9 16h6" }))
+      }
+    );
+  }
+  function ShieldIcon({ color = "#0284c7", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" }))
+      }
+    );
+  }
+  function SettingsIcon({ color = "#0284c7", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" }), /* @__PURE__ */ import_react9.default.createElement("circle", { cx: "12", cy: "12", r: "3" }))
+      }
+    );
   }
   function MenuIcon({ color = "#0f172a", size = 20 }) {
-    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size * 0.75, justifyContent: "space-between" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: "100%", height: 2, backgroundColor: color, borderRadius: 1 } }), /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: "100%", height: 2, backgroundColor: color, borderRadius: 1 } }), /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: "100%", height: 2, backgroundColor: color, borderRadius: 1 } }));
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("line", { x1: "4", x2: "20", y1: "12", y2: "12" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "4", x2: "20", y1: "6", y2: "6" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "4", x2: "20", y1: "18", y2: "18" }))
+      }
+    );
   }
-  function CalendarIcon({ color = "#2563eb", size = 20 }) {
-    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size, alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size * 0.88, height: size * 0.82, borderWidth: 1.8, borderColor: color, borderRadius: 4, padding: 2 } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: "100%", height: 2, backgroundColor: color, marginBottom: 2 } }), /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 1 } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: 2.5, height: 2.5, backgroundColor: color, borderRadius: 1 } }), /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: 2.5, height: 2.5, backgroundColor: color, borderRadius: 1 } }), /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: 2.5, height: 2.5, backgroundColor: color, borderRadius: 1 } }))));
+  function ChevronRightIcon({ color = "#94a3b8", size = 16 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        strokeWidth: 2.2,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("polyline", { points: "9 18 15 12 9 6" }))
+      }
+    );
   }
-  function PillIcon({ color = "#8b5cf6", size = 20 }) {
-    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size, alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size * 0.46, height: size * 0.88, borderWidth: 1.8, borderColor: color, borderRadius: size * 0.23, overflow: "hidden" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: "100%", height: "50%", backgroundColor: color } })));
+  function LogOutIcon({ color = "#dc2626", size = 16 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" }), /* @__PURE__ */ import_react9.default.createElement("polyline", { points: "16 17 21 12 16 7" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "21", x2: "9", y1: "12", y2: "12" }))
+      }
+    );
   }
-  function RecordsIcon({ color = "#059669", size = 20 }) {
-    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size, alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size * 0.75, height: size * 0.9, borderWidth: 1.8, borderColor: color, borderRadius: 3, padding: 3, justifyContent: "space-around" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: "60%", height: 1.8, backgroundColor: color, borderRadius: 1 } }), /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: "80%", height: 1.8, backgroundColor: color, borderRadius: 1 } }), /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: "50%", height: 1.8, backgroundColor: color, borderRadius: 1 } })));
+  function MailIcon({ color = "#94a3b8", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("rect", { width: "20", height: "16", x: "2", y: "4", rx: "2" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" }))
+      }
+    );
   }
-  function BellIcon({ color = "#ea580c", size = 20 }) {
-    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size, alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size * 0.7, height: size * 0.75, borderTopLeftRadius: size * 0.35, borderTopRightRadius: size * 0.35, borderWidth: 1.8, borderColor: color, borderBottomWidth: 2.5, alignItems: "center", justifyContent: "flex-end" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: 3, height: 2, backgroundColor: color, borderRadius: 1 } })));
+  function LockIcon({ color = "#94a3b8", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M7 11V7a5 5 0 0 1 10 0v4" }))
+      }
+    );
   }
-  function ChatIcon({ color = "#0284c7", size = 20 }) {
-    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size, alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: {
-      width: size * 0.88,
-      height: size * 0.72,
-      borderWidth: 1.8,
-      borderColor: color,
-      borderRadius: 4,
-      alignItems: "center",
-      justifyContent: "center"
-    } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size * 0.45, height: 1.6, backgroundColor: color, marginBottom: 2 } }), /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size * 0.3, height: 1.6, backgroundColor: color } })));
+  function EyeOffIcon({ color = "#94a3b8", size = 18 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(
+      SvgIcon,
+      {
+        size,
+        color,
+        paths: /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("path", { d: "M9.88 9.88a3 3 0 1 0 4.24 4.24" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" }), /* @__PURE__ */ import_react9.default.createElement("path", { d: "M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" }), /* @__PURE__ */ import_react9.default.createElement("line", { x1: "2", x2: "22", y1: "2", y2: "22" }))
+      }
+    );
   }
 
   // assets/logo.png
@@ -32217,7 +32302,7 @@
   });
 
   // src/screens/PatientDashboardScreen.js
-  var import_react15 = __toESM(require_react());
+  var import_react16 = __toESM(require_react());
 
   // src/components/AppointmentsModal.js
   var import_react11 = __toESM(require_react());
@@ -34613,14 +34698,302 @@
     }
   });
 
+  // src/components/SidebarDrawer.js
+  var import_react15 = __toESM(require_react());
+  function SidebarDrawer({
+    visible,
+    onClose,
+    user,
+    onNavigate,
+    onLogout
+  }) {
+    if (!visible) return null;
+    const firstName = user?.first_name || "Patient";
+    const lastName = user?.last_name || "User";
+    const middleName = user?.middle_name ? ` ${user.middle_name}` : "";
+    const fullName = `${firstName}${middleName} ${lastName}`.trim();
+    const initials = `${firstName[0] || "P"}${lastName[0] || ""}`.toUpperCase();
+    const roleText = (user?.role || "PATIENT").toUpperCase();
+    const orgText = "ENTERPRISE";
+    const navItems = [
+      {
+        id: "dashboard",
+        label: "Dashboard",
+        IconComponent: HomeIcon
+      },
+      {
+        id: "appointments",
+        label: "Appointments",
+        IconComponent: CalendarIcon
+      },
+      {
+        id: "prescriptions",
+        label: "Prescriptions",
+        IconComponent: PillIcon
+      },
+      {
+        id: "health_records",
+        label: "Health Records (CCD)",
+        IconComponent: RecordsIcon
+      },
+      {
+        id: "messages",
+        label: "Care Team Messages",
+        IconComponent: ChatIcon
+      },
+      {
+        id: "reminders",
+        label: "Clinical Reminders",
+        IconComponent: BellIcon
+      },
+      {
+        id: "recalls",
+        label: "Preventive Recalls",
+        IconComponent: ClipboardIcon
+      },
+      {
+        id: "policies",
+        label: "Portal Policies & NPP",
+        IconComponent: ShieldIcon
+      },
+      {
+        id: "settings",
+        label: "Account Settings",
+        IconComponent: SettingsIcon
+      }
+    ];
+    return /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.overlay }, /* @__PURE__ */ import_react15.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: styles16.backdrop,
+        activeOpacity: 1,
+        onPress: onClose
+      }
+    ), /* @__PURE__ */ import_react15.default.createElement(SafeAreaView_default, { style: styles16.drawerPanel }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.drawerHeader }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.avatarSquare }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.avatarText }, initials)), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.userInfoCol }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.userName, numberOfLines: 2 }, fullName), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.badgeRow }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.roleBadge }, roleText), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.dotSeparator }, "\u2022"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.orgBadge }, orgText))), /* @__PURE__ */ import_react15.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: styles16.closeBtn,
+        onPress: onClose,
+        hitSlop: { top: 12, bottom: 12, left: 12, right: 12 }
+      },
+      /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.closeBtnText }, "\u2715")
+    )), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.sectionHeaderWrap }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.sectionHeaderText }, "PORTAL NAVIGATION")), /* @__PURE__ */ import_react15.default.createElement(
+      ScrollView_default,
+      {
+        style: styles16.navScroll,
+        contentContainerStyle: styles16.navScrollContent,
+        showsVerticalScrollIndicator: false
+      },
+      navItems.map((item) => {
+        const IconComp = item.IconComponent;
+        return /* @__PURE__ */ import_react15.default.createElement(
+          TouchableOpacity_default,
+          {
+            key: item.id,
+            style: styles16.navItem,
+            activeOpacity: 0.7,
+            onPress: () => {
+              onClose();
+              onNavigate(item.id);
+            }
+          },
+          /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.navIconBox }, /* @__PURE__ */ import_react15.default.createElement(IconComp, { color: "#0d9488", size: 17 })),
+          /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.navItemLabel }, item.label),
+          /* @__PURE__ */ import_react15.default.createElement(ChevronRightIcon, { color: "#94a3b8", size: 13 })
+        );
+      })
+    ), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.bottomFooter }, /* @__PURE__ */ import_react15.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: styles16.signOutBtn,
+        activeOpacity: 0.8,
+        onPress: () => {
+          onClose();
+          onLogout();
+        }
+      },
+      /* @__PURE__ */ import_react15.default.createElement(LogOutIcon, { color: "#dc2626", size: 16 }),
+      /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.signOutText }, "Sign Out Workstation")
+    ))));
+  }
+  var styles16 = StyleSheet_default.create({
+    overlay: {
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex: 9999,
+      flexDirection: "row"
+    },
+    backdrop: {
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: "rgba(30, 41, 59, 0.65)"
+    },
+    drawerPanel: {
+      width: "82%",
+      maxWidth: 320,
+      height: "100%",
+      backgroundColor: "#ffffff",
+      borderRightWidth: 1,
+      borderRightColor: "#e2e8f0",
+      shadowColor: "#000",
+      shadowOffset: { width: 4, height: 0 },
+      shadowOpacity: 0.16,
+      shadowRadius: 14,
+      elevation: 20,
+      display: "flex",
+      flexDirection: "column"
+    },
+    drawerHeader: {
+      flexDirection: "row",
+      alignItems: "center",
+      paddingHorizontal: 16,
+      paddingTop: 18,
+      paddingBottom: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: "#f1f5f9"
+    },
+    avatarSquare: {
+      width: 44,
+      height: 44,
+      borderRadius: 6,
+      backgroundColor: "#007b83",
+      // Exact solid dark teal from screenshot
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: 12
+    },
+    avatarText: {
+      color: "#ffffff",
+      fontSize: 18,
+      fontWeight: "800",
+      letterSpacing: 0.5
+    },
+    userInfoCol: {
+      flex: 1,
+      justifyContent: "center"
+    },
+    userName: {
+      fontSize: 14,
+      fontWeight: "800",
+      color: "#0f172a",
+      lineHeight: 18,
+      marginBottom: 3
+    },
+    badgeRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 4
+    },
+    roleBadge: {
+      fontSize: 10,
+      fontWeight: "800",
+      color: "#0284c7",
+      // Cyan/blue
+      letterSpacing: 0.4
+    },
+    dotSeparator: {
+      fontSize: 10,
+      color: "#0d9488",
+      marginHorizontal: 1
+    },
+    orgBadge: {
+      fontSize: 10,
+      fontWeight: "800",
+      color: "#0d9488",
+      // Teal
+      letterSpacing: 0.4
+    },
+    closeBtn: {
+      padding: 6,
+      marginLeft: 4
+    },
+    closeBtnText: {
+      fontSize: 16,
+      color: "#64748b",
+      fontWeight: "600"
+    },
+    sectionHeaderWrap: {
+      paddingHorizontal: 18,
+      paddingTop: 18,
+      paddingBottom: 8
+    },
+    sectionHeaderText: {
+      fontSize: 11,
+      fontWeight: "800",
+      color: "#94a3b8",
+      letterSpacing: 0.8
+    },
+    navScroll: {
+      flex: 1
+    },
+    navScrollContent: {
+      paddingHorizontal: 12,
+      paddingVertical: 4
+    },
+    navItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      paddingVertical: 9,
+      paddingHorizontal: 8,
+      borderRadius: 8,
+      marginBottom: 2
+    },
+    navIconBox: {
+      width: 36,
+      height: 36,
+      borderRadius: 6,
+      borderWidth: 1,
+      borderColor: "#ccfbf1",
+      backgroundColor: "#f0fdfa",
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: 12
+    },
+    navItemLabel: {
+      flex: 1,
+      fontSize: 13.5,
+      fontWeight: "600",
+      color: "#1e293b"
+    },
+    bottomFooter: {
+      paddingHorizontal: 14,
+      paddingVertical: 14,
+      borderTopWidth: 1,
+      borderTopColor: "#f1f5f9",
+      backgroundColor: "#ffffff"
+    },
+    signOutBtn: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#fecaca",
+      borderRadius: 6,
+      height: 44,
+      gap: 8
+    },
+    signOutText: {
+      fontSize: 13,
+      fontWeight: "700",
+      color: "#dc2626"
+    }
+  });
+
   // src/screens/PatientDashboardScreen.js
   function PatientDashboardScreen({ user, onLogout }) {
-    const [drawerOpen, setDrawerOpen] = (0, import_react15.useState)(false);
-    const [reminderSet, setReminderSet] = (0, import_react15.useState)(false);
-    const [showAppointments, setShowAppointments] = (0, import_react15.useState)(false);
-    const [showPrescriptions, setShowPrescriptions] = (0, import_react15.useState)(false);
-    const [showHealthRecords, setShowHealthRecords] = (0, import_react15.useState)(false);
-    const [showMessages, setShowMessages] = (0, import_react15.useState)(false);
+    const [drawerOpen, setDrawerOpen] = (0, import_react16.useState)(false);
+    const [reminderSet, setReminderSet] = (0, import_react16.useState)(false);
+    const [showAppointments, setShowAppointments] = (0, import_react16.useState)(false);
+    const [showPrescriptions, setShowPrescriptions] = (0, import_react16.useState)(false);
+    const [showHealthRecords, setShowHealthRecords] = (0, import_react16.useState)(false);
+    const [showMessages, setShowMessages] = (0, import_react16.useState)(false);
     const firstName = user.first_name || "Patient";
     const lastName = user.last_name || "User";
     const fullName = `${firstName} ${lastName}`.trim();
@@ -34629,75 +35002,75 @@
       await AuthService.logout();
       onLogout();
     };
-    return /* @__PURE__ */ import_react15.default.createElement(SafeAreaView_default, { style: styles16.container }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.topNavBar }, /* @__PURE__ */ import_react15.default.createElement(
+    return /* @__PURE__ */ import_react16.default.createElement(SafeAreaView_default, { style: styles17.container }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.topNavBar }, /* @__PURE__ */ import_react16.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles16.hamburgerBtn,
+        style: styles17.hamburgerBtn,
         onPress: () => setDrawerOpen(!drawerOpen),
         activeOpacity: 0.7
       },
-      /* @__PURE__ */ import_react15.default.createElement(MenuIcon, { color: "#0f172a", size: 18 })
-    ), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.userIdentityColumn }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.userFullNameText, numberOfLines: 1 }, fullName)), /* @__PURE__ */ import_react15.default.createElement(
+      /* @__PURE__ */ import_react16.default.createElement(MenuIcon, { color: "#0f172a", size: 18 })
+    ), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.userIdentityColumn }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.userFullNameText, numberOfLines: 1 }, fullName)), /* @__PURE__ */ import_react16.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles16.avatarBadge,
+        style: styles17.avatarBadge,
         onPress: handleLogout,
         activeOpacity: 0.8
       },
-      /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.avatarInitialsText }, initials)
-    )), /* @__PURE__ */ import_react15.default.createElement(
+      /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.avatarInitialsText }, initials)
+    )), /* @__PURE__ */ import_react16.default.createElement(
       ScrollView_default,
       {
-        contentContainerStyle: styles16.contentScroll,
+        contentContainerStyle: styles17.contentScroll,
         showsVerticalScrollIndicator: false
       },
-      /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.statusCard }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
-      /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.sectionHeaderTitle }, "Services & Actions"),
-      /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.cardsGrid }, /* @__PURE__ */ import_react15.default.createElement(
+      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.statusCard }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
+      /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.sectionHeaderTitle }, "Services & Actions"),
+      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardsGrid }, /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles16.gridCard,
+          style: styles17.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowAppointments(true)
         },
-        /* @__PURE__ */ import_react15.default.createElement(View_default, { style: [styles16.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react15.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })),
-        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardTitle }, "Appointments"),
-        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardDesc }, "View upcoming visits")
-      ), /* @__PURE__ */ import_react15.default.createElement(
+        /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react16.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })),
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardTitle }, "Appointments"),
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardDesc }, "View upcoming visits")
+      ), /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles16.gridCard,
+          style: styles17.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowPrescriptions(true)
         },
-        /* @__PURE__ */ import_react15.default.createElement(View_default, { style: [styles16.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react15.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })),
-        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardTitle }, "Prescriptions"),
-        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardDesc }, "Active medications")
-      ), /* @__PURE__ */ import_react15.default.createElement(
+        /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react16.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })),
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardTitle }, "Prescriptions"),
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardDesc }, "Active medications")
+      ), /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles16.gridCard,
+          style: styles17.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowHealthRecords(true)
         },
-        /* @__PURE__ */ import_react15.default.createElement(View_default, { style: [styles16.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react15.default.createElement(RecordsIcon, { color: "#059669", size: 20 })),
-        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardTitle }, "Health Records"),
-        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardDesc }, "Lab results & charts")
-      ), /* @__PURE__ */ import_react15.default.createElement(
+        /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react16.default.createElement(RecordsIcon, { color: "#059669", size: 20 })),
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardTitle }, "Health Records"),
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardDesc }, "Lab results & charts")
+      ), /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles16.gridCard,
+          style: styles17.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowMessages(true)
         },
-        /* @__PURE__ */ import_react15.default.createElement(View_default, { style: [styles16.cardIconCircle, { backgroundColor: "#f0f9ff" }] }, /* @__PURE__ */ import_react15.default.createElement(ChatIcon, { color: "#0284c7", size: 20 })),
-        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardTitle }, "Messages"),
-        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardDesc }, "Care team chat")
+        /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconCircle, { backgroundColor: "#f0f9ff" }] }, /* @__PURE__ */ import_react16.default.createElement(ChatIcon, { color: "#0284c7", size: 20 })),
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardTitle }, "Messages"),
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.gridCardDesc }, "Care team chat")
       )),
-      /* @__PURE__ */ import_react15.default.createElement(
+      /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: [styles16.simpleRemindBtn, reminderSet && styles16.simpleRemindBtnActive],
+          style: [styles17.simpleRemindBtn, reminderSet && styles17.simpleRemindBtnActive],
           onPress: () => {
             setReminderSet(!reminderSet);
             Alert_default.alert(
@@ -34707,44 +35080,61 @@
           },
           activeOpacity: 0.8
         },
-        /* @__PURE__ */ import_react15.default.createElement(BellIcon, { color: reminderSet ? "#059669" : "#2563eb", size: 17 }),
-        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: [styles16.simpleRemindText, reminderSet && styles16.simpleRemindTextActive] }, reminderSet ? "Reminders Set \u2713" : "Remind Me")
+        /* @__PURE__ */ import_react16.default.createElement(BellIcon, { color: reminderSet ? "#059669" : "#2563eb", size: 17 }),
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: [styles17.simpleRemindText, reminderSet && styles17.simpleRemindTextActive] }, reminderSet ? "Reminders Set \u2713" : "Remind Me")
       )
-    ), /* @__PURE__ */ import_react15.default.createElement(
+    ), /* @__PURE__ */ import_react16.default.createElement(
       AppointmentsModal,
       {
         visible: showAppointments,
         onClose: () => setShowAppointments(false),
         patientId: user.id
       }
-    ), /* @__PURE__ */ import_react15.default.createElement(
+    ), /* @__PURE__ */ import_react16.default.createElement(
       PrescriptionsModal,
       {
         visible: showPrescriptions,
         onClose: () => setShowPrescriptions(false)
       }
-    ), /* @__PURE__ */ import_react15.default.createElement(
+    ), /* @__PURE__ */ import_react16.default.createElement(
       HealthRecordsModal,
       {
         visible: showHealthRecords,
         onClose: () => setShowHealthRecords(false)
       }
-    ), /* @__PURE__ */ import_react15.default.createElement(
+    ), /* @__PURE__ */ import_react16.default.createElement(
       MessagesModal,
       {
         visible: showMessages,
         onClose: () => setShowMessages(false),
         currentUser: user
       }
-    ), drawerOpen && /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.drawerDropdown }, /* @__PURE__ */ import_react15.default.createElement(TouchableOpacity_default, { style: styles16.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.drawerItemText }, "\u{1F3E0} Dashboard Home")), /* @__PURE__ */ import_react15.default.createElement(TouchableOpacity_default, { style: styles16.drawerItem, onPress: () => {
-      setDrawerOpen(false);
-      setShowHealthRecords(true);
-    } }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.drawerItemText }, "\u{1F4C1} My Medical Records")), /* @__PURE__ */ import_react15.default.createElement(TouchableOpacity_default, { style: styles16.drawerItem, onPress: () => {
-      setDrawerOpen(false);
-      setShowMessages(true);
-    } }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.drawerItemText }, "\u{1F4AC} Care Team Messages")), /* @__PURE__ */ import_react15.default.createElement(TouchableOpacity_default, { style: styles16.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.drawerItemText }, "\u2699\uFE0F Portal Settings")), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: { height: 1, backgroundColor: "#e2e8f0", marginVertical: 6 } }), /* @__PURE__ */ import_react15.default.createElement(TouchableOpacity_default, { style: styles16.drawerItem, onPress: handleLogout }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: [styles16.drawerItemText, { color: "#ef4444" }] }, "\u{1F6AA} Sign Out"))));
+    ), /* @__PURE__ */ import_react16.default.createElement(
+      SidebarDrawer,
+      {
+        visible: drawerOpen,
+        onClose: () => setDrawerOpen(false),
+        user,
+        onNavigate: (navId) => {
+          if (navId === "appointments") setShowAppointments(true);
+          else if (navId === "prescriptions") setShowPrescriptions(true);
+          else if (navId === "health_records") setShowHealthRecords(true);
+          else if (navId === "messages") setShowMessages(true);
+          else if (navId === "reminders") {
+            setReminderSet(!reminderSet);
+            Alert_default.alert(
+              !reminderSet ? "Reminders Active" : "Reminders Paused",
+              !reminderSet ? "Clinical notifications enabled for upcoming visits." : "Reminders turned off."
+            );
+          } else if (navId === "recalls") {
+            setShowMessages(true);
+          }
+        },
+        onLogout: handleLogout
+      }
+    ));
   }
-  var styles16 = StyleSheet_default.create({
+  var styles17 = StyleSheet_default.create({
     container: {
       flex: 1,
       width: "100%",
@@ -34933,16 +35323,16 @@
 
   // App.js
   function App() {
-    const [currentUser, setCurrentUser] = (0, import_react16.useState)(null);
-    return /* @__PURE__ */ import_react16.default.createElement(SafeAreaView_default, { style: styles17.root }, /* @__PURE__ */ import_react16.default.createElement(StatusBar_default, { barStyle: "dark-content", backgroundColor: "#ffffff" }), currentUser ? /* @__PURE__ */ import_react16.default.createElement(
+    const [currentUser, setCurrentUser] = (0, import_react17.useState)(null);
+    return /* @__PURE__ */ import_react17.default.createElement(SafeAreaView_default, { style: styles18.root }, /* @__PURE__ */ import_react17.default.createElement(StatusBar_default, { barStyle: "dark-content", backgroundColor: "#ffffff" }), currentUser ? /* @__PURE__ */ import_react17.default.createElement(
       PatientDashboardScreen,
       {
         user: currentUser,
         onLogout: () => setCurrentUser(null)
       }
-    ) : /* @__PURE__ */ import_react16.default.createElement(LoginScreen, { onLoginSuccess: (user) => setCurrentUser(user) }));
+    ) : /* @__PURE__ */ import_react17.default.createElement(LoginScreen, { onLoginSuccess: (user) => setCurrentUser(user) }));
   }
-  var styles17 = StyleSheet_default.create({
+  var styles18 = StyleSheet_default.create({
     root: {
       flex: 1,
       width: "100%",

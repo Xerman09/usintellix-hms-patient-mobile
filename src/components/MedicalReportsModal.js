@@ -16,7 +16,9 @@ import {
   DownloadTrayIcon,
   MedicalClipboardIcon,
   DocumentFolderIcon,
-  HelpCircleIcon
+  HelpCircleIcon,
+  RecordsIcon,
+  ChevronRightIcon
 } from './Icons';
 
 export default function MedicalReportsModal({ visible, onClose, currentUser }) {
@@ -65,7 +67,7 @@ export default function MedicalReportsModal({ visible, onClose, currentUser }) {
   </div>
 
   <div class="section">
-    <h2>1. Allergies & Adverse Reactions</h2>
+    <h2>1. Allergies &amp; Adverse Reactions</h2>
     ${data.allergies && data.allergies.length ? `
     <table><tr><th>Allergen</th><th>Reaction</th><th>Severity</th></tr>
     ${data.allergies.map(a => `<tr><td>${a.title || a.allergy || 'N/A'}</td><td>${a.reaction || 'None'}</td><td>${a.severity || 'Mild'}</td></tr>`).join('')}
@@ -73,7 +75,7 @@ export default function MedicalReportsModal({ visible, onClose, currentUser }) {
   </div>
 
   <div class="section">
-    <h2>2. Active Medical Conditions & Diagnoses</h2>
+    <h2>2. Active Medical Conditions &amp; Diagnoses</h2>
     ${data.problems && data.problems.length ? `
     <table><tr><th>Condition / Diagnosis</th><th>ICD-10</th><th>Onset Date</th></tr>
     ${data.problems.map(p => `<tr><td>${p.problem || p.title || 'N/A'}</td><td>${p.icd10 || 'N/A'}</td><td>${p.onset_date || 'N/A'}</td></tr>`).join('')}
@@ -81,7 +83,7 @@ export default function MedicalReportsModal({ visible, onClose, currentUser }) {
   </div>
 
   <div class="section">
-    <h2>3. Active Medications & Prescriptions</h2>
+    <h2>3. Active Medications &amp; Prescriptions</h2>
     ${data.medications && data.medications.length ? `
     <table><tr><th>Medication</th><th>Dosage</th><th>Directions</th></tr>
     ${data.medications.map(m => `<tr><td>${m.medication || m.title || 'N/A'}</td><td>${m.dosage || 'Standard'}</td><td>${m.directions || 'As directed'}</td></tr>`).join('')}
@@ -174,9 +176,17 @@ export default function MedicalReportsModal({ visible, onClose, currentUser }) {
   return (
     <View style={styles.overlay}>
       <View style={styles.sheetContainer}>
-        {/* Header Bar */}
+        {/* ================= ALIGNED HEADER (WHITE SYSTEM THEME) ================= */}
         <View style={styles.sheetHeader}>
-          <Text style={styles.headerTitle}>Medical Reports</Text>
+          <View style={styles.headerTitleRow}>
+            <View style={styles.iconBadge}>
+              <RecordsIcon color="#059669" size={18} />
+            </View>
+            <View>
+              <Text style={styles.headerTitle}>Medical Reports</Text>
+              <Text style={styles.headerSub}>Export, clinical summaries, and HIPAA exports</Text>
+            </View>
+          </View>
           <TouchableOpacity
             onPress={onClose}
             style={styles.closeBtn}
@@ -211,15 +221,15 @@ export default function MedicalReportsModal({ visible, onClose, currentUser }) {
             </TouchableOpacity>
           </View>
 
-          {/* ================= 6 EXACT REPORT ACTION CARDS ================= */}
+          {/* ================= VIEWS ================= */}
           {activeView === 'safe_harbor' ? (
             /* Safe Harbor Detail View */
-            <View style={styles.subDetailCard}>
+            <View style={styles.detailCard}>
               <TouchableOpacity style={styles.backRow} onPress={() => setActiveView('grid')}>
                 <Text style={styles.backText}>‹ Back to Medical Reports</Text>
               </TouchableOpacity>
-              <Text style={styles.subDetailTitle}>Safe Harbor De-Identification Console</Text>
-              <Text style={styles.subDetailDesc}>
+              <Text style={styles.detailTitle}>Safe Harbor De-Identification Console</Text>
+              <Text style={styles.detailDesc}>
                 Under 45 CFR § 164.514(b)(2), health information is not individually identifiable if 18 specified identifiers of the individual or of relatives, employers, or household members of the individual are removed.
               </Text>
               <View style={styles.identifierBox}>
@@ -238,23 +248,23 @@ export default function MedicalReportsModal({ visible, onClose, currentUser }) {
                 <Text style={styles.identifierItem}>12. Full-face photographic images</Text>
               </View>
               <TouchableOpacity
-                style={styles.greenActionBtn}
+                style={styles.primaryActionBtn}
                 onPress={() => {
                   Alert.alert('HIPAA Verified', 'Safe Harbor rules verified. Export sanitized for clinical audit.');
                   setActiveView('grid');
                 }}
               >
-                <Text style={styles.actionBtnText}>Run Safe Harbor Sanitization</Text>
+                <Text style={styles.primaryActionBtnText}>Run Safe Harbor Sanitization</Text>
               </TouchableOpacity>
             </View>
           ) : activeView === 'help' ? (
             /* Help View */
-            <View style={styles.subDetailCard}>
+            <View style={styles.detailCard}>
               <TouchableOpacity style={styles.backRow} onPress={() => setActiveView('grid')}>
                 <Text style={styles.backText}>‹ Back to Medical Reports</Text>
               </TouchableOpacity>
-              <Text style={styles.subDetailTitle}>Medical Reports Help &amp; Guidance</Text>
-              <Text style={styles.subDetailDesc}>
+              <Text style={styles.detailTitle}>Medical Reports Help &amp; Guidance</Text>
+              <Text style={styles.detailDesc}>
                 This portal allows patients and authorized providers to review, export, and securely transfer clinical medical histories in accordance with ONC 2015 Edition Cures Update criteria.
               </Text>
               <View style={styles.identifierBox}>
@@ -266,30 +276,34 @@ export default function MedicalReportsModal({ visible, onClose, currentUser }) {
               </View>
             </View>
           ) : (
-            /* Main 6 Cards Grid matching user screenshot */
+            /* Main 6 Cards Grid (System-aligned Light Cards) */
             <View style={styles.cardsGrid}>
               
               {/* Card 1: Safe Harbor De-ID (§ 164.514) */}
-              <View style={[styles.reportCard, { borderColor: '#16a34a' }]}>
-                <View style={styles.cardIconCenter}>
-                  <LockIcon color="#22c55e" size={44} />
+              <View style={[styles.reportCard, { borderColor: '#86efac' }]}>
+                <View style={[styles.cardIconBox, { backgroundColor: '#f0fdf4' }]}>
+                  <LockIcon color="#16a34a" size={28} />
                 </View>
+                <Text style={styles.reportCardTitle}>Safe Harbor De-ID</Text>
+                <Text style={styles.reportCardDesc}>Scrub 18 HIPAA identifiers</Text>
                 <TouchableOpacity
-                  style={[styles.greenCardBtn, { backgroundColor: '#16a34a' }]}
+                  style={[styles.cardActionBtn, { backgroundColor: '#16a34a' }]}
                   activeOpacity={0.8}
                   onPress={() => setActiveView('safe_harbor')}
                 >
-                  <Text style={styles.cardBtnText}>Safe Harbor De-ID (§ 164.514)</Text>
+                  <Text style={styles.cardActionBtnText}>Safe Harbor De-ID (§ 164.514)</Text>
                 </TouchableOpacity>
               </View>
 
               {/* Card 2: View Summary of Care */}
               <View style={styles.reportCard}>
-                <View style={styles.cardIconCenter}>
-                  <DocumentPlusIcon color="#94a3b8" size={44} />
+                <View style={[styles.cardIconBox, { backgroundColor: '#eff6ff' }]}>
+                  <DocumentPlusIcon color="#2563eb" size={28} />
                 </View>
+                <Text style={styles.reportCardTitle}>Summary of Care</Text>
+                <Text style={styles.reportCardDesc}>View active health chart</Text>
                 <TouchableOpacity
-                  style={[styles.greenCardBtn, { backgroundColor: '#22c55e' }]}
+                  style={[styles.cardActionBtn, { backgroundColor: '#2563eb' }]}
                   activeOpacity={0.8}
                   onPress={handleViewSummary}
                   disabled={downloading}
@@ -297,18 +311,20 @@ export default function MedicalReportsModal({ visible, onClose, currentUser }) {
                   {downloading ? (
                     <ActivityIndicator size="small" color="#ffffff" />
                   ) : (
-                    <Text style={styles.cardBtnText}>View Summary of Care</Text>
+                    <Text style={styles.cardActionBtnText}>View Summary of Care</Text>
                   )}
                 </TouchableOpacity>
               </View>
 
               {/* Card 3: Download Summary of Care */}
               <View style={styles.reportCard}>
-                <View style={styles.cardIconCenter}>
-                  <DownloadTrayIcon color="#94a3b8" size={44} />
+                <View style={[styles.cardIconBox, { backgroundColor: '#eff6ff' }]}>
+                  <DownloadTrayIcon color="#2563eb" size={28} />
                 </View>
+                <Text style={styles.reportCardTitle}>Export Document</Text>
+                <Text style={styles.reportCardDesc}>Save complete CCD HTML</Text>
                 <TouchableOpacity
-                  style={[styles.greenCardBtn, { backgroundColor: '#22c55e' }]}
+                  style={[styles.cardActionBtn, { backgroundColor: '#2563eb' }]}
                   activeOpacity={0.8}
                   onPress={handleDownloadSummary}
                   disabled={downloading}
@@ -316,50 +332,56 @@ export default function MedicalReportsModal({ visible, onClose, currentUser }) {
                   {downloading ? (
                     <ActivityIndicator size="small" color="#ffffff" />
                   ) : (
-                    <Text style={styles.cardBtnText}>Download Summary of Care</Text>
+                    <Text style={styles.cardActionBtnText}>Download Summary of Care</Text>
                   )}
                 </TouchableOpacity>
               </View>
 
               {/* Card 4: Customized Medical History Report */}
               <View style={styles.reportCard}>
-                <View style={styles.cardIconCenter}>
-                  <MedicalClipboardIcon color="#94a3b8" size={44} />
+                <View style={[styles.cardIconBox, { backgroundColor: '#f5f3ff' }]}>
+                  <MedicalClipboardIcon color="#7c3aed" size={28} />
                 </View>
+                <Text style={styles.reportCardTitle}>History Report</Text>
+                <Text style={styles.reportCardDesc}>Problems &amp; visit records</Text>
                 <TouchableOpacity
-                  style={[styles.greenCardBtn, { backgroundColor: '#22c55e' }]}
+                  style={[styles.cardActionBtn, { backgroundColor: '#7c3aed' }]}
                   activeOpacity={0.8}
                   onPress={handleViewSummary}
                 >
-                  <Text style={styles.cardBtnText}>Customized Medical History Report</Text>
+                  <Text style={styles.cardActionBtnText}>Customized Medical History</Text>
                 </TouchableOpacity>
               </View>
 
               {/* Card 5: Download Medical Record Documents */}
               <View style={styles.reportCard}>
-                <View style={styles.cardIconCenter}>
-                  <DocumentFolderIcon color="#94a3b8" size={44} />
+                <View style={[styles.cardIconBox, { backgroundColor: '#ecfdf5' }]}>
+                  <DocumentFolderIcon color="#059669" size={28} />
                 </View>
+                <Text style={styles.reportCardTitle}>Record Documents</Text>
+                <Text style={styles.reportCardDesc}>Clinical attachments</Text>
                 <TouchableOpacity
-                  style={[styles.greenCardBtn, { backgroundColor: '#22c55e' }]}
+                  style={[styles.cardActionBtn, { backgroundColor: '#059669' }]}
                   activeOpacity={0.8}
                   onPress={handleDownloadSummary}
                 >
-                  <Text style={styles.cardBtnText}>Download Medical Record Documents</Text>
+                  <Text style={styles.cardActionBtnText}>Download Record Documents</Text>
                 </TouchableOpacity>
               </View>
 
               {/* Card 6: Help */}
               <View style={styles.reportCard}>
-                <View style={styles.cardIconCenter}>
-                  <HelpCircleIcon color="#94a3b8" size={44} />
+                <View style={[styles.cardIconBox, { backgroundColor: '#f1f5f9' }]}>
+                  <HelpCircleIcon color="#475569" size={28} />
                 </View>
+                <Text style={styles.reportCardTitle}>Guidance &amp; FAQ</Text>
+                <Text style={styles.reportCardDesc}>ONC 2015 Cures criteria</Text>
                 <TouchableOpacity
-                  style={[styles.greenCardBtn, { backgroundColor: '#3b82f6' }]}
+                  style={[styles.cardActionBtn, { backgroundColor: '#475569' }]}
                   activeOpacity={0.8}
                   onPress={() => setActiveView('help')}
                 >
-                  <Text style={styles.cardBtnText}>Help</Text>
+                  <Text style={styles.cardActionBtnText}>Help</Text>
                 </TouchableOpacity>
               </View>
 
@@ -378,18 +400,18 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(15, 23, 42, 0.75)',
+    backgroundColor: 'rgba(15, 23, 42, 0.45)',
     zIndex: 999,
     justifyContent: 'flex-end',
     alignItems: 'center'
   },
   sheetContainer: {
-    backgroundColor: '#0c1322', // Dark navy surface matching user screenshot
+    backgroundColor: '#ffffff',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    height: '92%',
+    height: '90%',
     width: '100%',
-    maxWidth: 640,
+    maxWidth: 500,
     display: 'flex',
     flexDirection: 'column',
     overflow: 'hidden'
@@ -398,24 +420,42 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 18,
+    paddingHorizontal: 18,
+    paddingTop: 16,
     paddingBottom: 14,
     borderBottomWidth: 1,
-    borderBottomColor: '#1e293b',
-    backgroundColor: '#0f172a'
+    borderBottomColor: '#f1f5f9'
+  },
+  headerTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1
+  },
+  iconBadge: {
+    width: 36,
+    height: 36,
+    borderRadius: 8,
+    backgroundColor: '#ecfdf5',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10
   },
   headerTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#ffffff'
+    fontSize: 16.5,
+    fontWeight: '800',
+    color: '#0f172a'
+  },
+  headerSub: {
+    fontSize: 11.5,
+    color: '#64748b',
+    marginTop: 1
   },
   closeBtn: {
     padding: 6
   },
   closeBtnText: {
     fontSize: 16,
-    color: '#94a3b8',
+    color: '#64748b',
     fontWeight: '700'
   },
   scrollContent: {
@@ -426,7 +466,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0fdf4',
     borderWidth: 1,
     borderColor: '#86efac',
-    borderRadius: 8,
+    borderRadius: 10,
     padding: 14,
     marginBottom: 16
   },
@@ -472,48 +512,62 @@ const styles = StyleSheet.create({
   cardsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
+    gap: 10,
     justifyContent: 'space-between'
   },
   reportCard: {
-    width: '48%',
-    backgroundColor: '#131e33', // Exact card navy background
+    width: '48.5%',
+    backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: '#1e293b',
-    borderRadius: 10,
-    padding: 14,
+    borderColor: '#e2e8f0',
+    borderRadius: 12,
+    padding: 12,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
-    minHeight: 180
+    minHeight: 160
   },
-  cardIconCenter: {
-    flex: 1,
+  cardIconBox: {
+    width: 48,
+    height: 48,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 14
+    marginBottom: 8
   },
-  greenCardBtn: {
+  reportCardTitle: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#0f172a',
+    textAlign: 'center',
+    marginBottom: 2
+  },
+  reportCardDesc: {
+    fontSize: 10.5,
+    color: '#64748b',
+    textAlign: 'center',
+    marginBottom: 10
+  },
+  cardActionBtn: {
     width: '100%',
-    paddingVertical: 10,
-    paddingHorizontal: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 6,
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center'
   },
-  cardBtnText: {
+  cardActionBtnText: {
     color: '#ffffff',
-    fontSize: 11.5,
+    fontSize: 10.5,
     fontWeight: '700',
-    textAlign: 'center',
-    lineHeight: 15
+    textAlign: 'center'
   },
-  subDetailCard: {
-    backgroundColor: '#131e33',
+  detailCard: {
+    backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: '#1e293b',
-    borderRadius: 10,
+    borderColor: '#e2e8f0',
+    borderRadius: 12,
     padding: 16
   },
   backRow: {
@@ -522,24 +576,24 @@ const styles = StyleSheet.create({
   backText: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#38bdf8'
+    color: '#2563eb'
   },
-  subDetailTitle: {
+  detailTitle: {
     fontSize: 16,
     fontWeight: '800',
-    color: '#ffffff',
+    color: '#0f172a',
     marginBottom: 8
   },
-  subDetailDesc: {
+  detailDesc: {
     fontSize: 12,
-    color: '#94a3b8',
+    color: '#64748b',
     lineHeight: 18,
     marginBottom: 14
   },
   identifierBox: {
-    backgroundColor: '#0c1322',
+    backgroundColor: '#f8fafc',
     borderWidth: 1,
-    borderColor: '#1e293b',
+    borderColor: '#e2e8f0',
     borderRadius: 8,
     padding: 12,
     marginBottom: 14
@@ -547,22 +601,22 @@ const styles = StyleSheet.create({
   identifierHeading: {
     fontSize: 11.5,
     fontWeight: '800',
-    color: '#22c55e',
+    color: '#0f172a',
     marginBottom: 6
   },
   identifierItem: {
     fontSize: 11,
-    color: '#cbd5e1',
+    color: '#475569',
     lineHeight: 16,
     marginBottom: 2
   },
-  greenActionBtn: {
+  primaryActionBtn: {
     backgroundColor: '#16a34a',
     borderRadius: 6,
     paddingVertical: 10,
     alignItems: 'center'
   },
-  actionBtnText: {
+  primaryActionBtnText: {
     color: '#ffffff',
     fontSize: 12.5,
     fontWeight: '700'

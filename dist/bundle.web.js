@@ -35311,7 +35311,7 @@
   </div>
 
   <div class="section">
-    <h2>1. Allergies & Adverse Reactions</h2>
+    <h2>1. Allergies &amp; Adverse Reactions</h2>
     ${data.allergies && data.allergies.length ? `
     <table><tr><th>Allergen</th><th>Reaction</th><th>Severity</th></tr>
     ${data.allergies.map((a) => `<tr><td>${a.title || a.allergy || "N/A"}</td><td>${a.reaction || "None"}</td><td>${a.severity || "Mild"}</td></tr>`).join("")}
@@ -35319,7 +35319,7 @@
   </div>
 
   <div class="section">
-    <h2>2. Active Medical Conditions & Diagnoses</h2>
+    <h2>2. Active Medical Conditions &amp; Diagnoses</h2>
     ${data.problems && data.problems.length ? `
     <table><tr><th>Condition / Diagnosis</th><th>ICD-10</th><th>Onset Date</th></tr>
     ${data.problems.map((p) => `<tr><td>${p.problem || p.title || "N/A"}</td><td>${p.icd10 || "N/A"}</td><td>${p.onset_date || "N/A"}</td></tr>`).join("")}
@@ -35327,7 +35327,7 @@
   </div>
 
   <div class="section">
-    <h2>3. Active Medications & Prescriptions</h2>
+    <h2>3. Active Medications &amp; Prescriptions</h2>
     ${data.medications && data.medications.length ? `
     <table><tr><th>Medication</th><th>Dosage</th><th>Directions</th></tr>
     ${data.medications.map((m2) => `<tr><td>${m2.medication || m2.title || "N/A"}</td><td>${m2.dosage || "Standard"}</td><td>${m2.directions || "As directed"}</td></tr>`).join("")}
@@ -35415,7 +35415,7 @@ Problems: ${data.problems?.length || 0}`);
         setDownloading(false);
       }
     };
-    return /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.overlay }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.sheetContainer }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.sheetHeader }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.headerTitle }, "Medical Reports"), /* @__PURE__ */ import_react16.default.createElement(
+    return /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.overlay }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.sheetContainer }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.sheetHeader }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.headerTitleRow }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.iconBadge }, /* @__PURE__ */ import_react16.default.createElement(RecordsIcon, { color: "#059669", size: 18 })), /* @__PURE__ */ import_react16.default.createElement(View_default, null, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.headerTitle }, "Medical Reports"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.headerSub }, "Export, clinical summaries, and HIPAA exports"))), /* @__PURE__ */ import_react16.default.createElement(
       TouchableOpacity_default,
       {
         onPress: onClose,
@@ -35433,72 +35433,72 @@ Problems: ${data.problems?.length || 0}`);
       /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.bannerActionBtnText }, "Launch Safe Harbor De-ID Console \u2192")
     )), activeView === "safe_harbor" ? (
       /* Safe Harbor Detail View */
-      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.subDetailCard }, /* @__PURE__ */ import_react16.default.createElement(TouchableOpacity_default, { style: styles17.backRow, onPress: () => setActiveView("grid") }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.backText }, "\u2039 Back to Medical Reports")), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.subDetailTitle }, "Safe Harbor De-Identification Console"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.subDetailDesc }, "Under 45 CFR \xA7 164.514(b)(2), health information is not individually identifiable if 18 specified identifiers of the individual or of relatives, employers, or household members of the individual are removed."), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.identifierBox }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierHeading }, "Protected Identifiers Scrubbed (18 Categories):"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "1. Names & Initials"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "2. All geographic subdivisions smaller than a state"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "3. All elements of dates directly related to an individual"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "4. Telephone numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "5. Fax numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "6. Email addresses"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "7. Social Security Numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "8. Medical record numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "9. Health plan beneficiary numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "10. Account numbers & certificate numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "11. Biometric identifiers including finger and voice prints"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "12. Full-face photographic images")), /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.detailCard }, /* @__PURE__ */ import_react16.default.createElement(TouchableOpacity_default, { style: styles17.backRow, onPress: () => setActiveView("grid") }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.backText }, "\u2039 Back to Medical Reports")), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.detailTitle }, "Safe Harbor De-Identification Console"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.detailDesc }, "Under 45 CFR \xA7 164.514(b)(2), health information is not individually identifiable if 18 specified identifiers of the individual or of relatives, employers, or household members of the individual are removed."), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.identifierBox }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierHeading }, "Protected Identifiers Scrubbed (18 Categories):"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "1. Names & Initials"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "2. All geographic subdivisions smaller than a state"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "3. All elements of dates directly related to an individual"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "4. Telephone numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "5. Fax numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "6. Email addresses"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "7. Social Security Numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "8. Medical record numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "9. Health plan beneficiary numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "10. Account numbers & certificate numbers"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "11. Biometric identifiers including finger and voice prints"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "12. Full-face photographic images")), /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles17.greenActionBtn,
+          style: styles17.primaryActionBtn,
           onPress: () => {
             Alert_default.alert("HIPAA Verified", "Safe Harbor rules verified. Export sanitized for clinical audit.");
             setActiveView("grid");
           }
         },
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.actionBtnText }, "Run Safe Harbor Sanitization")
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.primaryActionBtnText }, "Run Safe Harbor Sanitization")
       ))
     ) : activeView === "help" ? (
       /* Help View */
-      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.subDetailCard }, /* @__PURE__ */ import_react16.default.createElement(TouchableOpacity_default, { style: styles17.backRow, onPress: () => setActiveView("grid") }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.backText }, "\u2039 Back to Medical Reports")), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.subDetailTitle }, "Medical Reports Help & Guidance"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.subDetailDesc }, "This portal allows patients and authorized providers to review, export, and securely transfer clinical medical histories in accordance with ONC 2015 Edition Cures Update criteria."), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.identifierBox }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierHeading }, "Available Export Options:"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 View Summary of Care: Opens an interactive HTML view of your active CCD record."), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 Download Summary of Care: Generates a complete Continuity of Care Document file."), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 Customized Medical History Report: Filter by allergies, problems, or encounters."), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 Safe Harbor De-ID: Strips 18 HIPAA identifiers for research sharing.")))
+      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.detailCard }, /* @__PURE__ */ import_react16.default.createElement(TouchableOpacity_default, { style: styles17.backRow, onPress: () => setActiveView("grid") }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.backText }, "\u2039 Back to Medical Reports")), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.detailTitle }, "Medical Reports Help & Guidance"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.detailDesc }, "This portal allows patients and authorized providers to review, export, and securely transfer clinical medical histories in accordance with ONC 2015 Edition Cures Update criteria."), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.identifierBox }, /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierHeading }, "Available Export Options:"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 View Summary of Care: Opens an interactive HTML view of your active CCD record."), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 Download Summary of Care: Generates a complete Continuity of Care Document file."), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 Customized Medical History Report: Filter by allergies, problems, or encounters."), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.identifierItem }, "\u2022 Safe Harbor De-ID: Strips 18 HIPAA identifiers for research sharing.")))
     ) : (
-      /* Main 6 Cards Grid matching user screenshot */
-      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardsGrid }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.reportCard, { borderColor: "#16a34a" }] }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(LockIcon, { color: "#22c55e", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+      /* Main 6 Cards Grid (System-aligned Light Cards) */
+      /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardsGrid }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.reportCard, { borderColor: "#86efac" }] }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconBox, { backgroundColor: "#f0fdf4" }] }, /* @__PURE__ */ import_react16.default.createElement(LockIcon, { color: "#16a34a", size: 28 })), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardTitle }, "Safe Harbor De-ID"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardDesc }, "Scrub 18 HIPAA identifiers"), /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: [styles17.greenCardBtn, { backgroundColor: "#16a34a" }],
+          style: [styles17.cardActionBtn, { backgroundColor: "#16a34a" }],
           activeOpacity: 0.8,
           onPress: () => setActiveView("safe_harbor")
         },
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "Safe Harbor De-ID (\xA7 164.514)")
-      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(DocumentPlusIcon, { color: "#94a3b8", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardActionBtnText }, "Safe Harbor De-ID (\xA7 164.514)")
+      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconBox, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react16.default.createElement(DocumentPlusIcon, { color: "#2563eb", size: 28 })), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardTitle }, "Summary of Care"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardDesc }, "View active health chart"), /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: [styles17.greenCardBtn, { backgroundColor: "#22c55e" }],
+          style: [styles17.cardActionBtn, { backgroundColor: "#2563eb" }],
           activeOpacity: 0.8,
           onPress: handleViewSummary,
           disabled: downloading
         },
-        downloading ? /* @__PURE__ */ import_react16.default.createElement(ActivityIndicator_default, { size: "small", color: "#ffffff" }) : /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "View Summary of Care")
-      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(DownloadTrayIcon, { color: "#94a3b8", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+        downloading ? /* @__PURE__ */ import_react16.default.createElement(ActivityIndicator_default, { size: "small", color: "#ffffff" }) : /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardActionBtnText }, "View Summary of Care")
+      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconBox, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react16.default.createElement(DownloadTrayIcon, { color: "#2563eb", size: 28 })), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardTitle }, "Export Document"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardDesc }, "Save complete CCD HTML"), /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: [styles17.greenCardBtn, { backgroundColor: "#22c55e" }],
+          style: [styles17.cardActionBtn, { backgroundColor: "#2563eb" }],
           activeOpacity: 0.8,
           onPress: handleDownloadSummary,
           disabled: downloading
         },
-        downloading ? /* @__PURE__ */ import_react16.default.createElement(ActivityIndicator_default, { size: "small", color: "#ffffff" }) : /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "Download Summary of Care")
-      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(MedicalClipboardIcon, { color: "#94a3b8", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+        downloading ? /* @__PURE__ */ import_react16.default.createElement(ActivityIndicator_default, { size: "small", color: "#ffffff" }) : /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardActionBtnText }, "Download Summary of Care")
+      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconBox, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react16.default.createElement(MedicalClipboardIcon, { color: "#7c3aed", size: 28 })), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardTitle }, "History Report"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardDesc }, "Problems & visit records"), /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: [styles17.greenCardBtn, { backgroundColor: "#22c55e" }],
+          style: [styles17.cardActionBtn, { backgroundColor: "#7c3aed" }],
           activeOpacity: 0.8,
           onPress: handleViewSummary
         },
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "Customized Medical History Report")
-      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(DocumentFolderIcon, { color: "#94a3b8", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardActionBtnText }, "Customized Medical History")
+      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconBox, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react16.default.createElement(DocumentFolderIcon, { color: "#059669", size: 28 })), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardTitle }, "Record Documents"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardDesc }, "Clinical attachments"), /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: [styles17.greenCardBtn, { backgroundColor: "#22c55e" }],
+          style: [styles17.cardActionBtn, { backgroundColor: "#059669" }],
           activeOpacity: 0.8,
           onPress: handleDownloadSummary
         },
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "Download Medical Record Documents")
-      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.cardIconCenter }, /* @__PURE__ */ import_react16.default.createElement(HelpCircleIcon, { color: "#94a3b8", size: 44 })), /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardActionBtnText }, "Download Record Documents")
+      )), /* @__PURE__ */ import_react16.default.createElement(View_default, { style: styles17.reportCard }, /* @__PURE__ */ import_react16.default.createElement(View_default, { style: [styles17.cardIconBox, { backgroundColor: "#f1f5f9" }] }, /* @__PURE__ */ import_react16.default.createElement(HelpCircleIcon, { color: "#475569", size: 28 })), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardTitle }, "Guidance & FAQ"), /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.reportCardDesc }, "ONC 2015 Cures criteria"), /* @__PURE__ */ import_react16.default.createElement(
         TouchableOpacity_default,
         {
-          style: [styles17.greenCardBtn, { backgroundColor: "#3b82f6" }],
+          style: [styles17.cardActionBtn, { backgroundColor: "#475569" }],
           activeOpacity: 0.8,
           onPress: () => setActiveView("help")
         },
-        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardBtnText }, "Help")
+        /* @__PURE__ */ import_react16.default.createElement(Text_default, { style: styles17.cardActionBtnText }, "Help")
       )))
     ))));
   }
@@ -35509,19 +35509,18 @@ Problems: ${data.problems?.length || 0}`);
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: "rgba(15, 23, 42, 0.75)",
+      backgroundColor: "rgba(15, 23, 42, 0.45)",
       zIndex: 999,
       justifyContent: "flex-end",
       alignItems: "center"
     },
     sheetContainer: {
-      backgroundColor: "#0c1322",
-      // Dark navy surface matching user screenshot
+      backgroundColor: "#ffffff",
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      height: "92%",
+      height: "90%",
       width: "100%",
-      maxWidth: 640,
+      maxWidth: 500,
       display: "flex",
       flexDirection: "column",
       overflow: "hidden"
@@ -35530,24 +35529,42 @@ Problems: ${data.problems?.length || 0}`);
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      paddingHorizontal: 20,
-      paddingTop: 18,
+      paddingHorizontal: 18,
+      paddingTop: 16,
       paddingBottom: 14,
       borderBottomWidth: 1,
-      borderBottomColor: "#1e293b",
-      backgroundColor: "#0f172a"
+      borderBottomColor: "#f1f5f9"
+    },
+    headerTitleRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      flex: 1
+    },
+    iconBadge: {
+      width: 36,
+      height: 36,
+      borderRadius: 8,
+      backgroundColor: "#ecfdf5",
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: 10
     },
     headerTitle: {
-      fontSize: 18,
-      fontWeight: "700",
-      color: "#ffffff"
+      fontSize: 16.5,
+      fontWeight: "800",
+      color: "#0f172a"
+    },
+    headerSub: {
+      fontSize: 11.5,
+      color: "#64748b",
+      marginTop: 1
     },
     closeBtn: {
       padding: 6
     },
     closeBtnText: {
       fontSize: 16,
-      color: "#94a3b8",
+      color: "#64748b",
       fontWeight: "700"
     },
     scrollContent: {
@@ -35558,7 +35575,7 @@ Problems: ${data.problems?.length || 0}`);
       backgroundColor: "#f0fdf4",
       borderWidth: 1,
       borderColor: "#86efac",
-      borderRadius: 8,
+      borderRadius: 10,
       padding: 14,
       marginBottom: 16
     },
@@ -35604,49 +35621,62 @@ Problems: ${data.problems?.length || 0}`);
     cardsGrid: {
       flexDirection: "row",
       flexWrap: "wrap",
-      gap: 12,
+      gap: 10,
       justifyContent: "space-between"
     },
     reportCard: {
-      width: "48%",
-      backgroundColor: "#131e33",
-      // Exact card navy background
+      width: "48.5%",
+      backgroundColor: "#ffffff",
       borderWidth: 1,
-      borderColor: "#1e293b",
-      borderRadius: 10,
-      padding: 14,
+      borderColor: "#e2e8f0",
+      borderRadius: 12,
+      padding: 12,
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-between",
-      minHeight: 180
+      minHeight: 160
     },
-    cardIconCenter: {
-      flex: 1,
+    cardIconBox: {
+      width: 48,
+      height: 48,
+      borderRadius: 10,
       alignItems: "center",
       justifyContent: "center",
-      paddingVertical: 14
+      marginBottom: 8
     },
-    greenCardBtn: {
+    reportCardTitle: {
+      fontSize: 13,
+      fontWeight: "700",
+      color: "#0f172a",
+      textAlign: "center",
+      marginBottom: 2
+    },
+    reportCardDesc: {
+      fontSize: 10.5,
+      color: "#64748b",
+      textAlign: "center",
+      marginBottom: 10
+    },
+    cardActionBtn: {
       width: "100%",
-      paddingVertical: 10,
-      paddingHorizontal: 8,
+      paddingVertical: 8,
+      paddingHorizontal: 6,
       borderRadius: 6,
       alignItems: "center",
       justifyContent: "center"
     },
-    cardBtnText: {
+    cardActionBtnText: {
       color: "#ffffff",
-      fontSize: 11.5,
+      fontSize: 10.5,
       fontWeight: "700",
-      textAlign: "center",
-      lineHeight: 15
+      textAlign: "center"
     },
-    subDetailCard: {
-      backgroundColor: "#131e33",
+    detailCard: {
+      backgroundColor: "#ffffff",
       borderWidth: 1,
-      borderColor: "#1e293b",
-      borderRadius: 10,
+      borderColor: "#e2e8f0",
+      borderRadius: 12,
       padding: 16
     },
     backRow: {
@@ -35655,24 +35685,24 @@ Problems: ${data.problems?.length || 0}`);
     backText: {
       fontSize: 13,
       fontWeight: "700",
-      color: "#38bdf8"
+      color: "#2563eb"
     },
-    subDetailTitle: {
+    detailTitle: {
       fontSize: 16,
       fontWeight: "800",
-      color: "#ffffff",
+      color: "#0f172a",
       marginBottom: 8
     },
-    subDetailDesc: {
+    detailDesc: {
       fontSize: 12,
-      color: "#94a3b8",
+      color: "#64748b",
       lineHeight: 18,
       marginBottom: 14
     },
     identifierBox: {
-      backgroundColor: "#0c1322",
+      backgroundColor: "#f8fafc",
       borderWidth: 1,
-      borderColor: "#1e293b",
+      borderColor: "#e2e8f0",
       borderRadius: 8,
       padding: 12,
       marginBottom: 14
@@ -35680,22 +35710,22 @@ Problems: ${data.problems?.length || 0}`);
     identifierHeading: {
       fontSize: 11.5,
       fontWeight: "800",
-      color: "#22c55e",
+      color: "#0f172a",
       marginBottom: 6
     },
     identifierItem: {
       fontSize: 11,
-      color: "#cbd5e1",
+      color: "#475569",
       lineHeight: 16,
       marginBottom: 2
     },
-    greenActionBtn: {
+    primaryActionBtn: {
       backgroundColor: "#16a34a",
       borderRadius: 6,
       paddingVertical: 10,
       alignItems: "center"
     },
-    actionBtnText: {
+    primaryActionBtnText: {
       color: "#ffffff",
       fontSize: 12.5,
       fontWeight: "700"

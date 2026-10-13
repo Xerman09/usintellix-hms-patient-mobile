@@ -20,7 +20,8 @@ import {
   ShieldIcon,
   SettingsIcon,
   ChevronRightIcon,
-  LogOutIcon
+  LogOutIcon,
+  MegaphoneIcon
 } from './Icons';
 
 export default function SidebarDrawer({
@@ -81,6 +82,11 @@ export default function SidebarDrawer({
       id: 'reminders',
       label: 'Clinical Reminders',
       IconComponent: BellIcon
+    },
+    {
+      id: 'announcements',
+      label: 'Announcements & Alerts',
+      IconComponent: MegaphoneIcon
     },
     {
       id: 'recalls',

@@ -26,3 +26,9 @@ export function getAvatarUrl(path) {
   return `${CONFIG.BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
 }
 
+export function getMediaUrl(path) {
+  if (!path) return null;
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  return `${CONFIG.BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+}
+

@@ -29,8 +29,10 @@ import HealthRecordsModal from '../components/HealthRecordsModal';
 import MessagesModal from '../components/MessagesModal';
 import ClinicalRemindersModal from '../components/ClinicalRemindersModal';
 import MedicalReportsModal from '../components/MedicalReportsModal';
+import AnnouncementPopupModal from '../components/AnnouncementPopupModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
+import { AnnouncementsService } from '../api/announcements';
 
 export default function PatientDashboardScreen({ user, onLogout }) {
   const [currentView, setCurrentView] = useState('dashboard');
@@ -44,6 +46,8 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   const [showMedicalReports, setShowMedicalReports] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const [avatarError, setAvatarError] = useState(false);
+  const [announcements, setAnnouncements] = useState([]);
+  const [showAnnouncementPopup, setShowAnnouncementPopup] = useState(false);
 
   useEffect(() => {
     ProfileService.getProfile().then((res) => {
@@ -51,6 +55,16 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         setProfileData(res.data);
       }
     }).catch(() => {});
+
+    // Automatically check for active announcements after login
+    AnnouncementsService.getActiveAnnouncements().then((res) => {
+      if (res && res.success && Array.isArray(res.data) && res.data.length > 0) {
+        setAnnouncements(res.data);
+        setShowAnnouncementPopup(true);
+      }
+    }).catch((err) => {
+      console.warn('Failed to fetch announcements:', err);
+    });
   }, []);
 
   const rawAvatar = profileData?.avatar || profileData?.photo || user?.avatar || user?.photo;
@@ -336,6 +350,13 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         currentUser={user}
       />
 
+      {/* Automatic Announcement Broadcast Popup Modal */}
+      <AnnouncementPopupModal
+        visible={showAnnouncementPopup}
+        announcements={announcements}
+        onClose={() => setShowAnnouncementPopup(false)}
+      />
+
       {/* Full-Height Modern Sidebar Navigation Drawer */}
       <SidebarDrawer
         visible={drawerOpen}
@@ -349,6 +370,20 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           else if (navId === 'messages') setShowMessages(true);
           else if (navId === 'reminders') setShowClinicalReminders(true);
           else if (navId === 'recalls') setShowClinicalReminders(true);
+          else if (navId === 'announcements') {
+            if (announcements.length > 0) {
+              setShowAnnouncementPopup(true);
+            } else {
+              AnnouncementsService.getActiveAnnouncements().then((res) => {
+                if (res && res.success && Array.isArray(res.data) && res.data.length > 0) {
+                  setAnnouncements(res.data);
+                  setShowAnnouncementPopup(true);
+                } else {
+                  Alert.alert('Announcements', 'No active hospital announcements at this time.');
+                }
+              });
+            }
+          }
           else if (navId === 'settings' || navId === 'profile') setCurrentView('profile');
         }}
         onLogout={handleLogout}

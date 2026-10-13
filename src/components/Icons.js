@@ -441,4 +441,54 @@ export function CheckCircleIcon({ color = '#10b981', size = 18 }) {
   );
 }
 
+// 24. Close / X Icon
+export function CloseIcon({ color = '#64748b', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      strokeWidth={2.2}
+      paths={
+        <>
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </>
+      }
+    />
+  );
+}
+
+// 25. Megaphone / Broadcast Icon
+export function MegaphoneIcon({ color = '#0284c7', size = 20 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="m3 11 18-5v12L3 14v-3z" />
+          <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+        </>
+      }
+    />
+  );
+}
+
+// 26. Alert Triangle Icon
+export function AlertTriangleIcon({ color = '#eab308', size = 20 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      paths={
+        <>
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </>
+      }
+    />
+  );
+}
+
 

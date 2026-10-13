@@ -29,6 +29,7 @@
     "@babel/runtime": "^7.25.0",
     "@vitejs/plugin-react": "^6.1.2",
     "babel-loader": "^10.1.1",
+    "babel-preset-expo": "^57.0.15",
     "esbuild": "^0.28.2",
     "esbuild-server": "^0.3.0",
     "html-webpack-plugin": "^5.6.8",

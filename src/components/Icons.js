@@ -160,3 +160,23 @@ export function ChevronRightIcon({ color = '#94a3b8', size = 16 }) {
     </View>
   );
 }
+
+export function ChatIcon({ color = '#0284c7', size = 20 }) {
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{
+        width: size * 0.88,
+        height: size * 0.72,
+        borderWidth: 1.8,
+        borderColor: color,
+        borderRadius: 4,
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <View style={{ width: size * 0.45, height: 1.6, backgroundColor: color, marginBottom: 2 }} />
+        <View style={{ width: size * 0.3, height: 1.6, backgroundColor: color }} />
+      </View>
+    </View>
+  );
+}
+

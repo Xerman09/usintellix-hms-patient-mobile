@@ -16,11 +16,13 @@ import {
   PillIcon,
   RecordsIcon,
   BellIcon,
+  ChatIcon,
   ChevronRightIcon
 } from '../components/Icons';
 import AppointmentsModal from '../components/AppointmentsModal';
 import PrescriptionsModal from '../components/PrescriptionsModal';
 import HealthRecordsModal from '../components/HealthRecordsModal';
+import MessagesModal from '../components/MessagesModal';
 
 export default function PatientDashboardScreen({ user, onLogout }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -28,6 +30,8 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   const [showAppointments, setShowAppointments] = useState(false);
   const [showPrescriptions, setShowPrescriptions] = useState(false);
   const [showHealthRecords, setShowHealthRecords] = useState(false);
+  const [showMessages, setShowMessages] = useState(false);
+
 
   // Compute initials (e.g. "EA" for Erman Ace or from name)
   const firstName = user.first_name || 'Patient';
@@ -131,23 +135,17 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             <Text style={styles.gridCardDesc}>Lab results &amp; charts</Text>
           </TouchableOpacity>
 
-          {/* Card 4: Reminders */}
+          {/* Card 4: Messages */}
           <TouchableOpacity
             style={styles.gridCard}
             activeOpacity={0.7}
-            onPress={() => {
-              setReminderSet(!reminderSet);
-              Alert.alert(
-                !reminderSet ? 'Reminders Active' : 'Reminders Paused',
-                !reminderSet ? 'You will be notified before scheduled appointments.' : 'Clinical alerts paused.'
-              );
-            }}
+            onPress={() => setShowMessages(true)}
           >
-            <View style={[styles.cardIconCircle, { backgroundColor: '#fff7ed' }]}>
-              <BellIcon color="#ea580c" size={20} />
+            <View style={[styles.cardIconCircle, { backgroundColor: '#f0f9ff' }]}>
+              <ChatIcon color="#0284c7" size={20} />
             </View>
-            <Text style={styles.gridCardTitle}>Reminders</Text>
-            <Text style={styles.gridCardDesc}>Clinical alerts</Text>
+            <Text style={styles.gridCardTitle}>Messages</Text>
+            <Text style={styles.gridCardDesc}>Care team chat</Text>
           </TouchableOpacity>
 
         </View>
@@ -193,14 +191,24 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         onClose={() => setShowHealthRecords(false)}
       />
 
+      {/* Messages Interactive Bottom Sheet */}
+      <MessagesModal
+        visible={showMessages}
+        onClose={() => setShowMessages(false)}
+        currentUser={user}
+      />
+
       {/* Dropdown Menu when hamburger is pressed */}
       {drawerOpen && (
         <View style={styles.drawerDropdown}>
           <TouchableOpacity style={styles.drawerItem} onPress={() => setDrawerOpen(false)}>
             <Text style={styles.drawerItemText}>🏠 Dashboard Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerItem} onPress={() => setDrawerOpen(false)}>
+          <TouchableOpacity style={styles.drawerItem} onPress={() => { setDrawerOpen(false); setShowHealthRecords(true); }}>
             <Text style={styles.drawerItemText}>📁 My Medical Records</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.drawerItem} onPress={() => { setDrawerOpen(false); setShowMessages(true); }}>
+            <Text style={styles.drawerItemText}>💬 Care Team Messages</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.drawerItem} onPress={() => setDrawerOpen(false)}>
             <Text style={styles.drawerItemText}>⚙️ Portal Settings</Text>

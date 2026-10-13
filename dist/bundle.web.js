@@ -1088,7 +1088,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState9(initialState) {
+          function useState10(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1096,11 +1096,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef10(initialValue) {
+          function useRef11(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect9(create2, deps) {
+          function useEffect10(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1883,15 +1883,15 @@
           exports.useContext = useContext5;
           exports.useDebugValue = useDebugValue3;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect9;
+          exports.useEffect = useEffect10;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect2;
           exports.useMemo = useMemo4;
           exports.useReducer = useReducer;
-          exports.useRef = useRef10;
-          exports.useState = useState9;
+          exports.useRef = useRef11;
+          exports.useState = useState10;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -3295,18 +3295,18 @@
           var className = "";
           var inlineStyle = null;
           var nextCache = disableCache ? null : cache4;
-          var styles17 = new Array(arguments.length);
+          var styles18 = new Array(arguments.length);
           for (var i = 0; i < arguments.length; i++) {
-            styles17[i] = arguments[i];
+            styles18[i] = arguments[i];
           }
-          while (styles17.length > 0) {
-            var possibleStyle = styles17.pop();
+          while (styles18.length > 0) {
+            var possibleStyle = styles18.pop();
             if (possibleStyle == null || possibleStyle === false) {
               continue;
             }
             if (Array.isArray(possibleStyle)) {
               for (var _i = 0; _i < possibleStyle.length; _i++) {
-                styles17.push(possibleStyle[_i]);
+                styles18.push(possibleStyle[_i]);
               }
               continue;
             }
@@ -4290,9 +4290,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React27 = require_react();
+          var React28 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React27.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React28.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -5899,7 +5899,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React27.Children.forEach(props.children, function(child) {
+                  React28.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -6395,15 +6395,15 @@
             };
           }
           var warnValidStyle$1 = warnValidStyle;
-          function createDangerousStringForStyles(styles17) {
+          function createDangerousStringForStyles(styles18) {
             {
               var serialized = "";
               var delimiter = "";
-              for (var styleName in styles17) {
-                if (!styles17.hasOwnProperty(styleName)) {
+              for (var styleName in styles18) {
+                if (!styles18.hasOwnProperty(styleName)) {
                   continue;
                 }
-                var styleValue = styles17[styleName];
+                var styleValue = styles18[styleName];
                 if (styleValue != null) {
                   var isCustomProperty = styleName.indexOf("--") === 0;
                   serialized += delimiter + (isCustomProperty ? styleName : hyphenateStyleName2(styleName)) + ":";
@@ -6414,19 +6414,19 @@
               return serialized || null;
             }
           }
-          function setValueForStyles2(node, styles17) {
+          function setValueForStyles2(node, styles18) {
             var style2 = node.style;
-            for (var styleName in styles17) {
-              if (!styles17.hasOwnProperty(styleName)) {
+            for (var styleName in styles18) {
+              if (!styles18.hasOwnProperty(styleName)) {
                 continue;
               }
               var isCustomProperty = styleName.indexOf("--") === 0;
               {
                 if (!isCustomProperty) {
-                  warnValidStyle$1(styleName, styles17[styleName]);
+                  warnValidStyle$1(styleName, styles18[styleName]);
                 }
               }
-              var styleValue = dangerousStyleValue2(styleName, styles17[styleName], isCustomProperty);
+              var styleValue = dangerousStyleValue2(styleName, styles18[styleName], isCustomProperty);
               if (styleName === "float") {
                 styleName = "cssFloat";
               }
@@ -6440,9 +6440,9 @@
           function isValueEmpty(value) {
             return value == null || typeof value === "boolean" || value === "";
           }
-          function expandShorthandMap(styles17) {
+          function expandShorthandMap(styles18) {
             var expanded = {};
-            for (var key in styles17) {
+            for (var key in styles18) {
               var longhands = shorthandToLonghand[key] || [key];
               for (var i = 0; i < longhands.length; i++) {
                 expanded[longhands[i]] = key;
@@ -25584,7 +25584,7 @@
   });
 
   // index.web.js
-  var import_react16 = __toESM(require_react());
+  var import_react17 = __toESM(require_react());
 
   // node_modules/react-native-web/dist/modules/AccessibilityUtil/isDisabled.js
   var isDisabled = (props) => props.disabled || Array.isArray(props.accessibilityStates) && props.accessibilityStates.indexOf("disabled") > -1;
@@ -26964,7 +26964,7 @@
     shadow: true,
     textShadow: true
   };
-  function customStyleq(styles17, options) {
+  function customStyleq(styles18, options) {
     if (options === void 0) {
       options = {};
     }
@@ -26978,7 +26978,7 @@
         }
         return preprocess(style, _objectSpread2(_objectSpread2({}, defaultPreprocessOptions), preprocessOptions));
       }
-    })(styles17);
+    })(styles18);
   }
   function insertRules(compiledOrderedRules) {
     compiledOrderedRules.forEach((_ref) => {
@@ -27010,9 +27010,9 @@
   var absoluteFill = create({
     x: _objectSpread2({}, absoluteFillObject)
   }).x;
-  function create(styles17) {
-    Object.keys(styles17).forEach((key) => {
-      var styleObj = styles17[key];
+  function create(styles18) {
+    Object.keys(styles18).forEach((key) => {
+      var styleObj = styles18[key];
       if (styleObj != null && styleObj.$$css !== true) {
         var compiledStyles;
         if (key.indexOf("$raw") > -1) {
@@ -27020,14 +27020,14 @@
         } else {
           if (true) {
             validate(styleObj);
-            styles17[key] = Object.freeze(styleObj);
+            styles18[key] = Object.freeze(styleObj);
           }
           compiledStyles = compileAndInsertAtomic(styleObj);
         }
         staticStyleMap.set(styleObj, compiledStyles);
       }
     });
-    return styles17;
+    return styles18;
   }
   function compose(style1, style2) {
     if (true) {
@@ -27040,10 +27040,10 @@
     return [style1, style2];
   }
   function flatten() {
-    for (var _len = arguments.length, styles17 = new Array(_len), _key = 0; _key < _len; _key++) {
-      styles17[_key] = arguments[_key];
+    for (var _len = arguments.length, styles18 = new Array(_len), _key = 0; _key < _len; _key++) {
+      styles18[_key] = arguments[_key];
     }
-    var flatArray = styles17.flat(Infinity);
+    var flatArray = styles18.flat(Infinity);
     var result = {};
     for (var i = 0; i < flatArray.length; i++) {
       var style = flatArray[i];
@@ -27059,12 +27059,12 @@
       textContent: sheet.getTextContent()
     };
   }
-  function StyleSheet(styles17, options) {
+  function StyleSheet(styles18, options) {
     if (options === void 0) {
       options = {};
     }
     var isRTL = options.writingDirection === "rtl";
-    var styleProps2 = customStyleq(styles17, options);
+    var styleProps2 = customStyleq(styles18, options);
     if (Array.isArray(styleProps2) && styleProps2[1] != null) {
       styleProps2[1] = inline(styleProps2[1], isRTL);
     }
@@ -27595,14 +27595,14 @@
   var dangerousStyleValue_default = dangerousStyleValue;
 
   // node_modules/react-native-web/dist/modules/setValueForStyles/index.js
-  function setValueForStyles(node, styles17) {
+  function setValueForStyles(node, styles18) {
     var style = node.style;
-    for (var styleName in styles17) {
-      if (!styles17.hasOwnProperty(styleName)) {
+    for (var styleName in styles18) {
+      if (!styles18.hasOwnProperty(styleName)) {
         continue;
       }
       var isCustomProperty = styleName.indexOf("--") === 0;
-      var styleValue = dangerousStyleValue_default(styleName, styles17[styleName], isCustomProperty);
+      var styleValue = dangerousStyleValue_default(styleName, styles18[styleName], isCustomProperty);
       if (styleName === "float") {
         styleName = "cssFloat";
       }
@@ -31282,7 +31282,7 @@
   var TextInput_default = TextInput;
 
   // App.js
-  var import_react15 = __toESM(require_react());
+  var import_react16 = __toESM(require_react());
 
   // src/screens/LoginScreen.js
   var import_react10 = __toESM(require_react());
@@ -31505,6 +31505,17 @@
   }
   function BellIcon({ color = "#ea580c", size = 20 }) {
     return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size, alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size * 0.7, height: size * 0.75, borderTopLeftRadius: size * 0.35, borderTopRightRadius: size * 0.35, borderWidth: 1.8, borderColor: color, borderBottomWidth: 2.5, alignItems: "center", justifyContent: "flex-end" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: 3, height: 2, backgroundColor: color, borderRadius: 1 } })));
+  }
+  function ChatIcon({ color = "#0284c7", size = 20 }) {
+    return /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size, height: size, alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: {
+      width: size * 0.88,
+      height: size * 0.72,
+      borderWidth: 1.8,
+      borderColor: color,
+      borderRadius: 4,
+      alignItems: "center",
+      justifyContent: "center"
+    } }, /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size * 0.45, height: 1.6, backgroundColor: color, marginBottom: 2 } }), /* @__PURE__ */ import_react9.default.createElement(View_default, { style: { width: size * 0.3, height: 1.6, backgroundColor: color } })));
   }
 
   // assets/logo.png
@@ -32206,7 +32217,7 @@
   });
 
   // src/screens/PatientDashboardScreen.js
-  var import_react14 = __toESM(require_react());
+  var import_react15 = __toESM(require_react());
 
   // src/components/AppointmentsModal.js
   var import_react11 = __toESM(require_react());
@@ -33304,13 +33315,1312 @@
     }
   });
 
+  // src/components/MessagesModal.js
+  var import_react14 = __toESM(require_react());
+
+  // src/api/messages.js
+  var MessagingService = {
+    /**
+     * "My Messages" inbox list: ?scope=all|active|inactive
+     * Returns flat list matching web table: sender_name, type_name, patient_name, body, created_at, status_name, is_unread, deleted_at, etc.
+     */
+    async getMyMessages(scope = "active") {
+      return await apiRequest(`/messages/mine?scope=${encodeURIComponent(scope)}`, {
+        method: "GET"
+      });
+    },
+    /**
+     * List conversations the logged-in patient participates in
+     */
+    async getConversations() {
+      return await apiRequest("/messages", {
+        method: "GET"
+      });
+    },
+    /**
+     * Get single conversation details with participants
+     */
+    async getConversation(conversationId) {
+      return await apiRequest(`/messages/conversation?conversation_id=${conversationId}`, {
+        method: "GET"
+      });
+    },
+    /**
+     * Get messages inside a conversation thread
+     */
+    async getConversationMessages(conversationId) {
+      return await apiRequest(`/messages/conversation/messages?conversation_id=${conversationId}`, {
+        method: "GET"
+      });
+    },
+    /**
+     * Send a message inside an existing conversation
+     */
+    async sendMessage(conversationId, body, extra = {}) {
+      return await apiRequest("/messages/conversation/messages", {
+        method: "POST",
+        body: JSON.stringify({
+          conversation_id: conversationId,
+          body,
+          ...extra
+        })
+      });
+    },
+    /**
+     * Mark a conversation as read
+     */
+    async markRead(conversationId) {
+      return await apiRequest("/messages/conversation/read", {
+        method: "POST",
+        body: JSON.stringify({
+          conversation_id: conversationId
+        })
+      });
+    },
+    /**
+     * Soft-delete a message
+     */
+    async deleteMessage(messageId) {
+      return await apiRequest("/messages/conversation/messages", {
+        method: "DELETE",
+        body: JSON.stringify({
+          message_id: messageId
+        })
+      });
+    },
+    /**
+     * Get care team members / recipients available for the patient
+     */
+    async getRecipients() {
+      return await apiRequest("/messages/recipients", {
+        method: "GET"
+      });
+    },
+    /**
+     * Get message types
+     */
+    async getMessageTypes() {
+      return await apiRequest("/messages/types", {
+        method: "GET"
+      });
+    },
+    /**
+     * Get message statuses
+     */
+    async getMessageStatuses() {
+      return await apiRequest("/messages/statuses", {
+        method: "GET"
+      });
+    },
+    /**
+     * Start a new conversation thread with participant IDs and optional subject
+     */
+    async startConversation(participantIds, subject, initialMessage, extra = {}) {
+      const res = await apiRequest("/messages", {
+        method: "POST",
+        body: JSON.stringify({
+          participant_ids: participantIds,
+          subject
+        })
+      });
+      if (res.success && res.data?.conversation_id && initialMessage) {
+        await this.sendMessage(res.data.conversation_id, initialMessage, extra);
+      }
+      return res;
+    },
+    /**
+     * Dated Reminders
+     */
+    async getMyReminders() {
+      return await apiRequest("/reminders/mine", {
+        method: "GET"
+      });
+    },
+    /**
+     * Upcoming Recalls
+     */
+    async getMyRecalls() {
+      return await apiRequest("/recalls/mine", {
+        method: "GET"
+      });
+    }
+  };
+
+  // src/components/MessagesModal.js
+  function MessagesModal({ visible, onClose, currentUser }) {
+    const [activeTab, setActiveTab] = (0, import_react14.useState)("messages");
+    const [scopeFilter, setScopeFilter] = (0, import_react14.useState)("active");
+    const [myMessages, setMyMessages] = (0, import_react14.useState)([]);
+    const [reminders, setReminders] = (0, import_react14.useState)([]);
+    const [recalls, setRecalls] = (0, import_react14.useState)([]);
+    const [loading, setLoading] = (0, import_react14.useState)(false);
+    const [selectedIds, setSelectedIds] = (0, import_react14.useState)(/* @__PURE__ */ new Set());
+    const [activeConversationId, setActiveConversationId] = (0, import_react14.useState)(null);
+    const [activeConversation, setActiveConversation] = (0, import_react14.useState)(null);
+    const [threadMessages, setThreadMessages] = (0, import_react14.useState)([]);
+    const [threadLoading, setThreadLoading] = (0, import_react14.useState)(false);
+    const [replyText, setReplyText] = (0, import_react14.useState)("");
+    const [showAddModal, setShowAddModal] = (0, import_react14.useState)(false);
+    const [recipients, setRecipients] = (0, import_react14.useState)([]);
+    const [selectedRecipientId, setSelectedRecipientId] = (0, import_react14.useState)("");
+    const [messageTypes, setMessageTypes] = (0, import_react14.useState)([]);
+    const [selectedTypeId, setSelectedTypeId] = (0, import_react14.useState)("");
+    const [subject, setSubject] = (0, import_react14.useState)("");
+    const [messageBody, setMessageBody] = (0, import_react14.useState)("");
+    const [submitting, setSubmitting] = (0, import_react14.useState)(false);
+    const chatScrollRef = (0, import_react14.useRef)(null);
+    (0, import_react14.useEffect)(() => {
+      if (visible) {
+        loadTabData(activeTab, scopeFilter);
+      } else {
+        setActiveConversationId(null);
+        setActiveConversation(null);
+        setThreadMessages([]);
+        setShowAddModal(false);
+        setSelectedIds(/* @__PURE__ */ new Set());
+      }
+    }, [visible, activeTab, scopeFilter]);
+    const loadTabData = async (tab, scope) => {
+      setLoading(true);
+      try {
+        if (tab === "messages") {
+          const res = await MessagingService.getMyMessages(scope);
+          if (res.success && Array.isArray(res.data)) {
+            setMyMessages(res.data);
+          } else {
+            setMyMessages([]);
+          }
+        } else if (tab === "reminders") {
+          const res = await MessagingService.getMyReminders();
+          if (res.success && Array.isArray(res.data)) {
+            setReminders(res.data);
+          } else {
+            setReminders([]);
+          }
+        } else if (tab === "recalls") {
+          const res = await MessagingService.getMyRecalls();
+          if (res.success && Array.isArray(res.data)) {
+            setRecalls(res.data);
+          } else {
+            setRecalls([]);
+          }
+        }
+      } catch (e) {
+        console.error("Error loading messaging data:", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    const handleOpenAddMessage = async () => {
+      setShowAddModal(true);
+      setSubject("");
+      setMessageBody("");
+      try {
+        const [recRes, typesRes] = await Promise.all([
+          MessagingService.getRecipients(),
+          MessagingService.getMessageTypes()
+        ]);
+        if (recRes.success && Array.isArray(recRes.data)) {
+          setRecipients(recRes.data);
+          if (recRes.data.length > 0) {
+            setSelectedRecipientId(recRes.data[0].id.toString());
+          }
+        }
+        if (typesRes.success && Array.isArray(typesRes.data)) {
+          setMessageTypes(typesRes.data);
+          if (typesRes.data.length > 0) {
+            setSelectedTypeId(typesRes.data[0].id.toString());
+          }
+        }
+      } catch (e) {
+        console.error("Error opening compose dialog:", e);
+      }
+    };
+    const handleSendNewMessage = async () => {
+      if (!selectedRecipientId) {
+        Alert_default.alert("Required", "Please select a recipient from your care team.");
+        return;
+      }
+      if (!messageBody.trim()) {
+        Alert_default.alert("Required", "Please write your message body.");
+        return;
+      }
+      setSubmitting(true);
+      try {
+        const res = await MessagingService.startConversation(
+          [parseInt(selectedRecipientId, 10)],
+          subject.trim() || "Portal Message",
+          messageBody.trim(),
+          {
+            type_id: selectedTypeId ? parseInt(selectedTypeId, 10) : null
+          }
+        );
+        if (res.success) {
+          Alert_default.alert("Success", "Message sent successfully.");
+          setShowAddModal(false);
+          setMessageBody("");
+          setSubject("");
+          await loadTabData("messages", scopeFilter);
+        } else {
+          Alert_default.alert("Error", res.message || "Failed to send message.");
+        }
+      } catch (e) {
+        console.error("Send error:", e);
+        Alert_default.alert("Error", "Failed to send message.");
+      } finally {
+        setSubmitting(false);
+      }
+    };
+    const handleOpenThread = async (msg) => {
+      if (!msg.conversation_id) return;
+      setActiveConversationId(msg.conversation_id);
+      setThreadLoading(true);
+      try {
+        const [convRes, msgsRes] = await Promise.all([
+          MessagingService.getConversation(msg.conversation_id),
+          MessagingService.getConversationMessages(msg.conversation_id)
+        ]);
+        if (convRes.success && convRes.data) {
+          setActiveConversation(convRes.data);
+        }
+        if (msgsRes.success && Array.isArray(msgsRes.data)) {
+          setThreadMessages(msgsRes.data);
+        } else {
+          setThreadMessages([]);
+        }
+        await MessagingService.markRead(msg.conversation_id);
+        setMyMessages(
+          (prev) => prev.map(
+            (m2) => m2.conversation_id === msg.conversation_id ? { ...m2, is_unread: 0 } : m2
+          )
+        );
+      } catch (e) {
+        console.error("Error opening thread:", e);
+      } finally {
+        setThreadLoading(false);
+      }
+    };
+    const handleSendReply = async () => {
+      if (!replyText.trim() || !activeConversationId) return;
+      const bodyToSend = replyText.trim();
+      setReplyText("");
+      setSubmitting(true);
+      try {
+        const res = await MessagingService.sendMessage(activeConversationId, bodyToSend);
+        if (res.success && res.data) {
+          setThreadMessages((prev) => [...prev, res.data]);
+          loadTabData("messages", scopeFilter);
+        } else {
+          Alert_default.alert("Error", res.message || "Failed to send reply.");
+          setReplyText(bodyToSend);
+        }
+      } catch (e) {
+        console.error("Error replying:", e);
+        Alert_default.alert("Error", "Failed to send reply.");
+        setReplyText(bodyToSend);
+      } finally {
+        setSubmitting(false);
+      }
+    };
+    const toggleSelectRow = (id2) => {
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        if (next.has(id2)) {
+          next.delete(id2);
+        } else {
+          next.add(id2);
+        }
+        return next;
+      });
+    };
+    const handleDeleteSelected = async () => {
+      if (selectedIds.size === 0) return;
+      Alert_default.alert(
+        "Delete Messages",
+        `Delete ${selectedIds.size} selected message(s)?`,
+        [
+          { text: "Cancel", style: "cancel" },
+          {
+            text: "Delete",
+            style: "destructive",
+            onPress: async () => {
+              setLoading(true);
+              try {
+                for (const id2 of Array.from(selectedIds)) {
+                  await MessagingService.deleteMessage(id2);
+                }
+                setSelectedIds(/* @__PURE__ */ new Set());
+                await loadTabData("messages", scopeFilter);
+              } catch (e) {
+                console.error("Delete error:", e);
+              } finally {
+                setLoading(false);
+              }
+            }
+          }
+        ]
+      );
+    };
+    if (!visible) return null;
+    return /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.overlay }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.sheetContainer }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.sheetHeader }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.headerTitleRow }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.iconBadge }, /* @__PURE__ */ import_react14.default.createElement(ChatIcon, { color: "#2563eb", size: 18 })), /* @__PURE__ */ import_react14.default.createElement(View_default, null, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.headerTitle }, "Messages"), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.headerSub }, "Send and manage messages, reminders, and recalls."))), /* @__PURE__ */ import_react14.default.createElement(
+      TouchableOpacity_default,
+      {
+        onPress: onClose,
+        style: styles15.closeBtn,
+        hitSlop: { top: 10, bottom: 10, left: 10, right: 10 }
+      },
+      /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.closeBtnText }, "\u2715")
+    )), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.tabBarWrapper }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.tabBar }, /* @__PURE__ */ import_react14.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: [styles15.tabBtn, activeTab === "messages" && styles15.tabBtnActive],
+        onPress: () => {
+          setActiveTab("messages");
+          setActiveConversationId(null);
+        }
+      },
+      /* @__PURE__ */ import_react14.default.createElement(
+        Text_default,
+        {
+          style: [
+            styles15.tabBtnText,
+            activeTab === "messages" && styles15.tabBtnTextActive
+          ]
+        },
+        "Messages"
+      )
+    ), /* @__PURE__ */ import_react14.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: [styles15.tabBtn, activeTab === "reminders" && styles15.tabBtnActive],
+        onPress: () => {
+          setActiveTab("reminders");
+          setActiveConversationId(null);
+        }
+      },
+      /* @__PURE__ */ import_react14.default.createElement(
+        Text_default,
+        {
+          style: [
+            styles15.tabBtnText,
+            activeTab === "reminders" && styles15.tabBtnTextActive
+          ]
+        },
+        "Reminders"
+      )
+    ), /* @__PURE__ */ import_react14.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: [styles15.tabBtn, activeTab === "recalls" && styles15.tabBtnActive],
+        onPress: () => {
+          setActiveTab("recalls");
+          setActiveConversationId(null);
+        }
+      },
+      /* @__PURE__ */ import_react14.default.createElement(
+        Text_default,
+        {
+          style: [
+            styles15.tabBtnText,
+            activeTab === "recalls" && styles15.tabBtnTextActive
+          ]
+        },
+        "Recalls"
+      )
+    ))), activeConversationId ? (
+      /* ================= CHAT THREAD VIEW ================= */
+      /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.threadContainer }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.threadHeader }, /* @__PURE__ */ import_react14.default.createElement(
+        TouchableOpacity_default,
+        {
+          onPress: () => {
+            setActiveConversationId(null);
+            setActiveConversation(null);
+            loadTabData("messages", scopeFilter);
+          },
+          style: styles15.backBtn
+        },
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.backBtnText }, "\u2039 Back")
+      ), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: { flex: 1 } }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.threadSubject, numberOfLines: 1 }, activeConversation?.subject || "Message Thread"), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.threadParticipants, numberOfLines: 1 }, activeConversation?.participants?.map((p) => p.display_name).join(", ") || "Care Team"))), threadLoading ? /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.loadingArea }, /* @__PURE__ */ import_react14.default.createElement(ActivityIndicator_default, { size: "small", color: "#2563eb" })) : /* @__PURE__ */ import_react14.default.createElement(
+        ScrollView_default,
+        {
+          ref: chatScrollRef,
+          style: styles15.threadMessagesScroll,
+          contentContainerStyle: styles15.threadMessagesContent,
+          onContentSizeChange: () => chatScrollRef.current?.scrollToEnd({ animated: true })
+        },
+        threadMessages.length === 0 ? /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.emptyDesc }, "No messages in this thread.") : threadMessages.map((m2, idx) => {
+          const isMe = m2.sender_id === (currentUser?.id || 7);
+          return /* @__PURE__ */ import_react14.default.createElement(
+            View_default,
+            {
+              key: m2.id || idx,
+              style: [
+                styles15.bubbleWrap,
+                isMe ? styles15.bubbleWrapRight : styles15.bubbleWrapLeft
+              ]
+            },
+            /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.bubbleSender }, isMe ? "You" : m2.sender_name || "Care Team"),
+            /* @__PURE__ */ import_react14.default.createElement(
+              View_default,
+              {
+                style: [
+                  styles15.bubbleBox,
+                  isMe ? styles15.bubbleBoxMe : styles15.bubbleBoxThem
+                ]
+              },
+              /* @__PURE__ */ import_react14.default.createElement(
+                Text_default,
+                {
+                  style: [
+                    styles15.bubbleText,
+                    isMe ? styles15.bubbleTextMe : styles15.bubbleTextThem
+                  ]
+                },
+                m2.body
+              )
+            ),
+            /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.bubbleTime }, m2.created_at ? new Date(m2.created_at).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit"
+            }) : "")
+          );
+        })
+      ), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.replyBar }, /* @__PURE__ */ import_react14.default.createElement(
+        TextInput_default,
+        {
+          style: styles15.replyInput,
+          placeholder: "Type reply...",
+          placeholderTextColor: "#94a3b8",
+          value: replyText,
+          onChangeText: setReplyText,
+          multiline: true
+        }
+      ), /* @__PURE__ */ import_react14.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: [
+            styles15.replyBtn,
+            !replyText.trim() && { opacity: 0.5 }
+          ],
+          onPress: handleSendReply,
+          disabled: submitting || !replyText.trim()
+        },
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.replyBtnText }, "Send")
+      )))
+    ) : activeTab === "messages" ? (
+      /* ================= MY MESSAGES TAB ================= */
+      /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.panelContainer }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.panelHeaderRow }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.panelTitle }, "My Messages"), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.scopeFilterRow }, ["active", "all", "inactive"].map((sc) => /* @__PURE__ */ import_react14.default.createElement(
+        TouchableOpacity_default,
+        {
+          key: sc,
+          style: [
+            styles15.scopeFilterBtn,
+            scopeFilter === sc && styles15.scopeFilterBtnActive
+          ],
+          onPress: () => setScopeFilter(sc)
+        },
+        /* @__PURE__ */ import_react14.default.createElement(
+          Text_default,
+          {
+            style: [
+              styles15.scopeFilterBtnText,
+              scopeFilter === sc && styles15.scopeFilterBtnTextActive
+            ]
+          },
+          sc === "active" ? "Show Active" : sc === "all" ? "All" : "Inactive"
+        )
+      )))), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.toolbarRow }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.countPill }, /* @__PURE__ */ import_react14.default.createElement(ChatIcon, { color: "#2563eb", size: 13 }), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.countPillText }, myMessages.length, " ", myMessages.length === 1 ? "message" : "messages")), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.toolbarActions }, /* @__PURE__ */ import_react14.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: styles15.addMessageBtn,
+          onPress: handleOpenAddMessage,
+          activeOpacity: 0.8
+        },
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.addMessageBtnText }, "+ Add New Message")
+      ), /* @__PURE__ */ import_react14.default.createElement(
+        TouchableOpacity_default,
+        {
+          style: [
+            styles15.deleteMessageBtn,
+            selectedIds.size === 0 && styles15.deleteMessageBtnDisabled
+          ],
+          onPress: handleDeleteSelected,
+          disabled: selectedIds.size === 0,
+          activeOpacity: 0.8
+        },
+        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.deleteMessageBtnText }, "Delete Message")
+      ))), loading ? /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.loadingArea }, /* @__PURE__ */ import_react14.default.createElement(ActivityIndicator_default, { size: "small", color: "#2563eb" }), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.loadingText }, "Loading messages...")) : myMessages.length === 0 ? /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.emptyArea }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.emptyTitle }, "No messages found"), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.emptyDesc }, 'Try adjusting your filters, or tap "+ Add New Message" to contact your doctor.')) : /* @__PURE__ */ import_react14.default.createElement(
+        ScrollView_default,
+        {
+          style: styles15.cardsScroll,
+          contentContainerStyle: { paddingBottom: 30 },
+          showsVerticalScrollIndicator: false
+        },
+        myMessages.map((m2) => {
+          const isSelected = selectedIds.has(m2.id);
+          const isUnread = Boolean(Number(m2.is_unread));
+          const isInactive = m2.deleted_at !== null;
+          const fromLabel = m2.sender_id === (currentUser?.id || 7) ? "You" : m2.sender_name || "Care Team";
+          return /* @__PURE__ */ import_react14.default.createElement(
+            TouchableOpacity_default,
+            {
+              key: m2.id,
+              style: [
+                styles15.msgCard,
+                isSelected && styles15.msgCardSelected,
+                isUnread && styles15.msgCardUnread
+              ],
+              onPress: () => handleOpenThread(m2),
+              activeOpacity: 0.7
+            },
+            /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.cardTopRow }, /* @__PURE__ */ import_react14.default.createElement(
+              TouchableOpacity_default,
+              {
+                style: styles15.checkboxTouch,
+                onPress: () => toggleSelectRow(m2.id),
+                hitSlop: { top: 8, bottom: 8, left: 8, right: 8 }
+              },
+              /* @__PURE__ */ import_react14.default.createElement(
+                View_default,
+                {
+                  style: [
+                    styles15.checkboxSquare,
+                    isSelected && styles15.checkboxSquareChecked
+                  ]
+                },
+                isSelected && /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.checkboxCheckText }, "\u2713")
+              )
+            ), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: { flex: 1, marginLeft: 8 } }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: { flexDirection: "row", alignItems: "center", gap: 6 } }, isUnread && /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.unreadDot }), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: [styles15.cardSender, isUnread && styles15.cardSenderBold] }, fromLabel)), m2.type_name && /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.cardType }, m2.type_name)), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: { alignItems: "flex-end" } }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.cardDate }, m2.created_at ? new Date(m2.created_at).toLocaleDateString([], {
+              month: "short",
+              day: "numeric"
+            }) : ""), /* @__PURE__ */ import_react14.default.createElement(
+              View_default,
+              {
+                style: [
+                  styles15.statusBadge,
+                  isInactive ? styles15.statusBadgeInactive : styles15.statusBadgeActive
+                ]
+              },
+              /* @__PURE__ */ import_react14.default.createElement(
+                Text_default,
+                {
+                  style: [
+                    styles15.statusBadgeText,
+                    isInactive ? styles15.statusBadgeTextInactive : styles15.statusBadgeTextActive
+                  ]
+                },
+                isInactive ? "Inactive" : m2.status_name || "Active"
+              )
+            ))),
+            /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.cardBody, numberOfLines: 2 }, m2.body)
+          );
+        })
+      ))
+    ) : activeTab === "reminders" ? (
+      /* ================= REMINDERS TAB ================= */
+      /* @__PURE__ */ import_react14.default.createElement(ScrollView_default, { contentContainerStyle: styles15.subTabScroll, showsVerticalScrollIndicator: false }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.panelHeaderRow }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.panelTitle }, "Dated Reminders")), loading ? /* @__PURE__ */ import_react14.default.createElement(ActivityIndicator_default, { size: "small", color: "#2563eb", style: { marginTop: 20 } }) : reminders.length === 0 ? /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.emptyArea }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.emptyTitle }, "No Reminders"), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.emptyDesc }, "No dated clinical reminders recorded for this account.")) : reminders.map((r) => /* @__PURE__ */ import_react14.default.createElement(View_default, { key: r.id, style: styles15.miniCard }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.miniCardHeader }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.miniCardTitle }, r.title || r.body || "Clinical Reminder"), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.miniCardDate }, r.due_date || r.created_at?.slice(0, 10))), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.miniCardDesc }, r.notes || r.body || ""))))
+    ) : (
+      /* ================= RECALLS TAB ================= */
+      /* @__PURE__ */ import_react14.default.createElement(ScrollView_default, { contentContainerStyle: styles15.subTabScroll, showsVerticalScrollIndicator: false }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.panelHeaderRow }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.panelTitle }, "Upcoming Recalls")), loading ? /* @__PURE__ */ import_react14.default.createElement(ActivityIndicator_default, { size: "small", color: "#2563eb", style: { marginTop: 20 } }) : recalls.length === 0 ? /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.emptyArea }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.emptyTitle }, "No Upcoming Recalls"), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.emptyDesc }, "No pending recall visits or preventive health checks due.")) : recalls.map((rec) => /* @__PURE__ */ import_react14.default.createElement(View_default, { key: rec.id, style: styles15.miniCard }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.miniCardHeader }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.miniCardTitle }, rec.reason || rec.recall_reason || "Follow-up Screening"), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.miniCardDate }, rec.recall_date || rec.due_date || "")), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.miniCardDesc }, rec.notes || "Routine healthcare recall schedule."))))
+    ), showAddModal && /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.innerModalOverlay }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.innerModalCard }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.innerModalHeader }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.innerModalTitle }, "New Message"), /* @__PURE__ */ import_react14.default.createElement(TouchableOpacity_default, { onPress: () => setShowAddModal(false) }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.closeBtnText }, "\u2715"))), /* @__PURE__ */ import_react14.default.createElement(ScrollView_default, { contentContainerStyle: styles15.innerModalBody }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.inputLabel }, "RECIPIENT *"), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.recipientSelectorList }, recipients.map((rec) => {
+      const isSel = selectedRecipientId === rec.id.toString();
+      return /* @__PURE__ */ import_react14.default.createElement(
+        TouchableOpacity_default,
+        {
+          key: rec.id,
+          style: [
+            styles15.recipientSelectChip,
+            isSel && styles15.recipientSelectChipActive
+          ],
+          onPress: () => setSelectedRecipientId(rec.id.toString())
+        },
+        /* @__PURE__ */ import_react14.default.createElement(
+          Text_default,
+          {
+            style: [
+              styles15.recipientSelectText,
+              isSel && styles15.recipientSelectTextActive
+            ]
+          },
+          rec.display_name,
+          " (",
+          rec.role,
+          ")"
+        )
+      );
+    })), messageTypes.length > 0 && /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.inputLabel }, "MESSAGE TYPE"), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.typeChipsRow }, messageTypes.map((t) => {
+      const isSel = selectedTypeId === t.id.toString();
+      return /* @__PURE__ */ import_react14.default.createElement(
+        TouchableOpacity_default,
+        {
+          key: t.id,
+          style: [styles15.typeChip, isSel && styles15.typeChipActive],
+          onPress: () => setSelectedTypeId(t.id.toString())
+        },
+        /* @__PURE__ */ import_react14.default.createElement(
+          Text_default,
+          {
+            style: [
+              styles15.typeChipText,
+              isSel && styles15.typeChipTextActive
+            ]
+          },
+          t.name
+        )
+      );
+    }))), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.inputLabel }, "SUBJECT"), /* @__PURE__ */ import_react14.default.createElement(
+      TextInput_default,
+      {
+        style: styles15.formInput,
+        placeholder: "Subject or reason...",
+        placeholderTextColor: "#94a3b8",
+        value: subject,
+        onChangeText: setSubject
+      }
+    ), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.inputLabel }, "MESSAGE BODY *"), /* @__PURE__ */ import_react14.default.createElement(
+      TextInput_default,
+      {
+        style: [styles15.formInput, styles15.formTextArea],
+        placeholder: "Enter message details...",
+        placeholderTextColor: "#94a3b8",
+        value: messageBody,
+        onChangeText: setMessageBody,
+        multiline: true,
+        numberOfLines: 4
+      }
+    ), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.innerModalFooter }, /* @__PURE__ */ import_react14.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: styles15.cancelBtn,
+        onPress: () => setShowAddModal(false)
+      },
+      /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.cancelBtnText }, "Cancel")
+    ), /* @__PURE__ */ import_react14.default.createElement(
+      TouchableOpacity_default,
+      {
+        style: [styles15.submitBtn, submitting && { opacity: 0.7 }],
+        onPress: handleSendNewMessage,
+        disabled: submitting
+      },
+      submitting ? /* @__PURE__ */ import_react14.default.createElement(ActivityIndicator_default, { size: "small", color: "#ffffff" }) : /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.submitBtnText }, "Send Message")
+    )))))));
+  }
+  var styles15 = StyleSheet_default.create({
+    overlay: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(15, 23, 42, 0.45)",
+      zIndex: 999,
+      justifyContent: "flex-end",
+      alignItems: "center"
+    },
+    sheetContainer: {
+      backgroundColor: "#ffffff",
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      height: "88%",
+      width: "100%",
+      maxWidth: 500,
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden"
+    },
+    sheetHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 18,
+      paddingTop: 16,
+      paddingBottom: 12,
+      borderBottomWidth: 1,
+      borderBottomColor: "#f1f5f9"
+    },
+    headerTitleRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      flex: 1
+    },
+    iconBadge: {
+      width: 36,
+      height: 36,
+      borderRadius: 8,
+      backgroundColor: "#eff6ff",
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: 10
+    },
+    headerTitle: {
+      fontSize: 16.5,
+      fontWeight: "800",
+      color: "#0f172a"
+    },
+    headerSub: {
+      fontSize: 11.5,
+      color: "#64748b",
+      marginTop: 1
+    },
+    closeBtn: {
+      padding: 6
+    },
+    closeBtnText: {
+      fontSize: 16,
+      color: "#64748b",
+      fontWeight: "700"
+    },
+    tabBarWrapper: {
+      backgroundColor: "#f8fafc",
+      borderBottomWidth: 1,
+      borderBottomColor: "#e2e8f0",
+      paddingHorizontal: 14,
+      paddingVertical: 6
+    },
+    tabBar: {
+      flexDirection: "row",
+      gap: 6
+    },
+    tabBtn: {
+      paddingHorizontal: 14,
+      paddingVertical: 7,
+      borderRadius: 6
+    },
+    tabBtnActive: {
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0"
+    },
+    tabBtnText: {
+      fontSize: 12.5,
+      fontWeight: "600",
+      color: "#64748b"
+    },
+    tabBtnTextActive: {
+      color: "#2563eb",
+      fontWeight: "800"
+    },
+    panelContainer: {
+      flex: 1,
+      padding: 14,
+      display: "flex",
+      flexDirection: "column"
+    },
+    panelHeaderRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 10
+    },
+    panelTitle: {
+      fontSize: 15,
+      fontWeight: "800",
+      color: "#0f172a"
+    },
+    scopeFilterRow: {
+      flexDirection: "row",
+      gap: 4
+    },
+    scopeFilterBtn: {
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 6,
+      backgroundColor: "#f1f5f9",
+      borderWidth: 1,
+      borderColor: "#e2e8f0"
+    },
+    scopeFilterBtnActive: {
+      backgroundColor: "#2563eb",
+      borderColor: "#2563eb"
+    },
+    scopeFilterBtnText: {
+      fontSize: 11,
+      color: "#64748b",
+      fontWeight: "600"
+    },
+    scopeFilterBtnTextActive: {
+      color: "#ffffff",
+      fontWeight: "700"
+    },
+    toolbarRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 12
+    },
+    countPill: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 6,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      borderRadius: 999,
+      backgroundColor: "#f1f5f9",
+      borderWidth: 1,
+      borderColor: "#e2e8f0"
+    },
+    countPillText: {
+      fontSize: 12,
+      color: "#475569",
+      fontWeight: "700"
+    },
+    toolbarActions: {
+      flexDirection: "row",
+      gap: 8
+    },
+    addMessageBtn: {
+      backgroundColor: "#eff6ff",
+      borderWidth: 1,
+      borderColor: "#2563eb",
+      borderRadius: 6,
+      paddingHorizontal: 12,
+      paddingVertical: 6
+    },
+    addMessageBtnText: {
+      color: "#2563eb",
+      fontSize: 12,
+      fontWeight: "700"
+    },
+    deleteMessageBtn: {
+      backgroundColor: "#ef4444",
+      borderRadius: 6,
+      paddingHorizontal: 12,
+      paddingVertical: 6
+    },
+    deleteMessageBtnDisabled: {
+      backgroundColor: "#f1f5f9",
+      opacity: 0.6
+    },
+    deleteMessageBtnText: {
+      color: "#ffffff",
+      fontSize: 12,
+      fontWeight: "700"
+    },
+    cardsScroll: {
+      flex: 1
+    },
+    msgCard: {
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 10,
+      padding: 12,
+      marginBottom: 8
+    },
+    msgCardSelected: {
+      borderColor: "#2563eb",
+      backgroundColor: "#f8fafc"
+    },
+    msgCardUnread: {
+      borderColor: "#93c5fd",
+      backgroundColor: "#eff6ff"
+    },
+    cardTopRow: {
+      flexDirection: "row",
+      alignItems: "flex-start",
+      marginBottom: 6
+    },
+    checkboxTouch: {
+      paddingTop: 2
+    },
+    checkboxSquare: {
+      width: 17,
+      height: 17,
+      borderWidth: 1.5,
+      borderColor: "#94a3b8",
+      borderRadius: 3,
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    checkboxSquareChecked: {
+      backgroundColor: "#2563eb",
+      borderColor: "#2563eb"
+    },
+    checkboxCheckText: {
+      color: "#ffffff",
+      fontSize: 10,
+      fontWeight: "900"
+    },
+    unreadDot: {
+      width: 6,
+      height: 6,
+      borderRadius: 3,
+      backgroundColor: "#2563eb"
+    },
+    cardSender: {
+      fontSize: 13.5,
+      fontWeight: "600",
+      color: "#0f172a"
+    },
+    cardSenderBold: {
+      fontWeight: "800"
+    },
+    cardType: {
+      fontSize: 11,
+      color: "#64748b",
+      marginTop: 1
+    },
+    cardDate: {
+      fontSize: 11,
+      color: "#64748b",
+      fontWeight: "600",
+      marginBottom: 3
+    },
+    statusBadge: {
+      paddingHorizontal: 6,
+      paddingVertical: 2,
+      borderRadius: 999
+    },
+    statusBadgeActive: {
+      backgroundColor: "#eff6ff"
+    },
+    statusBadgeInactive: {
+      backgroundColor: "#f1f5f9"
+    },
+    statusBadgeText: {
+      fontSize: 10,
+      fontWeight: "700"
+    },
+    statusBadgeTextActive: {
+      color: "#2563eb"
+    },
+    statusBadgeTextInactive: {
+      color: "#94a3b8"
+    },
+    cardBody: {
+      fontSize: 12.5,
+      color: "#334155",
+      lineHeight: 18,
+      marginTop: 2
+    },
+    loadingArea: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 30
+    },
+    loadingText: {
+      marginTop: 10,
+      fontSize: 13,
+      color: "#64748b"
+    },
+    emptyArea: {
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 36
+    },
+    emptyTitle: {
+      fontSize: 15,
+      fontWeight: "700",
+      color: "#0f172a",
+      marginBottom: 4
+    },
+    emptyDesc: {
+      fontSize: 12.5,
+      color: "#64748b",
+      textAlign: "center",
+      lineHeight: 18
+    },
+    threadContainer: {
+      flex: 1,
+      display: "flex",
+      flexDirection: "column"
+    },
+    threadHeader: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 12,
+      backgroundColor: "#f8fafc",
+      borderBottomWidth: 1,
+      borderBottomColor: "#e2e8f0",
+      gap: 10
+    },
+    backBtn: {
+      paddingHorizontal: 8,
+      paddingVertical: 4
+    },
+    backBtnText: {
+      fontSize: 15,
+      fontWeight: "700",
+      color: "#2563eb"
+    },
+    threadSubject: {
+      fontSize: 14,
+      fontWeight: "700",
+      color: "#0f172a"
+    },
+    threadParticipants: {
+      fontSize: 11.5,
+      color: "#64748b"
+    },
+    threadMessagesScroll: {
+      flex: 1,
+      backgroundColor: "#f8fafc"
+    },
+    threadMessagesContent: {
+      padding: 14,
+      paddingBottom: 20
+    },
+    bubbleWrap: {
+      marginBottom: 12,
+      maxWidth: "82%"
+    },
+    bubbleWrapRight: {
+      alignSelf: "flex-end",
+      alignItems: "flex-end"
+    },
+    bubbleWrapLeft: {
+      alignSelf: "flex-start",
+      alignItems: "flex-start"
+    },
+    bubbleSender: {
+      fontSize: 11,
+      fontWeight: "700",
+      color: "#64748b",
+      marginBottom: 3
+    },
+    bubbleBox: {
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 12
+    },
+    bubbleBoxMe: {
+      backgroundColor: "#2563eb",
+      borderBottomRightRadius: 2
+    },
+    bubbleBoxThem: {
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderBottomLeftRadius: 2
+    },
+    bubbleText: {
+      fontSize: 13,
+      lineHeight: 18
+    },
+    bubbleTextMe: {
+      color: "#ffffff"
+    },
+    bubbleTextThem: {
+      color: "#0f172a"
+    },
+    bubbleTime: {
+      fontSize: 9.5,
+      color: "#94a3b8",
+      marginTop: 2
+    },
+    replyBar: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 10,
+      backgroundColor: "#ffffff",
+      borderTopWidth: 1,
+      borderTopColor: "#e2e8f0",
+      gap: 8
+    },
+    replyInput: {
+      flex: 1,
+      minHeight: 38,
+      maxHeight: 80,
+      backgroundColor: "#f8fafc",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 18,
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      fontSize: 13,
+      color: "#0f172a"
+    },
+    replyBtn: {
+      backgroundColor: "#2563eb",
+      paddingHorizontal: 14,
+      height: 38,
+      borderRadius: 19,
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    replyBtnText: {
+      color: "#ffffff",
+      fontSize: 12.5,
+      fontWeight: "700"
+    },
+    subTabScroll: {
+      padding: 16
+    },
+    miniCard: {
+      backgroundColor: "#ffffff",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 8,
+      padding: 12,
+      marginBottom: 10
+    },
+    miniCardHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 4
+    },
+    miniCardTitle: {
+      fontSize: 13.5,
+      fontWeight: "700",
+      color: "#0f172a"
+    },
+    miniCardDate: {
+      fontSize: 11,
+      color: "#2563eb",
+      fontWeight: "600"
+    },
+    miniCardDesc: {
+      fontSize: 12,
+      color: "#64748b"
+    },
+    innerModalOverlay: {
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: "rgba(15, 23, 42, 0.5)",
+      zIndex: 1e3,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 16
+    },
+    innerModalCard: {
+      width: "100%",
+      maxHeight: "85%",
+      backgroundColor: "#ffffff",
+      borderRadius: 14,
+      overflow: "hidden"
+    },
+    innerModalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 14,
+      borderBottomWidth: 1,
+      borderBottomColor: "#f1f5f9"
+    },
+    innerModalTitle: {
+      fontSize: 15,
+      fontWeight: "800",
+      color: "#0f172a"
+    },
+    innerModalBody: {
+      padding: 16
+    },
+    inputLabel: {
+      fontSize: 10.5,
+      fontWeight: "800",
+      color: "#64748b",
+      letterSpacing: 0.5,
+      marginBottom: 6
+    },
+    recipientSelectorList: {
+      flexDirection: "column",
+      gap: 6,
+      marginBottom: 14
+    },
+    recipientSelectChip: {
+      padding: 8,
+      borderRadius: 6,
+      backgroundColor: "#f8fafc",
+      borderWidth: 1,
+      borderColor: "#e2e8f0"
+    },
+    recipientSelectChipActive: {
+      borderColor: "#2563eb",
+      backgroundColor: "#eff6ff"
+    },
+    recipientSelectText: {
+      fontSize: 12.5,
+      color: "#475569"
+    },
+    recipientSelectTextActive: {
+      color: "#2563eb",
+      fontWeight: "700"
+    },
+    typeChipsRow: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: 6,
+      marginBottom: 14
+    },
+    typeChip: {
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      borderRadius: 6,
+      backgroundColor: "#f8fafc",
+      borderWidth: 1,
+      borderColor: "#e2e8f0"
+    },
+    typeChipActive: {
+      borderColor: "#2563eb",
+      backgroundColor: "#eff6ff"
+    },
+    typeChipText: {
+      fontSize: 11.5,
+      color: "#64748b"
+    },
+    typeChipTextActive: {
+      color: "#2563eb",
+      fontWeight: "700"
+    },
+    formInput: {
+      height: 40,
+      backgroundColor: "#f8fafc",
+      borderWidth: 1,
+      borderColor: "#e2e8f0",
+      borderRadius: 6,
+      paddingHorizontal: 10,
+      fontSize: 13,
+      color: "#0f172a",
+      marginBottom: 14
+    },
+    formTextArea: {
+      height: 90,
+      paddingTop: 8,
+      textAlignVertical: "top"
+    },
+    innerModalFooter: {
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      gap: 10,
+      marginTop: 8
+    },
+    cancelBtn: {
+      paddingHorizontal: 14,
+      paddingVertical: 8,
+      borderRadius: 6,
+      backgroundColor: "#f1f5f9"
+    },
+    cancelBtnText: {
+      fontSize: 12.5,
+      color: "#64748b",
+      fontWeight: "600"
+    },
+    submitBtn: {
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      borderRadius: 6,
+      backgroundColor: "#2563eb"
+    },
+    submitBtnText: {
+      fontSize: 12.5,
+      color: "#ffffff",
+      fontWeight: "700"
+    }
+  });
+
   // src/screens/PatientDashboardScreen.js
   function PatientDashboardScreen({ user, onLogout }) {
-    const [drawerOpen, setDrawerOpen] = (0, import_react14.useState)(false);
-    const [reminderSet, setReminderSet] = (0, import_react14.useState)(false);
-    const [showAppointments, setShowAppointments] = (0, import_react14.useState)(false);
-    const [showPrescriptions, setShowPrescriptions] = (0, import_react14.useState)(false);
-    const [showHealthRecords, setShowHealthRecords] = (0, import_react14.useState)(false);
+    const [drawerOpen, setDrawerOpen] = (0, import_react15.useState)(false);
+    const [reminderSet, setReminderSet] = (0, import_react15.useState)(false);
+    const [showAppointments, setShowAppointments] = (0, import_react15.useState)(false);
+    const [showPrescriptions, setShowPrescriptions] = (0, import_react15.useState)(false);
+    const [showHealthRecords, setShowHealthRecords] = (0, import_react15.useState)(false);
+    const [showMessages, setShowMessages] = (0, import_react15.useState)(false);
     const firstName = user.first_name || "Patient";
     const lastName = user.last_name || "User";
     const fullName = `${firstName} ${lastName}`.trim();
@@ -33319,81 +34629,75 @@
       await AuthService.logout();
       onLogout();
     };
-    return /* @__PURE__ */ import_react14.default.createElement(SafeAreaView_default, { style: styles15.container }, /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.topNavBar }, /* @__PURE__ */ import_react14.default.createElement(
+    return /* @__PURE__ */ import_react15.default.createElement(SafeAreaView_default, { style: styles16.container }, /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.topNavBar }, /* @__PURE__ */ import_react15.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles15.hamburgerBtn,
+        style: styles16.hamburgerBtn,
         onPress: () => setDrawerOpen(!drawerOpen),
         activeOpacity: 0.7
       },
-      /* @__PURE__ */ import_react14.default.createElement(MenuIcon, { color: "#0f172a", size: 18 })
-    ), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.userIdentityColumn }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.userFullNameText, numberOfLines: 1 }, fullName)), /* @__PURE__ */ import_react14.default.createElement(
+      /* @__PURE__ */ import_react15.default.createElement(MenuIcon, { color: "#0f172a", size: 18 })
+    ), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.userIdentityColumn }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.portalTagText }, "USINTELLIX PATIENT PORTAL"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.userFullNameText, numberOfLines: 1 }, fullName)), /* @__PURE__ */ import_react15.default.createElement(
       TouchableOpacity_default,
       {
-        style: styles15.avatarBadge,
+        style: styles16.avatarBadge,
         onPress: handleLogout,
         activeOpacity: 0.8
       },
-      /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.avatarInitialsText }, initials)
-    )), /* @__PURE__ */ import_react14.default.createElement(
+      /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.avatarInitialsText }, initials)
+    )), /* @__PURE__ */ import_react15.default.createElement(
       ScrollView_default,
       {
-        contentContainerStyle: styles15.contentScroll,
+        contentContainerStyle: styles16.contentScroll,
         showsVerticalScrollIndicator: false
       },
-      /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.statusCard }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
-      /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.sectionHeaderTitle }, "Services & Actions"),
-      /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.cardsGrid }, /* @__PURE__ */ import_react14.default.createElement(
+      /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.statusCard }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.statusCardLabel }, "PATIENT PORTAL"), /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.statusDescription }, "Welcome, ", firstName, ". Your medical portal is synced.")),
+      /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.sectionHeaderTitle }, "Services & Actions"),
+      /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.cardsGrid }, /* @__PURE__ */ import_react15.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles15.gridCard,
+          style: styles16.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowAppointments(true)
         },
-        /* @__PURE__ */ import_react14.default.createElement(View_default, { style: [styles15.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react14.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })),
-        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardTitle }, "Appointments"),
-        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardDesc }, "View upcoming visits")
-      ), /* @__PURE__ */ import_react14.default.createElement(
+        /* @__PURE__ */ import_react15.default.createElement(View_default, { style: [styles16.cardIconCircle, { backgroundColor: "#eff6ff" }] }, /* @__PURE__ */ import_react15.default.createElement(CalendarIcon, { color: "#2563eb", size: 20 })),
+        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardTitle }, "Appointments"),
+        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardDesc }, "View upcoming visits")
+      ), /* @__PURE__ */ import_react15.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles15.gridCard,
+          style: styles16.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowPrescriptions(true)
         },
-        /* @__PURE__ */ import_react14.default.createElement(View_default, { style: [styles15.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react14.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })),
-        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardTitle }, "Prescriptions"),
-        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardDesc }, "Active medications")
-      ), /* @__PURE__ */ import_react14.default.createElement(
+        /* @__PURE__ */ import_react15.default.createElement(View_default, { style: [styles16.cardIconCircle, { backgroundColor: "#f5f3ff" }] }, /* @__PURE__ */ import_react15.default.createElement(PillIcon, { color: "#7c3aed", size: 20 })),
+        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardTitle }, "Prescriptions"),
+        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardDesc }, "Active medications")
+      ), /* @__PURE__ */ import_react15.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles15.gridCard,
+          style: styles16.gridCard,
           activeOpacity: 0.7,
           onPress: () => setShowHealthRecords(true)
         },
-        /* @__PURE__ */ import_react14.default.createElement(View_default, { style: [styles15.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react14.default.createElement(RecordsIcon, { color: "#059669", size: 20 })),
-        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardTitle }, "Health Records"),
-        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardDesc }, "Lab results & charts")
-      ), /* @__PURE__ */ import_react14.default.createElement(
+        /* @__PURE__ */ import_react15.default.createElement(View_default, { style: [styles16.cardIconCircle, { backgroundColor: "#ecfdf5" }] }, /* @__PURE__ */ import_react15.default.createElement(RecordsIcon, { color: "#059669", size: 20 })),
+        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardTitle }, "Health Records"),
+        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardDesc }, "Lab results & charts")
+      ), /* @__PURE__ */ import_react15.default.createElement(
         TouchableOpacity_default,
         {
-          style: styles15.gridCard,
+          style: styles16.gridCard,
           activeOpacity: 0.7,
-          onPress: () => {
-            setReminderSet(!reminderSet);
-            Alert_default.alert(
-              !reminderSet ? "Reminders Active" : "Reminders Paused",
-              !reminderSet ? "You will be notified before scheduled appointments." : "Clinical alerts paused."
-            );
-          }
+          onPress: () => setShowMessages(true)
         },
-        /* @__PURE__ */ import_react14.default.createElement(View_default, { style: [styles15.cardIconCircle, { backgroundColor: "#fff7ed" }] }, /* @__PURE__ */ import_react14.default.createElement(BellIcon, { color: "#ea580c", size: 20 })),
-        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardTitle }, "Reminders"),
-        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.gridCardDesc }, "Clinical alerts")
+        /* @__PURE__ */ import_react15.default.createElement(View_default, { style: [styles16.cardIconCircle, { backgroundColor: "#f0f9ff" }] }, /* @__PURE__ */ import_react15.default.createElement(ChatIcon, { color: "#0284c7", size: 20 })),
+        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardTitle }, "Messages"),
+        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.gridCardDesc }, "Care team chat")
       )),
-      /* @__PURE__ */ import_react14.default.createElement(
+      /* @__PURE__ */ import_react15.default.createElement(
         TouchableOpacity_default,
         {
-          style: [styles15.simpleRemindBtn, reminderSet && styles15.simpleRemindBtnActive],
+          style: [styles16.simpleRemindBtn, reminderSet && styles16.simpleRemindBtnActive],
           onPress: () => {
             setReminderSet(!reminderSet);
             Alert_default.alert(
@@ -33403,31 +34707,44 @@
           },
           activeOpacity: 0.8
         },
-        /* @__PURE__ */ import_react14.default.createElement(BellIcon, { color: reminderSet ? "#059669" : "#2563eb", size: 17 }),
-        /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: [styles15.simpleRemindText, reminderSet && styles15.simpleRemindTextActive] }, reminderSet ? "Reminders Set \u2713" : "Remind Me")
+        /* @__PURE__ */ import_react15.default.createElement(BellIcon, { color: reminderSet ? "#059669" : "#2563eb", size: 17 }),
+        /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: [styles16.simpleRemindText, reminderSet && styles16.simpleRemindTextActive] }, reminderSet ? "Reminders Set \u2713" : "Remind Me")
       )
-    ), /* @__PURE__ */ import_react14.default.createElement(
+    ), /* @__PURE__ */ import_react15.default.createElement(
       AppointmentsModal,
       {
         visible: showAppointments,
         onClose: () => setShowAppointments(false),
         patientId: user.id
       }
-    ), /* @__PURE__ */ import_react14.default.createElement(
+    ), /* @__PURE__ */ import_react15.default.createElement(
       PrescriptionsModal,
       {
         visible: showPrescriptions,
         onClose: () => setShowPrescriptions(false)
       }
-    ), /* @__PURE__ */ import_react14.default.createElement(
+    ), /* @__PURE__ */ import_react15.default.createElement(
       HealthRecordsModal,
       {
         visible: showHealthRecords,
         onClose: () => setShowHealthRecords(false)
       }
-    ), drawerOpen && /* @__PURE__ */ import_react14.default.createElement(View_default, { style: styles15.drawerDropdown }, /* @__PURE__ */ import_react14.default.createElement(TouchableOpacity_default, { style: styles15.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.drawerItemText }, "\u{1F3E0} Dashboard Home")), /* @__PURE__ */ import_react14.default.createElement(TouchableOpacity_default, { style: styles15.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.drawerItemText }, "\u{1F4C1} My Medical Records")), /* @__PURE__ */ import_react14.default.createElement(TouchableOpacity_default, { style: styles15.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: styles15.drawerItemText }, "\u2699\uFE0F Portal Settings")), /* @__PURE__ */ import_react14.default.createElement(View_default, { style: { height: 1, backgroundColor: "#e2e8f0", marginVertical: 6 } }), /* @__PURE__ */ import_react14.default.createElement(TouchableOpacity_default, { style: styles15.drawerItem, onPress: handleLogout }, /* @__PURE__ */ import_react14.default.createElement(Text_default, { style: [styles15.drawerItemText, { color: "#ef4444" }] }, "\u{1F6AA} Sign Out"))));
+    ), /* @__PURE__ */ import_react15.default.createElement(
+      MessagesModal,
+      {
+        visible: showMessages,
+        onClose: () => setShowMessages(false),
+        currentUser: user
+      }
+    ), drawerOpen && /* @__PURE__ */ import_react15.default.createElement(View_default, { style: styles16.drawerDropdown }, /* @__PURE__ */ import_react15.default.createElement(TouchableOpacity_default, { style: styles16.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.drawerItemText }, "\u{1F3E0} Dashboard Home")), /* @__PURE__ */ import_react15.default.createElement(TouchableOpacity_default, { style: styles16.drawerItem, onPress: () => {
+      setDrawerOpen(false);
+      setShowHealthRecords(true);
+    } }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.drawerItemText }, "\u{1F4C1} My Medical Records")), /* @__PURE__ */ import_react15.default.createElement(TouchableOpacity_default, { style: styles16.drawerItem, onPress: () => {
+      setDrawerOpen(false);
+      setShowMessages(true);
+    } }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.drawerItemText }, "\u{1F4AC} Care Team Messages")), /* @__PURE__ */ import_react15.default.createElement(TouchableOpacity_default, { style: styles16.drawerItem, onPress: () => setDrawerOpen(false) }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: styles16.drawerItemText }, "\u2699\uFE0F Portal Settings")), /* @__PURE__ */ import_react15.default.createElement(View_default, { style: { height: 1, backgroundColor: "#e2e8f0", marginVertical: 6 } }), /* @__PURE__ */ import_react15.default.createElement(TouchableOpacity_default, { style: styles16.drawerItem, onPress: handleLogout }, /* @__PURE__ */ import_react15.default.createElement(Text_default, { style: [styles16.drawerItemText, { color: "#ef4444" }] }, "\u{1F6AA} Sign Out"))));
   }
-  var styles15 = StyleSheet_default.create({
+  var styles16 = StyleSheet_default.create({
     container: {
       flex: 1,
       width: "100%",
@@ -33616,16 +34933,16 @@
 
   // App.js
   function App() {
-    const [currentUser, setCurrentUser] = (0, import_react15.useState)(null);
-    return /* @__PURE__ */ import_react15.default.createElement(SafeAreaView_default, { style: styles16.root }, /* @__PURE__ */ import_react15.default.createElement(StatusBar_default, { barStyle: "dark-content", backgroundColor: "#ffffff" }), currentUser ? /* @__PURE__ */ import_react15.default.createElement(
+    const [currentUser, setCurrentUser] = (0, import_react16.useState)(null);
+    return /* @__PURE__ */ import_react16.default.createElement(SafeAreaView_default, { style: styles17.root }, /* @__PURE__ */ import_react16.default.createElement(StatusBar_default, { barStyle: "dark-content", backgroundColor: "#ffffff" }), currentUser ? /* @__PURE__ */ import_react16.default.createElement(
       PatientDashboardScreen,
       {
         user: currentUser,
         onLogout: () => setCurrentUser(null)
       }
-    ) : /* @__PURE__ */ import_react15.default.createElement(LoginScreen, { onLoginSuccess: (user) => setCurrentUser(user) }));
+    ) : /* @__PURE__ */ import_react16.default.createElement(LoginScreen, { onLoginSuccess: (user) => setCurrentUser(user) }));
   }
-  var styles16 = StyleSheet_default.create({
+  var styles17 = StyleSheet_default.create({
     root: {
       flex: 1,
       width: "100%",

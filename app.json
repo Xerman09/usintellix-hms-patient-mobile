@@ -4,7 +4,7 @@
     "slug": "patient-mobile-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "splash": {
       "image": "./assets/logo.png",
@@ -14,7 +14,7 @@
     "android": {
       "package": "com.usintellix.patientapp",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#090e1a"
       },
       "permissions": [

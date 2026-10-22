@@ -41,6 +41,7 @@ import ProxySwitcherModal from '../components/ProxySwitcherModal';
 import MyChartTodoModal from '../components/MyChartTodoModal';
 import MyChartResultsModal from '../components/MyChartResultsModal';
 import MyChartVisitsModal from '../components/MyChartVisitsModal';
+import MyChartBillingModal from '../components/MyChartBillingModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -73,6 +74,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
 
   // Phase M3: Visits & After-Visit Summaries State
   const [showVisitsModal, setShowVisitsModal] = useState(false);
+
+  // Phase M4: Statements & Payments State
+  const [showBillingModal, setShowBillingModal] = useState(false);
 
   const loadMyChartData = async () => {
     try {
@@ -139,11 +143,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         setShowVisitsModal(true);
         break;
       case 'mychart_billing':
-        Alert.alert(
-          'Phase M4: Statements & Payments',
-          'Billing statement endpoint /mychart/billing is connected.',
-          [{ text: 'OK' }]
-        );
+        setShowBillingModal(true);
         break;
       case 'mychart_checkin':
         Alert.alert(
@@ -633,6 +633,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
       <MyChartVisitsModal
         visible={showVisitsModal}
         onClose={() => setShowVisitsModal(false)}
+      />
+
+      {/* Phase M4: Statements & Payments Modal */}
+      <MyChartBillingModal
+        visible={showBillingModal}
+        onClose={() => setShowBillingModal(false)}
       />
 
       {/* Full-Height Modern Sidebar Navigation Drawer */}

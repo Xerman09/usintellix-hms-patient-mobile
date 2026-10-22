@@ -715,6 +715,43 @@ export function ClockIcon({ color = '#64748b', size = 16 }) {
   );
 }
 
+// 39. Credit Card / Pay Icon
+export function CreditCardIcon({ color = '#059669', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="💳"
+      paths={
+        <>
+          <rect width="20" height="14" x="2" y="5" rx="2" />
+          <line x1="2" x2="22" y1="10" y2="10" />
+        </>
+      }
+    />
+  );
+}
+
+// 40. Receipt Icon
+export function ReceiptIcon({ color = '#0284c7', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="🧾"
+      paths={
+        <>
+          <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+          <path d="M14 8H8" />
+          <path d="M16 12H8" />
+          <path d="M13 16H8" />
+        </>
+      }
+    />
+  );
+}
+
+
 
 
 

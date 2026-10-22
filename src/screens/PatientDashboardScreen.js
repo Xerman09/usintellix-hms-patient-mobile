@@ -44,6 +44,7 @@ import MyChartVisitsModal from '../components/MyChartVisitsModal';
 import MyChartBillingModal from '../components/MyChartBillingModal';
 import MyChartCheckinModal from '../components/MyChartCheckinModal';
 import MyChartNotificationsModal from '../components/MyChartNotificationsModal';
+import MyChartTrackHealthModal from '../components/MyChartTrackHealthModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -86,6 +87,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   // Phase M6: Notifications & Preferences State
   const [showNotificationsModal, setShowNotificationsModal] = useState(false);
   const [unreadNotifCount, setUnreadNotifCount] = useState(0);
+
+  // Phase M7: Track My Health State
+  const [showTrackHealthModal, setShowTrackHealthModal] = useState(false);
 
   const loadMyChartData = async () => {
     try {
@@ -166,11 +170,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         setShowNotificationsModal(true);
         break;
       case 'mychart_track':
-        Alert.alert(
-          'Phase M7: Track My Health',
-          'Vitals tracking endpoint /mychart/readings is connected.',
-          [{ text: 'OK' }]
-        );
+        setShowTrackHealthModal(true);
         break;
       default:
         break;
@@ -689,6 +689,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           else if (tab === 'mychart_checkin') handleMyChartNavigate('mychart_checkin');
           else if (tab === 'messages') setShowMessages(true);
         }}
+      />
+
+      {/* Phase M7: Track My Health Vitals & Self-Readings Modal */}
+      <MyChartTrackHealthModal
+        visible={showTrackHealthModal}
+        onClose={() => setShowTrackHealthModal(false)}
       />
 
       {/* Full-Height Modern Sidebar Navigation Drawer */}

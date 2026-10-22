@@ -228,8 +228,12 @@ export const MyChartService = {
   /**
    * Get historical self-readings and configured goal bands
    */
-  async getReadings() {
-    return apiRequest('/mychart/readings');
+  async getReadings(kind = '', days = 90) {
+    const params = new URLSearchParams();
+    if (kind) params.append('kind', kind);
+    if (days) params.append('days', String(days));
+    const qs = params.toString();
+    return apiRequest(`/mychart/readings${qs ? `?${qs}` : ''}`);
   },
 
   /**

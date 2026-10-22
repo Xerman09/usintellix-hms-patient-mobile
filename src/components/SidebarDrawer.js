@@ -21,7 +21,14 @@ import {
   SettingsIcon,
   ChevronRightIcon,
   LogOutIcon,
-  MegaphoneIcon
+  MegaphoneIcon,
+  LabIcon,
+  VisitsIcon,
+  BillingIcon,
+  CheckinIcon,
+  TrackHealthIcon,
+  ProxyIcon,
+  TodoIcon
 } from './Icons';
 
 export default function SidebarDrawer({
@@ -46,62 +53,113 @@ export default function SidebarDrawer({
   const rawAvatar = user?.avatarUrl || user?.avatar || user?.photo;
   const avatarUrl = getAvatarUrl(rawAvatar);
 
-  // System-aligned navigation items with pure vector SVG icons
-  const navItems = [
+  // MyChart specific primary modules
+  const myChartItems = [
+    {
+      id: 'mychart_todo',
+      label: 'To-Do & Action Center',
+      IconComponent: TodoIcon,
+      color: '#0891b2'
+    },
+    {
+      id: 'mychart_results',
+      label: 'Test Results (Lab & Imaging)',
+      IconComponent: LabIcon,
+      color: '#2563eb'
+    },
+    {
+      id: 'mychart_visits',
+      label: 'Visits & Discharge AVS',
+      IconComponent: VisitsIcon,
+      color: '#0284c7'
+    },
+    {
+      id: 'mychart_billing',
+      label: 'Statements & Payments',
+      IconComponent: BillingIcon,
+      color: '#059669'
+    },
+    {
+      id: 'mychart_checkin',
+      label: 'e-Check-In Wizard',
+      IconComponent: CheckinIcon,
+      color: '#d97706'
+    },
+    {
+      id: 'mychart_track',
+      label: 'Track My Health (Vitals)',
+      IconComponent: TrackHealthIcon,
+      color: '#e11d48'
+    },
+    {
+      id: 'mychart_account',
+      label: 'Family Proxy & Sharing',
+      IconComponent: ProxyIcon,
+      color: '#7c3aed'
+    }
+  ];
+
+  // Core clinical records & services
+  const clinicalItems = [
     {
       id: 'dashboard',
-      label: 'Dashboard',
-      IconComponent: HomeIcon
+      label: 'Home Dashboard',
+      IconComponent: HomeIcon,
+      color: '#2563eb'
     },
     {
       id: 'appointments',
       label: 'Appointments',
-      IconComponent: CalendarIcon
+      IconComponent: CalendarIcon,
+      color: '#2563eb'
     },
     {
       id: 'prescriptions',
       label: 'Prescriptions',
-      IconComponent: PillIcon
+      IconComponent: PillIcon,
+      color: '#7c3aed'
     },
     {
       id: 'health_records',
       label: 'Health Records (CCD)',
-      IconComponent: RecordsIcon
+      IconComponent: RecordsIcon,
+      color: '#059669'
     },
     {
       id: 'medical_reports',
       label: 'Medical Reports',
-      IconComponent: ClipboardIcon
+      IconComponent: ClipboardIcon,
+      color: '#4f46e5'
     },
     {
       id: 'messages',
       label: 'Care Team Messages',
-      IconComponent: ChatIcon
+      IconComponent: ChatIcon,
+      color: '#0284c7'
     },
     {
       id: 'reminders',
       label: 'Clinical Reminders',
-      IconComponent: BellIcon
+      IconComponent: BellIcon,
+      color: '#0d9488'
     },
     {
       id: 'announcements',
       label: 'Announcements & Alerts',
-      IconComponent: MegaphoneIcon
-    },
-    {
-      id: 'recalls',
-      label: 'Preventive Recalls',
-      IconComponent: ClipboardIcon
+      IconComponent: MegaphoneIcon,
+      color: '#e11d48'
     },
     {
       id: 'policies',
       label: 'Portal Policies & NPP',
-      IconComponent: ShieldIcon
+      IconComponent: ShieldIcon,
+      color: '#64748b'
     },
     {
       id: 'settings',
       label: 'Profile & Settings',
-      IconComponent: SettingsIcon
+      IconComponent: SettingsIcon,
+      color: '#475569'
     }
   ];
 
@@ -161,9 +219,9 @@ export default function SidebarDrawer({
           </TouchableOpacity>
         </TouchableOpacity>
 
-        {/* Section Heading: PORTAL NAVIGATION */}
+        {/* Section Heading: MYCHART CARE MODULES */}
         <View style={styles.sectionHeaderWrap}>
-          <Text style={styles.sectionHeaderText}>PORTAL NAVIGATION</Text>
+          <Text style={styles.sectionHeaderText}>MYCHART HEALTHCARE</Text>
         </View>
 
         {/* Navigation Item List */}
@@ -172,7 +230,7 @@ export default function SidebarDrawer({
           contentContainerStyle={styles.navScrollContent}
           showsVerticalScrollIndicator={false}
         >
-          {navItems.map((item) => {
+          {myChartItems.map((item) => {
             const IconComp = item.IconComponent;
             return (
               <TouchableOpacity
@@ -184,15 +242,37 @@ export default function SidebarDrawer({
                   onNavigate(item.id);
                 }}
               >
-                {/* Clean, soft cyan square icon frame matching web screenshot */}
-                <View style={styles.navIconBox}>
-                  <IconComp color="#0d9488" size={17} />
+                <View style={[styles.navIconBox, { backgroundColor: '#f0fdf4' }]}>
+                  <IconComp color={item.color || '#0d9488'} size={17} />
                 </View>
 
-                {/* Navigation Item Label */}
-                <Text style={styles.navItemLabel}>{item.label}</Text>
+                <Text style={styles.navLabel}>{item.label}</Text>
+                <ChevronRightIcon color="#94a3b8" size={13} />
+              </TouchableOpacity>
+            );
+          })}
 
-                {/* Right Chevron */}
+          <View style={[styles.sectionHeaderWrap, { marginTop: 14, paddingTop: 10, borderTopWidth: 1, borderTopColor: '#f1f5f9' }]}>
+            <Text style={styles.sectionHeaderText}>CLINICAL SERVICES</Text>
+          </View>
+
+          {clinicalItems.map((item) => {
+            const IconComp = item.IconComponent;
+            return (
+              <TouchableOpacity
+                key={item.id}
+                style={styles.navItem}
+                activeOpacity={0.7}
+                onPress={() => {
+                  onClose();
+                  onNavigate(item.id);
+                }}
+              >
+                <View style={styles.navIconBox}>
+                  <IconComp color={item.color || '#0d9488'} size={17} />
+                </View>
+
+                <Text style={styles.navLabel}>{item.label}</Text>
                 <ChevronRightIcon color="#94a3b8" size={13} />
               </TouchableOpacity>
             );

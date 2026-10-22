@@ -21,7 +21,14 @@ import {
   BellIcon,
   ChatIcon,
   ClipboardIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  LabIcon,
+  VisitsIcon,
+  BillingIcon,
+  CheckinIcon,
+  TrackHealthIcon,
+  ProxyIcon,
+  TodoIcon
 } from '../components/Icons';
 import AppointmentsModal from '../components/AppointmentsModal';
 import PrescriptionsModal from '../components/PrescriptionsModal';
@@ -30,9 +37,12 @@ import MessagesModal from '../components/MessagesModal';
 import ClinicalRemindersModal from '../components/ClinicalRemindersModal';
 import MedicalReportsModal from '../components/MedicalReportsModal';
 import AnnouncementPopupModal from '../components/AnnouncementPopupModal';
+import ProxySwitcherModal from '../components/ProxySwitcherModal';
+import MyChartTodoModal from '../components/MyChartTodoModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
+import { MyChartService } from '../api/mychart';
 
 export default function PatientDashboardScreen({ user, onLogout }) {
   const [currentView, setCurrentView] = useState('dashboard');
@@ -48,6 +58,32 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   const [avatarError, setAvatarError] = useState(false);
   const [announcements, setAnnouncements] = useState([]);
   const [showAnnouncementPopup, setShowAnnouncementPopup] = useState(false);
+
+  // Phase M0: MyChart Core Context & Switcher State
+  const [accessiblePatients, setAccessiblePatients] = useState([]);
+  const [activePatient, setActivePatient] = useState(null);
+  const [showProxySwitcher, setShowProxySwitcher] = useState(false);
+  const [showTodoModal, setShowTodoModal] = useState(false);
+  const [todoCounts, setTodoCounts] = useState({ total: 0, overdue: 0, todo: 0 });
+
+  const loadMyChartData = async () => {
+    try {
+      const [proxyRes, todoRes] = await Promise.all([
+        MyChartService.getAccessiblePatients(),
+        MyChartService.getTodo()
+      ]);
+      if (proxyRes && proxyRes.success && Array.isArray(proxyRes.data)) {
+        setAccessiblePatients(proxyRes.data);
+        const active = proxyRes.data.find((p) => p.is_active) || proxyRes.data[0];
+        setActivePatient(active);
+      }
+      if (todoRes && todoRes.success && todoRes.data) {
+        setTodoCounts(todoRes.data.counts || { total: 0, overdue: 0, todo: 0 });
+      }
+    } catch (e) {
+      console.warn('Failed to load MyChart data:', e);
+    }
+  };
 
   useEffect(() => {
     ProfileService.getProfile().then((res) => {
@@ -65,7 +101,68 @@ export default function PatientDashboardScreen({ user, onLogout }) {
     }).catch((err) => {
       console.warn('Failed to fetch announcements:', err);
     });
+
+    // Phase M0: Load accessible proxy charts & To-Do count
+    loadMyChartData();
   }, []);
+
+  const handlePatientSwitched = (patient) => {
+    setActivePatient(patient);
+    loadMyChartData();
+    ProfileService.getProfile().then((res) => {
+      if (res && res.success && res.data) {
+        setProfileData(res.data);
+      }
+    });
+  };
+
+  const handleMyChartNavigate = (targetTab) => {
+    switch (targetTab) {
+      case 'mychart_todo':
+        setShowTodoModal(true);
+        break;
+      case 'mychart_account':
+        setShowProxySwitcher(true);
+        break;
+      case 'mychart_results':
+        Alert.alert(
+          'Phase M1: Test Results',
+          'Ready to connect Phase M1! The release gate endpoint /mychart/results is primed.',
+          [{ text: 'OK' }]
+        );
+        break;
+      case 'mychart_visits':
+        Alert.alert(
+          'Phase M3: Visits & Discharge',
+          'Visits endpoint /mychart/visits is connected.',
+          [{ text: 'OK' }]
+        );
+        break;
+      case 'mychart_billing':
+        Alert.alert(
+          'Phase M4: Statements & Payments',
+          'Billing statement endpoint /mychart/billing is connected.',
+          [{ text: 'OK' }]
+        );
+        break;
+      case 'mychart_checkin':
+        Alert.alert(
+          'Phase M5: e-Check-In',
+          'Fast-track e-check-in endpoint /mychart/checkin is connected.',
+          [{ text: 'OK' }]
+        );
+        break;
+      case 'mychart_track':
+        Alert.alert(
+          'Phase M7: Track My Health',
+          'Vitals tracking endpoint /mychart/readings is connected.',
+          [{ text: 'OK' }]
+        );
+        break;
+      default:
+        break;
+    }
+  };
 
   const rawAvatar = profileData?.avatar || profileData?.photo || user?.avatar || user?.photo;
   const avatarUrl = getAvatarUrl(rawAvatar);
@@ -147,8 +244,22 @@ export default function PatientDashboardScreen({ user, onLogout }) {
               <View style={styles.statusLiveDot} />
               <Text style={styles.heroStatusText}>LIVE EHR SYNCED</Text>
             </View>
-            <View style={styles.mrnBadge}>
-              <Text style={styles.mrnBadgeText}>MRN #{patientNo}</Text>
+            <View style={styles.headerRightBadges}>
+              {activePatient && (
+                <TouchableOpacity
+                  style={styles.proxySwitchChip}
+                  onPress={() => setShowProxySwitcher(true)}
+                  activeOpacity={0.7}
+                >
+                  <ProxyIcon color="#5b21b6" size={13} />
+                  <Text style={styles.proxySwitchChipText} numberOfLines={1}>
+                    {activePatient.first_name} ({activePatient.relationship || 'Self'}) ▾
+                  </Text>
+                </TouchableOpacity>
+              )}
+              <View style={styles.mrnBadge}>
+                <Text style={styles.mrnBadgeText}>MRN #{patientNo}</Text>
+              </View>
             </View>
           </View>
 
@@ -174,6 +285,135 @@ export default function PatientDashboardScreen({ user, onLogout }) {
               <Text style={styles.metricValue}>CCD Active</Text>
             </View>
           </View>
+        </View>
+
+        {/* ================= TO-DO & ACTION CENTER ALERT BANNER ================= */}
+        {todoCounts.total > 0 && (
+          <TouchableOpacity
+            style={styles.todoHeroBanner}
+            onPress={() => setShowTodoModal(true)}
+            activeOpacity={0.8}
+          >
+            <View style={styles.todoHeroIconBox}>
+              <TodoIcon color="#ffffff" size={20} />
+            </View>
+            <View style={styles.todoHeroTextBox}>
+              <View style={styles.todoHeroTitleRow}>
+                <Text style={styles.todoHeroTitle}>Action Center</Text>
+                {todoCounts.overdue > 0 ? (
+                  <View style={styles.todoBadgeRed}>
+                    <Text style={styles.todoBadgeRedText}>{todoCounts.overdue} Overdue</Text>
+                  </View>
+                ) : (
+                  <View style={styles.todoBadgeBlue}>
+                    <Text style={styles.todoBadgeBlueText}>{todoCounts.total} Tasks</Text>
+                  </View>
+                )}
+              </View>
+              <Text style={styles.todoHeroSub} numberOfLines={2}>
+                {todoCounts.total} item{todoCounts.total > 1 ? 's' : ''} waiting: unread results, check-in, or payments.
+              </Text>
+            </View>
+            <ChevronRightIcon color="#0891b2" size={16} />
+          </TouchableOpacity>
+        )}
+
+        {/* ================= MYCHART HEALTHCARE PORTAL SECTION ================= */}
+        <View style={styles.sectionHeaderRow}>
+          <View>
+            <Text style={styles.sectionHeaderTitle}>MyChart Portal</Text>
+            <Text style={styles.sectionHeaderSub}>Connected Care & EHR</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.todoPillBtn}
+            onPress={() => setShowTodoModal(true)}
+            activeOpacity={0.7}
+          >
+            <TodoIcon color="#0891b2" size={14} />
+            <Text style={styles.todoPillBtnText}>
+              {todoCounts.total > 0 ? `${todoCounts.total} Actions` : 'Action Center'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.myChartGrid}>
+          {/* Card 1: Test Results */}
+          <TouchableOpacity
+            style={styles.myChartCard}
+            activeOpacity={0.7}
+            onPress={() => handleMyChartNavigate('mychart_results')}
+          >
+            <View style={[styles.myChartIconBox, { backgroundColor: '#eff6ff' }]}>
+              <LabIcon color="#2563eb" size={22} />
+            </View>
+            <Text style={styles.myChartCardTitle}>Test Results</Text>
+            <Text style={styles.myChartCardSub}>Lab & Imaging</Text>
+          </TouchableOpacity>
+
+          {/* Card 2: Visits & Summaries */}
+          <TouchableOpacity
+            style={styles.myChartCard}
+            activeOpacity={0.7}
+            onPress={() => handleMyChartNavigate('mychart_visits')}
+          >
+            <View style={[styles.myChartIconBox, { backgroundColor: '#f0f9ff' }]}>
+              <VisitsIcon color="#0284c7" size={22} />
+            </View>
+            <Text style={styles.myChartCardTitle}>Visits & AVS</Text>
+            <Text style={styles.myChartCardSub}>Prep & Summaries</Text>
+          </TouchableOpacity>
+
+          {/* Card 3: Billing Statements */}
+          <TouchableOpacity
+            style={styles.myChartCard}
+            activeOpacity={0.7}
+            onPress={() => handleMyChartNavigate('mychart_billing')}
+          >
+            <View style={[styles.myChartIconBox, { backgroundColor: '#ecfdf5' }]}>
+              <BillingIcon color="#059669" size={22} />
+            </View>
+            <Text style={styles.myChartCardTitle}>Statements</Text>
+            <Text style={styles.myChartCardSub}>Bills & Receipts</Text>
+          </TouchableOpacity>
+
+          {/* Card 4: e-Check-In */}
+          <TouchableOpacity
+            style={styles.myChartCard}
+            activeOpacity={0.7}
+            onPress={() => handleMyChartNavigate('mychart_checkin')}
+          >
+            <View style={[styles.myChartIconBox, { backgroundColor: '#fffbeb' }]}>
+              <CheckinIcon color="#d97706" size={22} />
+            </View>
+            <Text style={styles.myChartCardTitle}>e-Check-In</Text>
+            <Text style={styles.myChartCardSub}>Fast-Track Pass</Text>
+          </TouchableOpacity>
+
+          {/* Card 5: Track Health */}
+          <TouchableOpacity
+            style={styles.myChartCard}
+            activeOpacity={0.7}
+            onPress={() => handleMyChartNavigate('mychart_track')}
+          >
+            <View style={[styles.myChartIconBox, { backgroundColor: '#fff1f2' }]}>
+              <TrackHealthIcon color="#e11d48" size={22} />
+            </View>
+            <Text style={styles.myChartCardTitle}>Track Health</Text>
+            <Text style={styles.myChartCardSub}>Vitals & Goals</Text>
+          </TouchableOpacity>
+
+          {/* Card 6: Family & Share */}
+          <TouchableOpacity
+            style={styles.myChartCard}
+            activeOpacity={0.7}
+            onPress={() => handleMyChartNavigate('mychart_account')}
+          >
+            <View style={[styles.myChartIconBox, { backgroundColor: '#f5f3ff' }]}>
+              <ProxyIcon color="#7c3aed" size={22} />
+            </View>
+            <Text style={styles.myChartCardTitle}>Family & Share</Text>
+            <Text style={styles.myChartCardSub}>Proxy & Links</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Section Header */}
@@ -357,13 +597,38 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         onClose={() => setShowAnnouncementPopup(false)}
       />
 
+      {/* Proxy / Family Switcher Bottom Sheet */}
+      <ProxySwitcherModal
+        visible={showProxySwitcher}
+        onClose={() => setShowProxySwitcher(false)}
+        accessiblePatients={accessiblePatients}
+        currentPatientId={activePatient?.patient_id}
+        onPatientSwitched={handlePatientSwitched}
+      />
+
+      {/* MyChart Action Center To-Do Modal */}
+      <MyChartTodoModal
+        visible={showTodoModal}
+        onClose={() => setShowTodoModal(false)}
+        onNavigateTab={(tab) => {
+          if (tab === 'mychart_results') handleMyChartNavigate('mychart_results');
+          else if (tab === 'mychart_checkin') handleMyChartNavigate('mychart_checkin');
+          else if (tab === 'mychart_billing') handleMyChartNavigate('mychart_billing');
+          else if (tab === 'mychart_visits') handleMyChartNavigate('mychart_visits');
+          else if (tab === 'messages') setShowMessages(true);
+        }}
+      />
+
       {/* Full-Height Modern Sidebar Navigation Drawer */}
       <SidebarDrawer
         visible={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         user={{ ...user, ...(profileData || {}), avatarUrl }}
         onNavigate={(navId) => {
-          if (navId === 'appointments') setShowAppointments(true);
+          if (navId === 'mychart_todo') setShowTodoModal(true);
+          else if (navId === 'mychart_account') setShowProxySwitcher(true);
+          else if (navId.startsWith('mychart_')) handleMyChartNavigate(navId);
+          else if (navId === 'appointments') setShowAppointments(true);
           else if (navId === 'prescriptions') setShowPrescriptions(true);
           else if (navId === 'health_records') setShowHealthRecords(true);
           else if (navId === 'medical_reports') setShowMedicalReports(true);
@@ -749,5 +1014,148 @@ const styles = StyleSheet.create({
     fontSize: 11.5,
     color: '#64748b',
     lineHeight: 16
+  },
+  headerRightBadges: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6
+  },
+  proxySwitchChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#ede9fe',
+    borderWidth: 1,
+    borderColor: '#ddd6fe',
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    maxWidth: 130
+  },
+  proxySwitchChipText: {
+    fontSize: 10.5,
+    fontWeight: '700',
+    color: '#6d28d9'
+  },
+  todoHeroBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#0891b2',
+    borderRadius: 16,
+    padding: 14,
+    marginBottom: 16,
+    shadowColor: '#0891b2',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 2
+  },
+  todoHeroIconBox: {
+    width: 38,
+    height: 38,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12
+  },
+  todoHeroTextBox: {
+    flex: 1,
+    marginRight: 8
+  },
+  todoHeroTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 2
+  },
+  todoHeroTitle: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#ffffff'
+  },
+  todoBadgeRed: {
+    backgroundColor: '#dc2626',
+    paddingHorizontal: 6,
+    paddingVertical: 1,
+    borderRadius: 6
+  },
+  todoBadgeRedText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#ffffff'
+  },
+  todoBadgeBlue: {
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    paddingHorizontal: 6,
+    paddingVertical: 1,
+    borderRadius: 6
+  },
+  todoBadgeBlueText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#ffffff'
+  },
+  todoHeroSub: {
+    fontSize: 11.5,
+    color: '#cffafe',
+    lineHeight: 15
+  },
+  todoPillBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#ecfeff',
+    borderWidth: 1,
+    borderColor: '#cffafe',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12
+  },
+  todoPillBtnText: {
+    fontSize: 11.5,
+    fontWeight: '700',
+    color: '#0891b2'
+  },
+  myChartGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginBottom: 20
+  },
+  myChartCard: {
+    width: '31.3%',
+    backgroundColor: '#ffffff',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    paddingVertical: 14,
+    paddingHorizontal: 8,
+    alignItems: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 2,
+    elevation: 1
+  },
+  myChartIconBox: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8
+  },
+  myChartCardTitle: {
+    fontSize: 12.5,
+    fontWeight: '700',
+    color: '#0f172a',
+    textAlign: 'center'
+  },
+  myChartCardSub: {
+    fontSize: 10,
+    color: '#64748b',
+    textAlign: 'center',
+    marginTop: 2
   }
 });

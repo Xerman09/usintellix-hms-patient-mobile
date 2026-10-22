@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Platform } from 'react-native';
+import { View, Text, Platform } from 'react-native';
 
 /**
  * Universal SVG Icon component for React Native Web & Native
  * Renders standard scalable vector paths matching Lucide/Heroicons
  */
-export function SvgIcon({ paths, size = 18, color = '#0284c7', viewBox = '0 0 24 24', strokeWidth = 2, fill = 'none' }) {
+export function SvgIcon({ paths, size = 18, color = '#0284c7', viewBox = '0 0 24 24', strokeWidth = 2, fill = 'none', fallback = '' }) {
   if (Platform.OS === 'web') {
     return (
       <svg
@@ -24,8 +24,18 @@ export function SvgIcon({ paths, size = 18, color = '#0284c7', viewBox = '0 0 24
     );
   }
 
-  // Fallback for native view rendering if needed
-  return <View style={{ width: size, height: size }} />;
+  // Fallback for native view rendering
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+      {fallback ? (
+        <Text style={{ fontSize: Math.max(12, Math.round(size * 0.85)), color, textAlign: 'center', lineHeight: size }}>
+          {fallback}
+        </Text>
+      ) : (
+        <View style={{ width: size * 0.45, height: size * 0.45, borderRadius: (size * 0.45) / 2, backgroundColor: color }} />
+      )}
+    </View>
+  );
 }
 
 // 1. Dashboard / Home Icon
@@ -480,6 +490,7 @@ export function AlertTriangleIcon({ color = '#eab308', size = 20 }) {
     <SvgIcon
       size={size}
       color={color}
+      fallback="⚠️"
       paths={
         <>
           <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
@@ -490,5 +501,148 @@ export function AlertTriangleIcon({ color = '#eab308', size = 20 }) {
     />
   );
 }
+
+// 27. MyChart Lab / Test Results Icon
+export function LabIcon({ color = '#2563eb', size = 20 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="🧪"
+      paths={
+        <>
+          <path d="M10 2v7.31L4.1 20.3a2 2 0 0 0 1.74 2.7h12.32a2 2 0 0 0 1.74-2.7L14 9.31V2" />
+          <path d="M8.5 2h7" />
+          <path d="M14 9.3a6.5 6.5 0 0 0-4 0" />
+        </>
+      }
+    />
+  );
+}
+
+// 28. MyChart Visits & Clinic Icon
+export function VisitsIcon({ color = '#0284c7', size = 20 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="🏥"
+      paths={
+        <>
+          <path d="M18 21V5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16" />
+          <path d="M2 21h20" />
+          <path d="M10 9h4" />
+          <path d="M12 7v4" />
+        </>
+      }
+    />
+  );
+}
+
+// 29. MyChart Billing & Payments Icon
+export function BillingIcon({ color = '#059669', size = 20 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="💳"
+      paths={
+        <>
+          <rect width="20" height="14" x="2" y="5" rx="2" />
+          <line x1="2" x2="22" y1="10" y2="10" />
+        </>
+      }
+    />
+  );
+}
+
+// 30. MyChart e-Check-In Icon
+export function CheckinIcon({ color = '#d97706', size = 20 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="📋"
+      paths={
+        <>
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+          <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+          <path d="m9 14 2 2 4-4" />
+        </>
+      }
+    />
+  );
+}
+
+// 31. MyChart Track Health Icon
+export function TrackHealthIcon({ color = '#e11d48', size = 20 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="🩺"
+      paths={
+        <>
+          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+          <path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27" />
+        </>
+      }
+    />
+  );
+}
+
+// 32. MyChart Proxy & Family Sharing Icon
+export function ProxyIcon({ color = '#7c3aed', size = 20 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="👥"
+      paths={
+        <>
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </>
+      }
+    />
+  );
+}
+
+// 33. MyChart To-Do Checklist Icon
+export function TodoIcon({ color = '#0891b2', size = 20 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="✅"
+      paths={
+        <>
+          <path d="m9 11 3 3L22 4" />
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+        </>
+      }
+    />
+  );
+}
+
+// 34. Shield Security / Capability Icon
+export function ShieldCheckIcon({ color = '#10b981', size = 20 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="🛡️"
+      paths={
+        <>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </>
+      }
+    />
+  );
+}
+
 
 

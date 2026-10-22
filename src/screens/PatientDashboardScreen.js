@@ -45,6 +45,7 @@ import MyChartBillingModal from '../components/MyChartBillingModal';
 import MyChartCheckinModal from '../components/MyChartCheckinModal';
 import MyChartNotificationsModal from '../components/MyChartNotificationsModal';
 import MyChartTrackHealthModal from '../components/MyChartTrackHealthModal';
+import MyChartSharingModal from '../components/MyChartSharingModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -90,6 +91,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
 
   // Phase M7: Track My Health State
   const [showTrackHealthModal, setShowTrackHealthModal] = useState(false);
+
+  // Phase M8: Share Everywhere, Family Proxy & Access Audit Log State
+  const [showSharingModal, setShowSharingModal] = useState(false);
 
   const loadMyChartData = async () => {
     try {
@@ -152,7 +156,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         setShowTodoModal(true);
         break;
       case 'mychart_account':
-        setShowProxySwitcher(true);
+        setShowSharingModal(true);
         break;
       case 'mychart_results':
         setShowResultsModal(true);
@@ -697,6 +701,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         onClose={() => setShowTrackHealthModal(false)}
       />
 
+      {/* Phase M8: Share Everywhere, Family Proxy & Access Audit Log Modal */}
+      <MyChartSharingModal
+        visible={showSharingModal}
+        onClose={() => setShowSharingModal(false)}
+      />
+
       {/* Full-Height Modern Sidebar Navigation Drawer */}
       <SidebarDrawer
         visible={drawerOpen}
@@ -704,7 +714,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         user={{ ...user, ...(profileData || {}), avatarUrl }}
         onNavigate={(navId) => {
           if (navId === 'mychart_todo') setShowTodoModal(true);
-          else if (navId === 'mychart_account') setShowProxySwitcher(true);
+          else if (navId === 'mychart_account') setShowSharingModal(true);
           else if (navId.startsWith('mychart_')) handleMyChartNavigate(navId);
           else if (navId === 'appointments') setShowAppointments(true);
           else if (navId === 'prescriptions') setShowPrescriptions(true);

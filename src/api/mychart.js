@@ -280,8 +280,16 @@ export const MyChartService = {
   /**
    * Access audit log ("who has accessed my record")
    */
-  async getAccessLog() {
-    return apiRequest('/mychart/access-log');
+  async getAccessLog(days = 90) {
+    return apiRequest(`/mychart/access-log?days=${Number(days)}`);
+  },
+
+  /**
+   * Get formatted digital health record summary pack
+   */
+  async getRecordPack(scope = []) {
+    const query = scope.length > 0 ? `?scope=${scope.join(',')}` : '';
+    return apiRequest(`/mychart/record-pack${query}`);
   },
 
   /**

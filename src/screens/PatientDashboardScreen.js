@@ -43,6 +43,7 @@ import MyChartResultsModal from '../components/MyChartResultsModal';
 import MyChartVisitsModal from '../components/MyChartVisitsModal';
 import MyChartBillingModal from '../components/MyChartBillingModal';
 import MyChartCheckinModal from '../components/MyChartCheckinModal';
+import MyChartNotificationsModal from '../components/MyChartNotificationsModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -82,11 +83,16 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   // Phase M5: Fast-Track e-Check-In State
   const [showCheckinModal, setShowCheckinModal] = useState(false);
 
+  // Phase M6: Notifications & Preferences State
+  const [showNotificationsModal, setShowNotificationsModal] = useState(false);
+  const [unreadNotifCount, setUnreadNotifCount] = useState(0);
+
   const loadMyChartData = async () => {
     try {
-      const [proxyRes, todoRes] = await Promise.all([
+      const [proxyRes, todoRes, notifRes] = await Promise.all([
         MyChartService.getAccessiblePatients(),
-        MyChartService.getTodo()
+        MyChartService.getTodo(),
+        MyChartService.getNotifications(false).catch(() => null)
       ]);
       if (proxyRes && proxyRes.success && Array.isArray(proxyRes.data)) {
         setAccessiblePatients(proxyRes.data);
@@ -95,6 +101,10 @@ export default function PatientDashboardScreen({ user, onLogout }) {
       }
       if (todoRes && todoRes.success && todoRes.data) {
         setTodoCounts(todoRes.data.counts || { total: 0, overdue: 0, todo: 0 });
+      }
+      if (notifRes && notifRes.success && notifRes.data) {
+        const list = Array.isArray(notifRes.data) ? notifRes.data : (notifRes.data.items || []);
+        setUnreadNotifCount(list.filter((n) => !n.read_at && n.status !== 'read').length);
       }
     } catch (e) {
       console.warn('Failed to load MyChart data:', e);
@@ -151,6 +161,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         break;
       case 'mychart_checkin':
         setShowCheckinModal(true);
+        break;
+      case 'mychart_notifications':
+        setShowNotificationsModal(true);
         break;
       case 'mychart_track':
         Alert.alert(
@@ -212,24 +225,41 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           </Text>
         </View>
 
-        {/* Right: Modern Circular Avatar with Online Dot */}
-        <TouchableOpacity
-          style={styles.avatarBadge}
-          onPress={() => setCurrentView('profile')}
-          activeOpacity={0.8}
-        >
-          {avatarUrl && !avatarError ? (
-            <Image
-              source={{ uri: avatarUrl }}
-              style={styles.avatarImg}
-              onError={() => setAvatarError(true)}
-              resizeMode="cover"
-            />
-          ) : (
-            <Text style={styles.avatarInitialsText}>{initials}</Text>
-          )}
-          <View style={styles.onlineStatusDot} />
-        </TouchableOpacity>
+        {/* Right: Notification Bell Button & Avatar */}
+        <View style={styles.topRightActions}>
+          <TouchableOpacity
+            style={styles.bellBtn}
+            onPress={() => setShowNotificationsModal(true)}
+            activeOpacity={0.7}
+          >
+            <BellIcon color="#0f172a" size={19} />
+            {unreadNotifCount > 0 && (
+              <View style={styles.bellBadge}>
+                <Text style={styles.bellBadgeText}>
+                  {unreadNotifCount > 9 ? '9+' : unreadNotifCount}
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.avatarBadge}
+            onPress={() => setCurrentView('profile')}
+            activeOpacity={0.8}
+          >
+            {avatarUrl && !avatarError ? (
+              <Image
+                source={{ uri: avatarUrl }}
+                style={styles.avatarImg}
+                onError={() => setAvatarError(true)}
+                resizeMode="cover"
+              />
+            ) : (
+              <Text style={styles.avatarInitialsText}>{initials}</Text>
+            )}
+            <View style={styles.onlineStatusDot} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Main Content Area */}
@@ -647,6 +677,20 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         onClose={() => setShowCheckinModal(false)}
       />
 
+      {/* Phase M6: Notifications & Delivery Preferences Modal */}
+      <MyChartNotificationsModal
+        visible={showNotificationsModal}
+        onClose={() => setShowNotificationsModal(false)}
+        onUnreadCountChange={(c) => setUnreadNotifCount(c)}
+        onNavigateTab={(tab) => {
+          if (tab === 'mychart_results') handleMyChartNavigate('mychart_results');
+          else if (tab === 'mychart_billing') handleMyChartNavigate('mychart_billing');
+          else if (tab === 'mychart_visits') handleMyChartNavigate('mychart_visits');
+          else if (tab === 'mychart_checkin') handleMyChartNavigate('mychart_checkin');
+          else if (tab === 'messages') setShowMessages(true);
+        }}
+      />
+
       {/* Full-Height Modern Sidebar Navigation Drawer */}
       <SidebarDrawer
         visible={drawerOpen}
@@ -732,6 +776,41 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: '#0f172a',
     letterSpacing: -0.3
+  },
+  topRightActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8
+  },
+  bellBtn: {
+    width: 38,
+    height: 38,
+    borderRadius: 12,
+    backgroundColor: '#f1f5f9',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    borderWidth: 1,
+    borderColor: '#e2e8f0'
+  },
+  bellBadge: {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    backgroundColor: '#ef4444',
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 4,
+    borderWidth: 1.5,
+    borderColor: '#ffffff'
+  },
+  bellBadgeText: {
+    color: '#ffffff',
+    fontSize: 9.5,
+    fontWeight: '800'
   },
   avatarBadge: {
     width: 42,

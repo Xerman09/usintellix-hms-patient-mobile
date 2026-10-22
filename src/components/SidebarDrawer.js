@@ -62,6 +62,12 @@ export default function SidebarDrawer({
       color: '#0891b2'
     },
     {
+      id: 'mychart_notifications',
+      label: 'Notifications & Alerts',
+      IconComponent: BellIcon,
+      color: '#0284c7'
+    },
+    {
       id: 'mychart_results',
       label: 'Test Results (Lab & Imaging)',
       IconComponent: LabIcon,

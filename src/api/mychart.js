@@ -211,10 +211,13 @@ export const MyChartService = {
   /**
    * Finalize and complete e-check-in
    */
-  async completeCheckin(checkinId) {
+  async completeCheckin(appointmentId) {
     return apiRequest('/mychart/checkin/complete', {
       method: 'POST',
-      body: JSON.stringify({ checkin_id: Number(checkinId) })
+      body: JSON.stringify({
+        appointment_id: Number(appointmentId),
+        checkin_id: Number(appointmentId)
+      })
     });
   },
 

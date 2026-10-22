@@ -42,6 +42,7 @@ import MyChartTodoModal from '../components/MyChartTodoModal';
 import MyChartResultsModal from '../components/MyChartResultsModal';
 import MyChartVisitsModal from '../components/MyChartVisitsModal';
 import MyChartBillingModal from '../components/MyChartBillingModal';
+import MyChartCheckinModal from '../components/MyChartCheckinModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -77,6 +78,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
 
   // Phase M4: Statements & Payments State
   const [showBillingModal, setShowBillingModal] = useState(false);
+
+  // Phase M5: Fast-Track e-Check-In State
+  const [showCheckinModal, setShowCheckinModal] = useState(false);
 
   const loadMyChartData = async () => {
     try {
@@ -146,11 +150,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         setShowBillingModal(true);
         break;
       case 'mychart_checkin':
-        Alert.alert(
-          'Phase M5: e-Check-In',
-          'Fast-track e-check-in endpoint /mychart/checkin is connected.',
-          [{ text: 'OK' }]
-        );
+        setShowCheckinModal(true);
         break;
       case 'mychart_track':
         Alert.alert(
@@ -639,6 +639,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
       <MyChartBillingModal
         visible={showBillingModal}
         onClose={() => setShowBillingModal(false)}
+      />
+
+      {/* Phase M5: Fast-Track e-Check-In Wizard Modal */}
+      <MyChartCheckinModal
+        visible={showCheckinModal}
+        onClose={() => setShowCheckinModal(false)}
       />
 
       {/* Full-Height Modern Sidebar Navigation Drawer */}

@@ -40,6 +40,7 @@ import AnnouncementPopupModal from '../components/AnnouncementPopupModal';
 import ProxySwitcherModal from '../components/ProxySwitcherModal';
 import MyChartTodoModal from '../components/MyChartTodoModal';
 import MyChartResultsModal from '../components/MyChartResultsModal';
+import MyChartVisitsModal from '../components/MyChartVisitsModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -69,6 +70,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
 
   // Phase M1: Test Results & Release Gating State
   const [showResultsModal, setShowResultsModal] = useState(false);
+
+  // Phase M3: Visits & After-Visit Summaries State
+  const [showVisitsModal, setShowVisitsModal] = useState(false);
 
   const loadMyChartData = async () => {
     try {
@@ -132,11 +136,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         setShowResultsModal(true);
         break;
       case 'mychart_visits':
-        Alert.alert(
-          'Phase M3: Visits & Discharge',
-          'Visits endpoint /mychart/visits is connected.',
-          [{ text: 'OK' }]
-        );
+        setShowVisitsModal(true);
         break;
       case 'mychart_billing':
         Alert.alert(
@@ -627,6 +627,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           setShowResultsModal(false);
           setShowMessages(true);
         }}
+      />
+
+      {/* Phase M3: Visits & After-Visit Summaries (AVS) Modal */}
+      <MyChartVisitsModal
+        visible={showVisitsModal}
+        onClose={() => setShowVisitsModal(false)}
       />
 
       {/* Full-Height Modern Sidebar Navigation Drawer */}

@@ -679,6 +679,43 @@ export function InfoCircleIcon({ color = '#0284c7', size = 18 }) {
   );
 }
 
+// 37. Hospital / Building Icon
+export function HospitalIcon({ color = '#0284c7', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="🏥"
+      paths={
+        <>
+          <path d="M3 21h18" />
+          <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16" />
+          <path d="M9 10h6" />
+          <path d="M12 7v6" />
+        </>
+      }
+    />
+  );
+}
+
+// 38. Clock Icon
+export function ClockIcon({ color = '#64748b', size = 16 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="🕒"
+      paths={
+        <>
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </>
+      }
+    />
+  );
+}
+
+
 
 
 

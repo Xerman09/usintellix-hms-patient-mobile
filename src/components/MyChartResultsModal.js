@@ -19,8 +19,13 @@ import {
   AlertTriangleIcon,
   CheckCircleIcon,
   ChatIcon,
-  UserIcon
+  UserIcon,
+  TrendIcon,
+  InfoCircleIcon
 } from './Icons';
+import { getAnalyteExplanation, parseRangeAndValue } from '../utils/analyteDictionary';
+import MyChartTrendModal from './MyChartTrendModal';
+import MyChartAskDoctorModal from './MyChartAskDoctorModal';
 
 const CATEGORY_NAMES = {
   hematology: 'Blood count',
@@ -78,6 +83,11 @@ export default function MyChartResultsModal({
   const [detailLoading, setDetailLoading] = useState(false);
   const [orderDetail, setOrderDetail] = useState(null);
 
+  // Phase M2: Plain-Language & Trend Modals
+  const [expandedExplanation, setExpandedExplanation] = useState({});
+  const [activeTrendAnalyte, setActiveTrendAnalyte] = useState(null);
+  const [showAskModal, setShowAskModal] = useState(false);
+
   const fetchResults = async () => {
     try {
       const filters = {};
@@ -107,6 +117,7 @@ export default function MyChartResultsModal({
     } else {
       setSelectedOrder(null);
       setOrderDetail(null);
+      setExpandedExplanation({});
     }
   }, [visible, filterKind]);
 
@@ -118,6 +129,7 @@ export default function MyChartResultsModal({
   const handleOpenDetail = async (item) => {
     setSelectedOrder(item);
     setDetailLoading(true);
+    setExpandedExplanation({});
     try {
       const res = await MyChartService.getResultDetail(item.order_id);
       if (res && res.success && res.data) {
@@ -133,6 +145,14 @@ export default function MyChartResultsModal({
   const handleCloseDetail = () => {
     setSelectedOrder(null);
     setOrderDetail(null);
+    setExpandedExplanation({});
+  };
+
+  const toggleExplanation = (key) => {
+    setExpandedExplanation((prev) => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
   };
 
   // Filter abnormal in-memory if filterKind === 'abnormal'
@@ -249,51 +269,211 @@ export default function MyChartResultsModal({
                   </View>
                 ) : null}
 
-                {/* LABORATORY ANALYTES TABLE */}
+                {/* LABORATORY ANALYTES & PLAIN-LANGUAGE SECTION (PHASE M2) */}
                 {orderDetail.results && orderDetail.results.length > 0 ? (
                   <View style={styles.analytesContainer}>
-                    <Text style={styles.analytesHeaderTitle}>Test Components &amp; Measurements</Text>
-                    <View style={styles.tableHeader}>
-                      <Text style={[styles.thText, { flex: 2 }]}>COMPONENT</Text>
-                      <Text style={[styles.thText, { flex: 1.2, textAlign: 'right' }]}>VALUE</Text>
-                      <Text style={[styles.thText, { flex: 1.5, textAlign: 'right' }]}>STANDARD</Text>
+                    <View style={styles.analytesHeaderRow}>
+                      <Text style={styles.analytesHeaderTitle}>Test Components &amp; Measurements</Text>
+                      <Text style={styles.analytesCount}>{orderDetail.results.length} items</Text>
                     </View>
 
-                    {orderDetail.results.map((row, idx) => (
-                      <View
-                        key={`analyte-${idx}`}
-                        style={[
-                          styles.tableRow,
-                          row.abnormal && styles.tableRowAbnormal,
-                          idx % 2 === 1 && !row.abnormal && styles.tableRowAlt
-                        ]}
-                      >
-                        <View style={{ flex: 2 }}>
-                          <Text style={[styles.analyteName, row.abnormal && styles.analyteNameAbnormal]}>
-                            {row.name}
-                          </Text>
-                          {row.code ? <Text style={styles.analyteCode}>{row.code}</Text> : null}
-                        </View>
+                    {orderDetail.results.map((row, idx) => {
+                      const parsedRange = parseRangeAndValue(row.value, row.reference_range);
+                      const explanation = getAnalyteExplanation(row.name, row.code, orderDetail.explanations);
+                      const isExpanded = !!expandedExplanation[row.name];
+                      const isNumeric = parsedRange.value !== null;
 
-                        <View style={{ flex: 1.2, alignItems: 'flex-end' }}>
-                          <View style={styles.valueRow}>
-                            <Text style={[styles.analyteValue, row.abnormal && styles.analyteValueAbnormal]}>
-                              {row.value}
-                            </Text>
-                            {row.abnormal && (
-                              <View style={styles.abnormalDot}>
-                                <Text style={styles.abnormalDotText}>!</Text>
+                      return (
+                        <View
+                          key={`analyte-${idx}`}
+                          style={[
+                            styles.analyteCard,
+                            row.abnormal && styles.analyteCardAbnormal,
+                            idx % 2 === 1 && !row.abnormal && styles.analyteCardAlt
+                          ]}
+                        >
+                          {/* Top Row: Name, Value, Standard Range */}
+                          <View style={styles.analyteTopRow}>
+                            <View style={{ flex: 1.8 }}>
+                              <Text style={[styles.analyteName, row.abnormal && styles.analyteNameAbnormal]}>
+                                {row.name}
+                              </Text>
+                              {row.code ? <Text style={styles.analyteCode}>{row.code}</Text> : null}
+                            </View>
+
+                            <View style={styles.analyteValueCol}>
+                              <View style={styles.valueRow}>
+                                <Text style={[styles.analyteValue, row.abnormal && styles.analyteValueAbnormal]}>
+                                  {row.value}
+                                </Text>
+                                {row.abnormal && (
+                                  <View style={styles.abnormalDot}>
+                                    <Text style={styles.abnormalDotText}>!</Text>
+                                  </View>
+                                )}
                               </View>
+                              {row.units ? <Text style={styles.analyteUnits}>{row.units}</Text> : null}
+                            </View>
+
+                            <View style={styles.refRangeCol}>
+                              <Text style={styles.refRangeLabel}>Standard</Text>
+                              <Text style={styles.refRangeText}>{row.reference_range || 'Ref Range'}</Text>
+                            </View>
+                          </View>
+
+                          {/* Phase M2: Horizontal Visual Range Bar (if range available) */}
+                          {parsedRange.hasRange && (
+                            <View style={styles.rangeBarBox}>
+                              <View style={styles.rangeBarTrack}>
+                                <View style={styles.rangeBarNormalZone} />
+                                {/* Marker Pointer Needle */}
+                                <View
+                                  style={[
+                                    styles.rangeBarMarker,
+                                    { left: `${parsedRange.percent}%` },
+                                    parsedRange.status === 'high' && { backgroundColor: '#dc2626' },
+                                    parsedRange.status === 'low' && { backgroundColor: '#2563eb' }
+                                  ]}
+                                />
+                              </View>
+                              <View style={styles.rangeBarLegend}>
+                                <Text style={styles.rangeLegendText}>
+                                  {parsedRange.low !== null ? `${parsedRange.low}` : ''}
+                                </Text>
+                                <View
+                                  style={[
+                                    styles.rangeStatusBadge,
+                                    parsedRange.status === 'normal'
+                                      ? styles.rangeStatusBadgeNormal
+                                      : styles.rangeStatusBadgeAbnormal
+                                  ]}
+                                >
+                                  <Text
+                                    style={[
+                                      styles.rangeStatusText,
+                                      parsedRange.status === 'normal'
+                                        ? styles.rangeStatusTextNormal
+                                        : styles.rangeStatusTextAbnormal
+                                    ]}
+                                  >
+                                    {parsedRange.status === 'normal'
+                                      ? 'In Standard Range'
+                                      : parsedRange.status === 'high'
+                                      ? 'Elevated Above Range'
+                                      : 'Below Range'}
+                                  </Text>
+                                </View>
+                                <Text style={styles.rangeLegendText}>
+                                  {parsedRange.high !== null ? `${parsedRange.high}` : ''}
+                                </Text>
+                              </View>
+                            </View>
+                          )}
+
+                          {/* Action Buttons: Trend & Explanation Accordion */}
+                          <View style={styles.analyteActionsRow}>
+                            {/* Trend Button (for numeric values) */}
+                            {isNumeric && (
+                              <TouchableOpacity
+                                style={styles.actionBtnTrend}
+                                activeOpacity={0.7}
+                                onPress={() =>
+                                  setActiveTrendAnalyte({
+                                    name: row.name,
+                                    code: row.code,
+                                    value: row.value,
+                                    units: row.units,
+                                    referenceRange: row.reference_range
+                                  })
+                                }
+                              >
+                                <TrendIcon color="#2563eb" size={13} />
+                                <Text style={styles.actionBtnTrendText}>View Trend</Text>
+                              </TouchableOpacity>
+                            )}
+
+                            {/* What this means accordion toggle */}
+                            {explanation && (
+                              <TouchableOpacity
+                                style={[styles.actionBtnExpl, isExpanded && styles.actionBtnExplActive]}
+                                activeOpacity={0.7}
+                                onPress={() => toggleExplanation(row.name)}
+                              >
+                                <InfoCircleIcon color={isExpanded ? '#1d4ed8' : '#0891b2'} size={13} />
+                                <Text
+                                  style={[
+                                    styles.actionBtnExplText,
+                                    isExpanded && styles.actionBtnExplTextActive
+                                  ]}
+                                >
+                                  {isExpanded ? 'Hide Details' : 'What does this mean?'}
+                                </Text>
+                              </TouchableOpacity>
                             )}
                           </View>
-                          {row.units ? <Text style={styles.analyteUnits}>{row.units}</Text> : null}
-                        </View>
 
-                        <View style={{ flex: 1.5, alignItems: 'flex-end' }}>
-                          <Text style={styles.refRangeText}>{row.reference_range || 'Standard'}</Text>
+                          {/* Plain-Language Explanation Card (Collapsible) */}
+                          {explanation && isExpanded && (
+                            <View style={styles.explanationBox}>
+                              <View style={styles.explanationHeaderRow}>
+                                <Text style={styles.explanationTitle}>
+                                  Understanding {row.name}
+                                </Text>
+                                <View style={styles.libraryBadge}>
+                                  <Text style={styles.libraryBadgeText}>Medical Guide</Text>
+                                </View>
+                              </View>
+
+                              {explanation.what_it_measures ? (
+                                <View style={styles.explanationSection}>
+                                  <Text style={styles.explanationSectionLabel}>WHAT IT MEASURES</Text>
+                                  <Text style={styles.explanationSectionBody}>
+                                    {explanation.what_it_measures}
+                                  </Text>
+                                </View>
+                              ) : null}
+
+                              {explanation.why_ordered ? (
+                                <View style={styles.explanationSection}>
+                                  <Text style={styles.explanationSectionLabel}>WHY DOCTORS CHECK THIS</Text>
+                                  <Text style={styles.explanationSectionBody}>
+                                    {explanation.why_ordered}
+                                  </Text>
+                                </View>
+                              ) : null}
+
+                              {explanation.high_means && (
+                                <View style={styles.explanationSection}>
+                                  <Text style={[styles.explanationSectionLabel, { color: '#b91c1c' }]}>
+                                    IF ELEVATED / HIGH
+                                  </Text>
+                                  <Text style={styles.explanationSectionBody}>
+                                    {explanation.high_means}
+                                  </Text>
+                                </View>
+                              )}
+
+                              {explanation.low_means && (
+                                <View style={styles.explanationSection}>
+                                  <Text style={[styles.explanationSectionLabel, { color: '#0369a1' }]}>
+                                    IF LOW / DECREASED
+                                  </Text>
+                                  <Text style={styles.explanationSectionBody}>
+                                    {explanation.low_means}
+                                  </Text>
+                                </View>
+                              )}
+
+                              {explanation.source ? (
+                                <Text style={styles.explanationSource}>
+                                  Source: {explanation.source}
+                                </Text>
+                              ) : null}
+                            </View>
+                          )}
                         </View>
-                      </View>
-                    ))}
+                      );
+                    })}
                   </View>
                 ) : null}
 
@@ -305,16 +485,12 @@ export default function MyChartResultsModal({
                   </Text>
                 </View>
 
-                {/* "Ask Doctor" Button */}
+                {/* "Ask Doctor" Button (Phase M2 in-app sheet) */}
                 {orderDetail.ordering_doctor ? (
                   <TouchableOpacity
                     style={styles.askDoctorBtn}
                     activeOpacity={0.8}
-                    onPress={() => {
-                      if (onAskDoctor) {
-                        onAskDoctor(orderDetail);
-                      }
-                    }}
+                    onPress={() => setShowAskModal(true)}
                   >
                     <ChatIcon color="#ffffff" size={18} />
                     <Text style={styles.askDoctorBtnText}>
@@ -475,6 +651,28 @@ export default function MyChartResultsModal({
             </ScrollView>
           </View>
         )}
+
+        {/* Phase M2: Longitudinal Trend Modal */}
+        <MyChartTrendModal
+          visible={!!activeTrendAnalyte}
+          onClose={() => setActiveTrendAnalyte(null)}
+          analyteName={activeTrendAnalyte?.name}
+          analyteCode={activeTrendAnalyte?.code}
+          currentValue={activeTrendAnalyte?.value}
+          units={activeTrendAnalyte?.units}
+          referenceRange={activeTrendAnalyte?.referenceRange}
+        />
+
+        {/* Phase M2: In-App Ask Doctor Modal */}
+        <MyChartAskDoctorModal
+          visible={showAskModal}
+          onClose={() => setShowAskModal(false)}
+          order={orderDetail}
+          onSuccessGoToMessages={() => {
+            setShowAskModal(false);
+            if (onAskDoctor) onAskDoctor(orderDetail);
+          }}
+        />
       </SafeAreaView>
     </Modal>
   );
@@ -864,58 +1062,70 @@ const styles = StyleSheet.create({
     color: '#334155',
     lineHeight: 19
   },
+
+  /* ================= PHASE M2 ANALYTE STYLES ================= */
   analytesContainer: {
     backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#e2e8f0'
+    borderColor: '#e2e8f0',
+    gap: 12
+  },
+  analytesHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 10,
+    borderBottomWidth: 1.5,
+    borderBottomColor: '#f1f5f9'
   },
   analytesHeaderTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#0f172a',
-    marginBottom: 12
+    color: '#0f172a'
   },
-  tableHeader: {
-    flexDirection: 'row',
-    paddingVertical: 8,
-    borderBottomWidth: 1.5,
-    borderBottomColor: '#e2e8f0'
+  analytesCount: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#64748b'
   },
-  thText: {
-    fontSize: 11,
-    fontWeight: '800',
-    color: '#64748b',
-    letterSpacing: 0.5
+  analyteCard: {
+    borderRadius: 12,
+    padding: 12,
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    gap: 10
   },
-  tableRow: {
+  analyteCardAlt: {
+    backgroundColor: '#fafbfc'
+  },
+  analyteCardAbnormal: {
+    borderColor: '#fca5a5',
+    backgroundColor: '#fffdfd'
+  },
+  analyteTopRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 4,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f1f5f9'
-  },
-  tableRowAlt: {
-    backgroundColor: '#fcfcfd'
-  },
-  tableRowAbnormal: {
-    backgroundColor: '#fef2f2'
+    justifyContent: 'space-between'
   },
   analyteName: {
-    fontSize: 13.5,
-    fontWeight: '600',
-    color: '#1e293b'
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#0f172a'
   },
   analyteNameAbnormal: {
-    color: '#991b1b',
-    fontWeight: '700'
+    color: '#991b1b'
   },
   analyteCode: {
     fontSize: 11,
     color: '#94a3b8',
     marginTop: 1
+  },
+  analyteValueCol: {
+    flex: 1.2,
+    alignItems: 'flex-end'
   },
   valueRow: {
     flexDirection: 'row',
@@ -923,13 +1133,12 @@ const styles = StyleSheet.create({
     gap: 4
   },
   analyteValue: {
-    fontSize: 14,
-    fontWeight: '700',
+    fontSize: 15,
+    fontWeight: '800',
     color: '#0f172a'
   },
   analyteValueAbnormal: {
-    color: '#dc2626',
-    fontWeight: '800'
+    color: '#dc2626'
   },
   abnormalDot: {
     width: 16,
@@ -948,10 +1157,193 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#64748b'
   },
-  refRangeText: {
-    fontSize: 12,
-    color: '#475569'
+  refRangeCol: {
+    flex: 1.3,
+    alignItems: 'flex-end'
   },
+  refRangeLabel: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#94a3b8',
+    letterSpacing: 0.5
+  },
+  refRangeText: {
+    fontSize: 11.5,
+    fontWeight: '600',
+    color: '#475569',
+    marginTop: 1
+  },
+
+  /* Visual Range Bar */
+  rangeBarBox: {
+    marginTop: 4,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#f1f5f9'
+  },
+  rangeBarTrack: {
+    height: 7,
+    backgroundColor: '#e2e8f0',
+    borderRadius: 4,
+    position: 'relative',
+    overflow: 'visible',
+    justifyContent: 'center'
+  },
+  rangeBarNormalZone: {
+    position: 'absolute',
+    left: '20%',
+    width: '60%',
+    height: '100%',
+    backgroundColor: '#a7f3d0',
+    borderRadius: 4
+  },
+  rangeBarMarker: {
+    position: 'absolute',
+    width: 11,
+    height: 11,
+    borderRadius: 6,
+    backgroundColor: '#059669',
+    borderWidth: 2,
+    borderColor: '#ffffff',
+    marginLeft: -5.5,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2
+  },
+  rangeBarLegend: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 6
+  },
+  rangeLegendText: {
+    fontSize: 10,
+    color: '#94a3b8'
+  },
+  rangeStatusBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 10
+  },
+  rangeStatusBadgeNormal: {
+    backgroundColor: '#ecfdf5'
+  },
+  rangeStatusBadgeAbnormal: {
+    backgroundColor: '#fef2f2'
+  },
+  rangeStatusText: {
+    fontSize: 10.5,
+    fontWeight: '700'
+  },
+  rangeStatusTextNormal: {
+    color: '#059669'
+  },
+  rangeStatusTextAbnormal: {
+    color: '#dc2626'
+  },
+
+  /* Action Buttons Row */
+  analyteActionsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 6
+  },
+  actionBtnTrend: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+    borderRadius: 8,
+    backgroundColor: '#eff6ff',
+    borderWidth: 1,
+    borderColor: '#dbeafe'
+  },
+  actionBtnTrendText: {
+    fontSize: 11.5,
+    fontWeight: '700',
+    color: '#2563eb'
+  },
+  actionBtnExpl: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+    borderRadius: 8,
+    backgroundColor: '#f0fdfa',
+    borderWidth: 1,
+    borderColor: '#ccfbf1'
+  },
+  actionBtnExplActive: {
+    backgroundColor: '#eff6ff',
+    borderColor: '#bfdbfe'
+  },
+  actionBtnExplText: {
+    fontSize: 11.5,
+    fontWeight: '700',
+    color: '#0891b2'
+  },
+  actionBtnExplTextActive: {
+    color: '#1d4ed8'
+  },
+
+  /* Plain-Language Explanation Details */
+  explanationBox: {
+    backgroundColor: '#f8fafc',
+    borderRadius: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    marginTop: 4,
+    gap: 8
+  },
+  explanationHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  explanationTitle: {
+    fontSize: 12.5,
+    fontWeight: '700',
+    color: '#0f172a'
+  },
+  libraryBadge: {
+    backgroundColor: '#e0f2fe',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 6
+  },
+  libraryBadgeText: {
+    fontSize: 9.5,
+    fontWeight: '700',
+    color: '#0369a1'
+  },
+  explanationSection: {
+    gap: 2
+  },
+  explanationSectionLabel: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#64748b',
+    letterSpacing: 0.5
+  },
+  explanationSectionBody: {
+    fontSize: 12,
+    color: '#334155',
+    lineHeight: 17
+  },
+  explanationSource: {
+    fontSize: 10,
+    color: '#94a3b8',
+    fontStyle: 'italic',
+    marginTop: 2
+  },
+
+  /* Patient Advisory & Ask Doctor */
   disclaimerCard: {
     backgroundColor: '#f8fafc',
     borderRadius: 14,

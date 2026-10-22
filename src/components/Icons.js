@@ -644,5 +644,41 @@ export function ShieldCheckIcon({ color = '#10b981', size = 20 }) {
   );
 }
 
+// 35. Trend / Sparkline Chart Icon
+export function TrendIcon({ color = '#2563eb', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="📈"
+      paths={
+        <>
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+          <polyline points="16 7 22 7 22 13" />
+        </>
+      }
+    />
+  );
+}
+
+// 36. Info Circle Icon
+export function InfoCircleIcon({ color = '#0284c7', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="ℹ️"
+      paths={
+        <>
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </>
+      }
+    />
+  );
+}
+
+
 
 

@@ -39,6 +39,7 @@ import MedicalReportsModal from '../components/MedicalReportsModal';
 import AnnouncementPopupModal from '../components/AnnouncementPopupModal';
 import ProxySwitcherModal from '../components/ProxySwitcherModal';
 import MyChartTodoModal from '../components/MyChartTodoModal';
+import MyChartResultsModal from '../components/MyChartResultsModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -65,6 +66,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   const [showProxySwitcher, setShowProxySwitcher] = useState(false);
   const [showTodoModal, setShowTodoModal] = useState(false);
   const [todoCounts, setTodoCounts] = useState({ total: 0, overdue: 0, todo: 0 });
+
+  // Phase M1: Test Results & Release Gating State
+  const [showResultsModal, setShowResultsModal] = useState(false);
 
   const loadMyChartData = async () => {
     try {
@@ -125,11 +129,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         setShowProxySwitcher(true);
         break;
       case 'mychart_results':
-        Alert.alert(
-          'Phase M1: Test Results',
-          'Ready to connect Phase M1! The release gate endpoint /mychart/results is primed.',
-          [{ text: 'OK' }]
-        );
+        setShowResultsModal(true);
         break;
       case 'mychart_visits':
         Alert.alert(
@@ -616,6 +616,16 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           else if (tab === 'mychart_billing') handleMyChartNavigate('mychart_billing');
           else if (tab === 'mychart_visits') handleMyChartNavigate('mychart_visits');
           else if (tab === 'messages') setShowMessages(true);
+        }}
+      />
+
+      {/* Phase M1: Test Results & Release Gating Modal */}
+      <MyChartResultsModal
+        visible={showResultsModal}
+        onClose={() => setShowResultsModal(false)}
+        onAskDoctor={(order) => {
+          setShowResultsModal(false);
+          setShowMessages(true);
         }}
       />
 

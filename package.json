@@ -27,6 +27,7 @@
     "@babel/runtime": "^7.25.0",
     "@types/react": "~19.1.10",
     "babel-preset-expo": "~54.0.12",
+    "eas-cli": "^25.3.0",
     "esbuild": "^0.28.2",
     "typescript": "~5.9.2"
   }

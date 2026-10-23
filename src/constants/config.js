@@ -3,22 +3,40 @@ import { Platform } from 'react-native';
 /**
  * Backend Host Configuration for React Native
  * 
- * - When running on Android Emulator: 10.0.2.2 maps to the host machine's localhost (XAMPP).
- * - When running on Physical Android Device via Wi-Fi/USB: Replace with your PC LAN IP (e.g. 192.168.1.X).
- * - When running on iOS Simulator: localhost maps to host machine.
+ * - When running on physical Android device over Wi-Fi: uses PC's LAN IP (192.168.100.31).
+ * - When running on Android Studio Emulator: 10.0.2.2 maps to host machine.
+ * - When running on Web: uses current window.location.hostname.
  */
-const getHost = () => {
-  if (Platform.OS === 'android') return '10.0.2.2';
+const DEFAULT_LAN_IP = '192.168.100.31';
+
+let currentHost = (() => {
+  if (Platform.OS === 'android') return DEFAULT_LAN_IP;
   if (Platform.OS === 'web' && typeof window !== 'undefined') return window.location.hostname || 'localhost';
   return 'localhost';
-};
+})();
 
 export const CONFIG = {
-  BASE_URL: `http://${getHost()}/ims/usintellix-hospital-management-system/backend/public`,
+  get BASE_URL() {
+    return `http://${currentHost}/ims/usintellix-hospital-management-system/backend/public`;
+  },
   APP_NAME: 'USIntellix Health',
   APP_SUBTITLE: 'Patient Mobile Portal',
   VERSION: '1.0.0'
 };
+
+export function getServerHost() {
+  return currentHost;
+}
+
+export function setServerHost(newHost) {
+  if (newHost && typeof newHost === 'string') {
+    let clean = newHost.trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '');
+    if (clean) {
+      currentHost = clean;
+    }
+  }
+  return currentHost;
+}
 
 export function getAvatarUrl(path) {
   if (!path) return null;

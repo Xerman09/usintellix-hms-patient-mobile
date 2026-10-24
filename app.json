@@ -4,19 +4,19 @@
     "slug": "patient-mobile-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "dark",
+    "icon": "./assets/logo.png",
+    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#090e1a"
+      "backgroundColor": "#ffffff"
     },
     "android": {
       "package": "com.usintellix.patientapp",
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#090e1a"
+        "foregroundImage": "./assets/logo.png",
+        "backgroundColor": "#ffffff"
       },
       "permissions": [
         "INTERNET",

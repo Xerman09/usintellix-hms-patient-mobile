@@ -10,7 +10,9 @@ import {
   TextInput,
   RefreshControl,
   Alert,
-  SafeAreaView
+  SafeAreaView,
+  StatusBar,
+  Platform
 } from 'react-native';
 import { MyChartService } from '../api/mychart';
 import {
@@ -852,7 +854,8 @@ export default function MyChartCheckinModal({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) : 0
   },
   mainContainer: {
     flex: 1,

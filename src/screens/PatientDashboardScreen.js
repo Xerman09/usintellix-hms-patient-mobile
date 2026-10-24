@@ -7,7 +7,9 @@ import {
   ScrollView,
   SafeAreaView,
   Alert,
-  Image
+  Image,
+  StatusBar,
+  Platform
 } from 'react-native';
 import { THEME } from '../constants/theme';
 import { AuthService } from '../api/auth';
@@ -210,6 +212,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" translucent={false} />
       {/* ================= TOP NAVIGATION BAR ================= */}
       <View style={styles.topNavBar}>
         {/* Left: Hamburger Menu Icon in soft square frame */}
@@ -752,7 +755,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#f8fafc'
+    backgroundColor: '#ffffff',
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 28) : 0
   },
   topNavBar: {
     width: '100%',

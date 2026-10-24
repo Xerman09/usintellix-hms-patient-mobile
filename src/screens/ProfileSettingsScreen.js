@@ -8,7 +8,9 @@ import {
   TextInput,
   ActivityIndicator,
   SafeAreaView,
-  Image
+  Image,
+  StatusBar,
+  Platform
 } from 'react-native';
 import { ProfileService } from '../api/profile';
 import { getAvatarUrl } from '../constants/config';
@@ -923,7 +925,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#f8fafc'
+    backgroundColor: '#ffffff',
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 28) : 0
   },
   topNavBar: {
     width: '100%',

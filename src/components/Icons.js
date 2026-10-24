@@ -1,11 +1,40 @@
 import React from 'react';
 import { View, Text, Platform } from 'react-native';
+import Svg, {
+  Path as NativePath,
+  Rect as NativeRect,
+  Circle as NativeCircle,
+  Line as NativeLine,
+  Polyline as NativePolyline,
+  G as NativeG
+} from 'react-native-svg';
+
+const TAG_MAP = {
+  path: NativePath,
+  rect: NativeRect,
+  circle: NativeCircle,
+  line: NativeLine,
+  polyline: NativePolyline,
+  g: NativeG
+};
+
+function renderNativeElements(children) {
+  return React.Children.map(children, (child) => {
+    if (!child || !React.isValidElement(child)) return child;
+    if (child.type === React.Fragment) {
+      return renderNativeElements(child.props?.children);
+    }
+    const Component = TAG_MAP[child.type] || child.type;
+    const childChildren = child.props?.children ? renderNativeElements(child.props.children) : null;
+    return <Component {...child.props}>{childChildren}</Component>;
+  });
+}
 
 /**
  * Universal SVG Icon component for React Native Web & Native
- * Renders standard scalable vector paths matching Lucide/Heroicons
+ * Renders native SVG vector graphics on Android & iOS, standard SVG DOM on Web
  */
-export function SvgIcon({ paths, size = 18, color = '#0284c7', viewBox = '0 0 24 24', strokeWidth = 2, fill = 'none', fallback = '' }) {
+export function SvgIcon({ paths, size = 18, color = '#0284c7', viewBox = '0 0 24 24', strokeWidth = 2, fill = 'none' }) {
   if (Platform.OS === 'web') {
     return (
       <svg
@@ -24,17 +53,20 @@ export function SvgIcon({ paths, size = 18, color = '#0284c7', viewBox = '0 0 24
     );
   }
 
-  // Fallback for native view rendering
+  // Native Android and iOS vector rendering via react-native-svg
   return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      {fallback ? (
-        <Text style={{ fontSize: Math.max(12, Math.round(size * 0.85)), color, textAlign: 'center', lineHeight: size }}>
-          {fallback}
-        </Text>
-      ) : (
-        <View style={{ width: size * 0.45, height: size * 0.45, borderRadius: (size * 0.45) / 2, backgroundColor: color }} />
-      )}
-    </View>
+    <Svg
+      width={size}
+      height={size}
+      viewBox={viewBox}
+      fill={fill}
+      stroke={color}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {renderNativeElements(paths)}
+    </Svg>
   );
 }
 

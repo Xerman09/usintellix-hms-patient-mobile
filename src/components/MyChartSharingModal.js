@@ -10,7 +10,8 @@ import {
   ActivityIndicator,
   TextInput,
   Alert,
-  Platform
+  Platform,
+  StatusBar
 } from 'react-native';
 import { THEME } from '../constants/theme';
 import { MyChartService } from '../api/mychart';
@@ -983,7 +984,8 @@ export default function MyChartSharingModal({ visible, onClose }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f8fafc'
+    backgroundColor: '#ffffff',
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) : 0
   },
   headerBar: {
     height: 65,

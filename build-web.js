@@ -18,7 +18,8 @@ async function build() {
       '.svg': 'text'
     },
     alias: {
-      'react-native': 'react-native-web'
+      'react-native': 'react-native-web',
+      'react-native-svg': path.resolve(__dirname, 'src/components/SvgWebShim.js')
     },
     sourcemap: true
   });

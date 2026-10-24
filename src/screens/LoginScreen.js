@@ -11,7 +11,8 @@ import {
   Platform,
   Alert,
   Image,
-  Modal
+  Modal,
+  StatusBar
 } from 'react-native';
 import { THEME } from '../constants/theme';
 import { AuthService } from '../api/auth';
@@ -301,6 +302,7 @@ export default function LoginScreen({ onLoginSuccess }) {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       style={styles.screenContainer}
     >
+      <StatusBar barStyle="dark-content" backgroundColor="#eff6ff" translucent={false} />
       <ScrollView
         contentContainerStyle={styles.scrollWrapper}
         keyboardShouldPersistTaps="handled"
@@ -788,7 +790,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#eff6ff',
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) : 0
   },
   scrollWrapper: {
     flexGrow: 1,

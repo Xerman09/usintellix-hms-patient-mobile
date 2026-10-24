@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
-  Image
+  Image,
+  StatusBar,
+  Platform
 } from 'react-native';
 import { getAvatarUrl } from '../constants/config';
 import {
@@ -341,7 +343,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingTop: 18,
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) + 12 : 18,
     paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#f1f5f9'

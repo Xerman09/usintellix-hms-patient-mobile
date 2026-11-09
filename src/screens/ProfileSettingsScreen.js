@@ -13,7 +13,9 @@ import {
   Platform
 } from 'react-native';
 import { ProfileService } from '../api/profile';
-import { getAvatarUrl } from '../constants/config';
+import { VersionService } from '../api/version';
+import { getAvatarUrl, CONFIG } from '../constants/config';
+import UpdateNotificationModal from '../components/UpdateNotificationModal';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -24,7 +26,9 @@ import {
   LogOutIcon,
   ShieldIcon,
   LockIcon,
-  MailIcon
+  MailIcon,
+  RefreshIcon,
+  CloudDownloadIcon
 } from '../components/Icons';
 
 export default function ProfileSettingsScreen({
@@ -72,6 +76,48 @@ export default function ProfileSettingsScreen({
     clinicalGuidelines: true,
     careTeamMessages: true
   });
+
+  // App Update State
+  const [checkingUpdate, setCheckingUpdate] = useState(false);
+  const [updateStatus, setUpdateStatus] = useState(null);
+  const [updateModalInfo, setUpdateModalInfo] = useState(null);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+  // Manual Check for Updates
+  const handleCheckForUpdates = async () => {
+    setCheckingUpdate(true);
+    setUpdateStatus(null);
+    try {
+      const res = await VersionService.checkLatestVersion();
+      if (res && res.success) {
+        if (res.hasUpdate) {
+          setUpdateModalInfo(res);
+          setShowUpdateModal(true);
+          setUpdateStatus({
+            type: 'update_available',
+            text: `New version v${res.latestVersion} is ready to install!`
+          });
+        } else {
+          setUpdateStatus({
+            type: 'up_to_date',
+            text: `You are using the latest version (v${res.currentVersion}).`
+          });
+        }
+      } else {
+        setUpdateStatus({
+          type: 'error',
+          text: res.message || 'Unable to reach the hospital update server.'
+        });
+      }
+    } catch (err) {
+      setUpdateStatus({
+        type: 'error',
+        text: 'Network error checking for updates.'
+      });
+    } finally {
+      setCheckingUpdate(false);
+    }
+  };
 
   // Load profile upon mount
   useEffect(() => {
@@ -881,7 +927,80 @@ export default function ProfileSettingsScreen({
                 </TouchableOpacity>
               </View>
 
-              {/* 3. SECURITY & COMPLIANCE */}
+              {/* 3. APPLICATION & SYSTEM UPDATES */}
+              <View style={styles.sectionCard}>
+                <View style={styles.cardHeaderRow}>
+                  <CloudDownloadIcon color="#2563eb" size={19} />
+                  <Text style={styles.sectionCardHeaderInline}>Application &amp; Software Update</Text>
+                </View>
+                <Text style={styles.sectionCardSubtitle}>
+                  Check for newer releases of the USIntellix Patient App to receive latest security patches and clinical features.
+                </Text>
+
+                <View style={styles.updateStatusContainer}>
+                  <View style={styles.appVersionRow}>
+                    <View>
+                      <Text style={styles.appVersionLabel}>Current App Version</Text>
+                      <Text style={styles.appVersionValue}>Version {CONFIG.VERSION || '1.0.0'}</Text>
+                    </View>
+                    <View style={styles.buildTag}>
+                      <Text style={styles.buildTagText}>Build {Platform.OS.toUpperCase()}</Text>
+                    </View>
+                  </View>
+
+                  {updateStatus && (
+                    <View
+                      style={[
+                        styles.updateStatusBanner,
+                        updateStatus.type === 'update_available' && styles.updateBannerAvailable,
+                        updateStatus.type === 'up_to_date' && styles.updateBannerUpToDate,
+                        updateStatus.type === 'error' && styles.updateBannerError
+                      ]}
+                    >
+                      {updateStatus.type === 'update_available' ? (
+                        <CloudDownloadIcon color="#1d4ed8" size={16} />
+                      ) : updateStatus.type === 'up_to_date' ? (
+                        <CheckCircleIcon color="#16a34a" size={16} />
+                      ) : (
+                        <ShieldIcon color="#dc2626" size={16} />
+                      )}
+                      <Text
+                        style={[
+                          styles.updateStatusBannerText,
+                          updateStatus.type === 'update_available' && { color: '#1d4ed8' },
+                          updateStatus.type === 'up_to_date' && { color: '#16a34a' },
+                          updateStatus.type === 'error' && { color: '#dc2626' }
+                        ]}
+                      >
+                        {updateStatus.text}
+                      </Text>
+                    </View>
+                  )}
+
+                  <TouchableOpacity
+                    style={[styles.checkUpdateBtn, checkingUpdate && { opacity: 0.7 }]}
+                    onPress={handleCheckForUpdates}
+                    disabled={checkingUpdate}
+                    activeOpacity={0.8}
+                  >
+                    {checkingUpdate ? (
+                      <View style={styles.btnInlineRow}>
+                        <ActivityIndicator size="small" color="#2563eb" style={{ marginRight: 8 }} />
+                        <Text style={styles.checkUpdateBtnText}>Connecting to Hospital Server...</Text>
+                      </View>
+                    ) : (
+                      <View style={styles.btnInlineRow}>
+                        <RefreshIcon color="#2563eb" size={16} />
+                        <Text style={[styles.checkUpdateBtnText, { marginLeft: 8 }]}>
+                          Check for Updates
+                        </Text>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              {/* 4. SECURITY & COMPLIANCE */}
               <View style={styles.sectionCard}>
                 <View style={styles.cardHeaderRow}>
                   <ShieldIcon color="#16a34a" size={19} />
@@ -903,7 +1022,7 @@ export default function ProfileSettingsScreen({
                 </View>
               </View>
 
-              {/* 4. SIGN OUT BUTTON */}
+              {/* 5. SIGN OUT BUTTON */}
               <TouchableOpacity
                 style={styles.logoutBtn}
                 onPress={onLogout}
@@ -916,6 +1035,14 @@ export default function ProfileSettingsScreen({
           )}
         </View>
       </ScrollView>
+
+      {/* Manual Check Update Popup Modal */}
+      <UpdateNotificationModal
+        visible={showUpdateModal}
+        updateInfo={updateModalInfo}
+        onClose={() => setShowUpdateModal(false)}
+        isManualCheck={true}
+      />
     </SafeAreaView>
   );
 }
@@ -1400,6 +1527,90 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 8,
     marginBottom: 24
+  },
+  updateStatusContainer: {
+    marginTop: 10
+  },
+  appVersionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#f8fafc',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 12
+  },
+  appVersionLabel: {
+    fontSize: 12,
+    color: '#64748b',
+    fontWeight: '500'
+  },
+  appVersionValue: {
+    fontSize: 14,
+    color: '#0f172a',
+    fontWeight: '700',
+    marginTop: 2
+  },
+  buildTag: {
+    backgroundColor: '#e2e8f0',
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 4
+  },
+  buildTagText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#475569'
+  },
+  updateStatusBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    padding: 12,
+    borderRadius: 12,
+    marginBottom: 12
+  },
+  updateBannerAvailable: {
+    backgroundColor: '#eff6ff',
+    borderWidth: 1,
+    borderColor: '#bfdbfe'
+  },
+  updateBannerUpToDate: {
+    backgroundColor: '#f0fdf4',
+    borderWidth: 1,
+    borderColor: '#bbf7d0'
+  },
+  updateBannerError: {
+    backgroundColor: '#fef2f2',
+    borderWidth: 1,
+    borderColor: '#fecaca'
+  },
+  updateStatusBannerText: {
+    fontSize: 13,
+    fontWeight: '600',
+    flex: 1
+  },
+  checkUpdateBtn: {
+    backgroundColor: '#ffffff',
+    borderWidth: 1.5,
+    borderColor: '#2563eb',
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  btnInlineRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  checkUpdateBtnText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#2563eb'
   },
   logoutBtnText: {
     fontSize: 14.5,

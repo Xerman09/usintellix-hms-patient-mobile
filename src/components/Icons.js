@@ -855,6 +855,59 @@ export function CopyIcon({ color = '#0284c7', size = 18 }) {
   );
 }
 
+// 45. Refresh / Update Icon
+export function RefreshIcon({ color = '#2563eb', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="🔄"
+      paths={
+        <>
+          <polyline points="23 4 23 10 17 10" />
+          <polyline points="1 20 1 14 7 14" />
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+        </>
+      }
+    />
+  );
+}
+
+// 46. Cloud Download / App Update Icon
+export function CloudDownloadIcon({ color = '#2563eb', size = 20 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="⬇️"
+      paths={
+        <>
+          <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+          <path d="M12 12v9" />
+          <path d="m8 17 4 4 4-4" />
+        </>
+      }
+    />
+  );
+}
+
+// 47. Sparkles / New Feature Icon
+export function SparklesIcon({ color = '#eab308', size = 18 }) {
+  return (
+    <SvgIcon
+      size={size}
+      color={color}
+      fallback="✨"
+      paths={
+        <>
+          <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+        </>
+      }
+    />
+  );
+}
+
+
 
 
 

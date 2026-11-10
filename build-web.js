@@ -9,7 +9,11 @@ async function build() {
     outfile: 'dist/bundle.web.js',
     define: {
       'process.env.NODE_ENV': '"development"',
-      '__DEV__': 'true'
+      '__DEV__': 'true',
+      'global': 'window'
+    },
+    banner: {
+      js: 'if (typeof global === "undefined") { var global = typeof globalThis !== "undefined" ? globalThis : window; }'
     },
     loader: {
       '.js': 'jsx',

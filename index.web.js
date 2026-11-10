@@ -1,3 +1,9 @@
+// Polyfill global for browser runtime (fixes React Native Web Animated TimingAnimation.stop)
+if (typeof window !== 'undefined') {
+  window.global = window.global || window;
+  window.process = window.process || { env: { NODE_ENV: 'development' } };
+}
+
 import React from 'react';
 import { AppRegistry } from 'react-native';
 import App from './App';

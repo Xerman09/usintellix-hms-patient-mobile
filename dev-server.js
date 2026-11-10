@@ -17,7 +17,11 @@ async function startServer() {
     outfile: 'dist/bundle.web.js',
     define: {
       'process.env.NODE_ENV': '"development"',
-      '__DEV__': 'true'
+      '__DEV__': 'true',
+      'global': 'window'
+    },
+    banner: {
+      js: 'if (typeof global === "undefined") { var global = typeof globalThis !== "undefined" ? globalThis : window; }'
     },
     loader: {
       '.js': 'jsx',
@@ -53,6 +57,7 @@ async function startServer() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#2563eb">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="USIntellix">
@@ -117,6 +122,10 @@ async function startServer() {
 </head>
 <body>
   <div id="root"></div>
+  <script>
+    window.global = window.global || window;
+    window.process = window.process || { env: { NODE_ENV: 'development' } };
+  </script>
   <script src="/dist/bundle.web.js"></script>
 </body>
 </html>`);

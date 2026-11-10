@@ -138,6 +138,23 @@ export const MyChartService = {
     return apiRequest(`/mychart/visits/discharge-summary?admission_id=${Number(admissionId)}`);
   },
 
+  /**
+   * Plain-language guides for the patient's own diagnoses: what the condition is,
+   * what to do, what not to do, and when to get help the same day.
+   *
+   * A POST because it carries the list of diagnoses on screen. The server only
+   * answers for diagnoses this patient actually has, so an item it does not
+   * recognise simply comes back absent.
+   *
+   * @param {Array<{code?: string, text: string}>} items
+   */
+  async getDiagnosisGuides(items) {
+    return apiRequest('/mychart/diagnosis-guides', {
+      method: 'POST',
+      body: JSON.stringify({ items })
+    });
+  },
+
   // -------------------------------------------------------------
   // 5. Billing & Statements (Phase M4)
   // -------------------------------------------------------------

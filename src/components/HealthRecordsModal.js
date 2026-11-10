@@ -8,7 +8,10 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { HealthRecordsService } from '../api/healthRecords';
-import { RecordsIcon } from '../components/Icons';
+import { MyChartService } from '../api/mychart';
+import { RecordsIcon, HelpCircleIcon } from '../components/Icons';
+import DiagnosisGuideModal from './DiagnosisGuideModal';
+import { getFallbackGuides } from '../utils/diagnosisDictionary';
 
 const TABS = [
   { id: 'summary', label: 'Summary' },
@@ -21,16 +24,26 @@ const TABS = [
   { id: 'demographics', label: 'Demographics' }
 ];
 
-export default function HealthRecordsModal({ visible, onClose }) {
-  const [activeTab, setActiveTab] = useState('summary');
+export default function HealthRecordsModal({ visible, onClose, initialTab = 'summary' }) {
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Guides for the conditions on the problem list. /health-summary is a shared CCD
+  // endpoint that staff read too, so it is left alone and the guides are fetched
+  // separately -- one request, the first time the Conditions tab is opened.
+  const [guides, setGuides] = useState({});
+  const [openGuide, setOpenGuide] = useState(null);
+
   useEffect(() => {
     if (visible) {
+      setActiveTab(initialTab);
       loadHealthSummary();
+    } else {
+      setGuides({});
+      setOpenGuide(null);
     }
-  }, [visible]);
+  }, [visible, initialTab]);
 
   const loadHealthSummary = async () => {
     setLoading(true);
@@ -49,7 +62,34 @@ export default function HealthRecordsModal({ visible, onClose }) {
     }
   };
 
+  // Fetched once per opening, when the patient first looks at Conditions.
+  useEffect(() => {
+    if (!visible || activeTab !== 'problems') return;
+    if (Object.keys(guides).length > 0) return;
+
+    const items = (data?.problems || [])
+      .map((p) => ({ code: p.coding || '', text: p.title || p.diagnosis || '' }))
+      .filter((i) => i.text || i.code);
+
+    if (items.length === 0) return;
+
+    MyChartService.getDiagnosisGuides(items)
+      .then((res) => {
+        if (res?.success && res.data?.guides) setGuides(res.data.guides);
+      })
+      .catch((err) => {
+        // A guide is an extra, never the record itself: the conditions list still
+        // shows without it. The offline set is used only here, on a failed request
+        // -- never when the server answered and had no guide, because that answer
+        // is the hospital's decision. See src/utils/diagnosisDictionary.js.
+        console.warn('Could not load diagnosis guides, falling back offline:', err);
+        setGuides(getFallbackGuides(items));
+      });
+  }, [visible, activeTab, data]);
+
   if (!visible) return null;
+
+  const guideForProblem = (p) => guides[p.title || p.diagnosis || ''] || null;
 
   const demographics = data?.demographics || {};
   const careProvider = data?.care_provider;
@@ -242,6 +282,23 @@ export default function HealthRecordsModal({ visible, onClose }) {
                         <Text style={styles.recordDesc}>Reported Date: {p.created_at?.slice(0, 10) || '-'}</Text>
                         {p.begin_date && <Text style={styles.recordDesc}>Start Date: {p.begin_date}</Text>}
                         {p.end_date && <Text style={styles.recordDesc}>End Date: {p.end_date}</Text>}
+                        {guideForProblem(p) ? (
+                          <TouchableOpacity
+                            style={styles.guideChip}
+                            onPress={() =>
+                              setOpenGuide({
+                                diagnosis: p.title || p.diagnosis,
+                                code: p.coding || null,
+                                guide: guideForProblem(p)
+                              })
+                            }
+                            accessibilityRole="button"
+                            accessibilityLabel={`Learn about ${guideForProblem(p).title}`}
+                          >
+                            <HelpCircleIcon color="#2563eb" size={13} />
+                            <Text style={styles.guideChipText}>What this means, and what to do</Text>
+                          </TouchableOpacity>
+                        ) : null}
                       </View>
                       <View style={[styles.pillAlert, { backgroundColor: '#f0fdf4' }]}>
                         <Text style={[styles.pillAlertText, { color: '#16a34a' }]}>
@@ -406,6 +463,14 @@ export default function HealthRecordsModal({ visible, onClose }) {
           </ScrollView>
         )}
       </View>
+
+      <DiagnosisGuideModal
+        visible={!!openGuide}
+        onClose={() => setOpenGuide(null)}
+        diagnosis={openGuide?.diagnosis}
+        code={openGuide?.code}
+        guide={openGuide?.guide}
+      />
     </View>
   );
 }
@@ -668,6 +733,24 @@ const styles = StyleSheet.create({
     fontSize: 11.5,
     color: '#64748b',
     marginTop: 2
+  },
+  guideChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    backgroundColor: '#eff6ff',
+    borderWidth: 1,
+    borderColor: '#bfdbfe',
+    borderRadius: 999,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginTop: 7
+  },
+  guideChipText: {
+    fontSize: 11.5,
+    fontWeight: '700',
+    color: '#1d4ed8',
+    marginLeft: 5
   },
   pillAlert: {
     backgroundColor: '#f1f5f9',

@@ -30,7 +30,8 @@ import {
   CheckinIcon,
   TrackHealthIcon,
   ProxyIcon,
-  TodoIcon
+  TodoIcon,
+  MedicalClipboardIcon
 } from '../components/Icons';
 import AppointmentsModal from '../components/AppointmentsModal';
 import PrescriptionsModal from '../components/PrescriptionsModal';
@@ -60,6 +61,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   const [showAppointments, setShowAppointments] = useState(false);
   const [showPrescriptions, setShowPrescriptions] = useState(false);
   const [showHealthRecords, setShowHealthRecords] = useState(false);
+  // Which tab Health Records opens on. 'problems' when the patient came in through
+  // the My Conditions tile, so the diagnosis guides are the first thing they see.
+  const [healthRecordsTab, setHealthRecordsTab] = useState('summary');
   const [showMessages, setShowMessages] = useState(false);
   const [showClinicalReminders, setShowClinicalReminders] = useState(false);
   const [showMedicalReports, setShowMedicalReports] = useState(false);
@@ -507,7 +511,10 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           <TouchableOpacity
             style={styles.gridCard}
             activeOpacity={0.7}
-            onPress={() => setShowHealthRecords(true)}
+            onPress={() => {
+              setHealthRecordsTab('summary');
+              setShowHealthRecords(true);
+            }}
           >
             <View style={styles.gridCardTopRow}>
               <View style={[styles.cardIconCircle, { backgroundColor: '#ecfdf5' }]}>
@@ -521,6 +528,31 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             <Text style={styles.gridCardDesc}>Lab results &amp; CCD charts</Text>
             <View style={styles.gridCardActionRow}>
               <Text style={[styles.gridCardActionText, { color: '#059669' }]}>View chart →</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* My Conditions: the problem list, with what each diagnosis means and
+              what to do about it. Opens Health Records straight on Conditions. */}
+          <TouchableOpacity
+            style={styles.gridCard}
+            activeOpacity={0.7}
+            onPress={() => {
+              setHealthRecordsTab('problems');
+              setShowHealthRecords(true);
+            }}
+          >
+            <View style={styles.gridCardTopRow}>
+              <View style={[styles.cardIconCircle, { backgroundColor: '#eff6ff' }]}>
+                <MedicalClipboardIcon color="#2563eb" size={20} />
+              </View>
+              <View style={styles.cardArrowCircle}>
+                <ChevronRightIcon color="#94a3b8" size={13} />
+              </View>
+            </View>
+            <Text style={styles.gridCardTitle}>My Conditions</Text>
+            <Text style={styles.gridCardDesc}>What your diagnosis means</Text>
+            <View style={styles.gridCardActionRow}>
+              <Text style={[styles.gridCardActionText, { color: '#2563eb' }]}>Do&apos;s &amp; don&apos;ts →</Text>
             </View>
           </TouchableOpacity>
 
@@ -605,6 +637,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
       <HealthRecordsModal
         visible={showHealthRecords}
         onClose={() => setShowHealthRecords(false)}
+        initialTab={healthRecordsTab}
       />
 
       {/* Messages Interactive Bottom Sheet */}

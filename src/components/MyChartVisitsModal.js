@@ -23,8 +23,10 @@ import {
   UserIcon,
   HospitalIcon,
   ClockIcon,
-  PillIcon
+  PillIcon,
+  HelpCircleIcon
 } from './Icons';
+import DiagnosisGuideModal from './DiagnosisGuideModal';
 
 const formatDate = (dateStr) => {
   if (!dateStr) return '';
@@ -62,6 +64,38 @@ export default function MyChartVisitsModal({
   const [selectedAdmissionId, setSelectedAdmissionId] = useState(null);
   const [dischargeDetail, setDischargeDetail] = useState(null);
   const [dischargeLoading, setDischargeLoading] = useState(false);
+
+  // The diagnosis guide the patient opened, if any. The guides arrive with the AVS
+  // and the discharge summary, keyed by the diagnosis text, so opening one needs no
+  // further request.
+  const [openGuide, setOpenGuide] = useState(null);
+
+  const guideFor = (detail, text) => (detail?.diagnosis_guides || {})[text] || null;
+
+  /** A diagnosis row becomes tappable only when a guide actually matched it. */
+  const renderGuideChip = (detail, text, code) => {
+    const guide = guideFor(detail, text);
+    if (!guide) return null;
+
+    return (
+      <TouchableOpacity
+        style={styles.guideChip}
+        onPress={() =>
+          setOpenGuide({
+            diagnosis: text,
+            code: code || null,
+            guide,
+            doctorInstructions: detail?.instructions || []
+          })
+        }
+        accessibilityRole="button"
+        accessibilityLabel={`Learn about ${guide.title}`}
+      >
+        <HelpCircleIcon color="#2563eb" size={13} />
+        <Text style={styles.guideChipText}>What this means, and what to do</Text>
+      </TouchableOpacity>
+    );
+  };
 
   const fetchVisits = async () => {
     try {
@@ -206,6 +240,7 @@ export default function MyChartVisitsModal({
                         <View style={{ flex: 1 }}>
                           <Text style={styles.bulletText}>{d.description}</Text>
                           {d.code ? <Text style={styles.bulletSubText}>ICD: {d.code}</Text> : null}
+                          {renderGuideChip(avsDetail, d.description, d.code)}
                         </View>
                       </View>
                     ))}
@@ -359,8 +394,18 @@ export default function MyChartVisitsModal({
                   <View style={styles.sectionCard}>
                     <Text style={styles.sectionTitle}>Discharge Diagnosis</Text>
                     <Text style={styles.bodyText}>{dischargeDetail.discharge_diagnosis}</Text>
+                    {renderGuideChip(dischargeDetail, dischargeDetail.discharge_diagnosis, null)}
                   </View>
                 )}
+
+                {dischargeDetail.admitting_diagnosis &&
+                  guideFor(dischargeDetail, dischargeDetail.admitting_diagnosis) && (
+                    <View style={styles.sectionCard}>
+                      <Text style={styles.sectionTitle}>Admitting Diagnosis</Text>
+                      <Text style={styles.bodyText}>{dischargeDetail.admitting_diagnosis}</Text>
+                      {renderGuideChip(dischargeDetail, dischargeDetail.admitting_diagnosis, null)}
+                    </View>
+                  )}
 
                 {dischargeDetail.hospital_course && (
                   <View style={styles.sectionCard}>
@@ -630,6 +675,14 @@ export default function MyChartVisitsModal({
             </ScrollView>
           </View>
         )}
+        <DiagnosisGuideModal
+          visible={!!openGuide}
+          onClose={() => setOpenGuide(null)}
+          diagnosis={openGuide?.diagnosis}
+          code={openGuide?.code}
+          guide={openGuide?.guide}
+          doctorInstructions={openGuide?.doctorInstructions}
+        />
       </SafeAreaView>
     </Modal>
   );
@@ -975,6 +1028,24 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#64748b',
     marginTop: 1
+  },
+  guideChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    backgroundColor: '#eff6ff',
+    borderWidth: 1,
+    borderColor: '#bfdbfe',
+    borderRadius: 999,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginTop: 7
+  },
+  guideChipText: {
+    fontSize: 11.5,
+    fontWeight: '700',
+    color: '#1d4ed8',
+    marginLeft: 5
   },
   instructionBox: {
     backgroundColor: '#ffffff',

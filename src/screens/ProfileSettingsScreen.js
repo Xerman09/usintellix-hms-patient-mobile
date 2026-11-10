@@ -10,10 +10,14 @@ import {
   SafeAreaView,
   Image,
   StatusBar,
-  Platform
+  Platform,
+  Alert,
+  Modal
 } from 'react-native';
+import { AuthService } from '../api/auth';
 import { ProfileService } from '../api/profile';
 import { VersionService } from '../api/version';
+import { BiometricService } from '../utils/biometricAuth';
 import { getAvatarUrl, CONFIG } from '../constants/config';
 import UpdateNotificationModal from '../components/UpdateNotificationModal';
 import {
@@ -28,7 +32,9 @@ import {
   LockIcon,
   MailIcon,
   RefreshIcon,
-  CloudDownloadIcon
+  CloudDownloadIcon,
+  FingerprintIcon,
+  FaceIdIcon
 } from '../components/Icons';
 
 export default function ProfileSettingsScreen({
@@ -83,6 +89,15 @@ export default function ProfileSettingsScreen({
   const [updateModalInfo, setUpdateModalInfo] = useState(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
+  // Biometric Quick Unlock State (Fingerprint / Face Unlock)
+  const [biometricAvailable, setBiometricAvailable] = useState(false);
+  const [biometricType, setBiometricType] = useState('Biometric Unlock');
+  const [biometricEnabled, setBiometricEnabled] = useState(false);
+  const [bioModalVisible, setBioModalVisible] = useState(false);
+  const [bioPasswordInput, setBioPasswordInput] = useState('');
+  const [bioPasswordError, setBioPasswordError] = useState('');
+  const [bioLoading, setBioLoading] = useState(false);
+
   // Manual Check for Updates
   const handleCheckForUpdates = async () => {
     setCheckingUpdate(true);
@@ -119,10 +134,113 @@ export default function ProfileSettingsScreen({
     }
   };
 
-  // Load profile upon mount
+  // Load profile upon mount & check biometrics
   useEffect(() => {
     loadProfile();
+    checkBiometricStatus();
   }, []);
+
+  const checkBiometricStatus = async () => {
+    try {
+      const avail = await BiometricService.checkBiometricAvailability();
+      setBiometricAvailable(avail.available);
+      if (avail.biometricType) {
+        setBiometricType(avail.biometricType);
+      }
+      const enabled = await BiometricService.isBiometricEnabled();
+      setBiometricEnabled(enabled);
+    } catch (e) {
+      console.warn('Biometric status check failed:', e);
+    }
+  };
+
+  const handleToggleBiometrics = async () => {
+    if (!biometricAvailable) {
+      Alert.alert(
+        `${biometricType} Unavailable`,
+        `Your device does not have biometric hardware or registered fingerprints/face profiles. Please configure biometrics in your phone Settings.`
+      );
+      return;
+    }
+
+    if (biometricEnabled) {
+      Alert.alert(
+        `Disable ${biometricType}?`,
+        `Are you sure you want to disable ${biometricType} quick login on this device?`,
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Disable',
+            style: 'destructive',
+            onPress: async () => {
+              await BiometricService.disableBiometrics();
+              setBiometricEnabled(false);
+              setStatusMessage({
+                type: 'success',
+                text: `${biometricType} quick unlock has been disabled.`
+              });
+            }
+          }
+        ]
+      );
+    } else {
+      setBioPasswordInput('');
+      setBioPasswordError('');
+      setBioModalVisible(true);
+    }
+  };
+
+  const handleConfirmEnableBiometrics = async () => {
+    if (!bioPasswordInput) {
+      setBioPasswordError('Please enter your account password to verify your identity.');
+      return;
+    }
+
+    setBioLoading(true);
+    setBioPasswordError('');
+
+    try {
+      const accountUsername = user?.username || profileData?.username;
+      const loginCheck = await AuthService.login(accountUsername, bioPasswordInput);
+      if (!loginCheck.success) {
+        setBioPasswordError(loginCheck.message || 'Incorrect password.');
+        setBioLoading(false);
+        return;
+      }
+
+      const bioCheck = await BiometricService.authenticateWithBiometrics(
+        `Verify ${biometricType} to link to USIntellix`
+      );
+
+      if (!bioCheck.success && Platform.OS !== 'web') {
+        setBioPasswordError(bioCheck.error || 'Biometric verification failed.');
+        setBioLoading(false);
+        return;
+      }
+
+      const saved = await BiometricService.enableBiometrics(
+        accountUsername,
+        bioPasswordInput,
+        user || profileData
+      );
+
+      setBioLoading(false);
+
+      if (saved) {
+        setBiometricEnabled(true);
+        setBioModalVisible(false);
+        setStatusMessage({
+          type: 'success',
+          text: `${biometricType} quick unlock is now active on this device.`
+        });
+      } else {
+        setBioPasswordError('Failed to securely save credentials on this device.');
+      }
+    } catch (err) {
+      setBioLoading(false);
+      setBioPasswordError('Error during verification: ' + (err.message || 'Unknown error'));
+    }
+  };
 
   const loadProfile = async () => {
     setLoading(true);
@@ -1000,13 +1118,47 @@ export default function ProfileSettingsScreen({
                 </View>
               </View>
 
-              {/* 4. SECURITY & COMPLIANCE */}
+              {/* 4. BIOMETRIC SECURITY & COMPLIANCE */}
               <View style={styles.sectionCard}>
                 <View style={styles.cardHeaderRow}>
                   <ShieldIcon color="#16a34a" size={19} />
-                  <Text style={styles.sectionCardHeaderInline}>Security &amp; Compliance</Text>
+                  <Text style={styles.sectionCardHeaderInline}>Biometrics &amp; Security</Text>
                 </View>
-                <View style={styles.complianceList}>
+
+                {/* Biometric Quick Unlock Interactive Toggle */}
+                <TouchableOpacity
+                  style={[styles.bioToggleRow, !biometricAvailable && { opacity: 0.6 }]}
+                  onPress={handleToggleBiometrics}
+                  activeOpacity={0.7}
+                >
+                  <View style={styles.bioToggleIconWrap}>
+                    {biometricType.toLowerCase().includes('face') ? (
+                      <FaceIdIcon color="#2563eb" size={24} />
+                    ) : (
+                      <FingerprintIcon color="#2563eb" size={24} />
+                    )}
+                  </View>
+                  <View style={styles.prefTextCol}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                      <Text style={styles.prefTitle}>{biometricType} Quick Unlock</Text>
+                      {biometricEnabled && (
+                        <View style={styles.activeBioBadge}>
+                          <Text style={styles.activeBioBadgeText}>ACTIVE</Text>
+                        </View>
+                      )}
+                    </View>
+                    <Text style={styles.prefSub}>
+                      {biometricAvailable
+                        ? `Sign in instantly using ${biometricType} without typing your password each time.`
+                        : `No biometric hardware or enrolled sensor detected in device settings.`}
+                    </Text>
+                  </View>
+                  <View style={[styles.togglePill, biometricEnabled && styles.togglePillActive]}>
+                    <View style={[styles.toggleDot, biometricEnabled && styles.toggleDotActive]} />
+                  </View>
+                </TouchableOpacity>
+
+                <View style={[styles.complianceList, { marginTop: 14, paddingTop: 14, borderTopWidth: 1, borderTopColor: '#f1f5f9' }]}>
                   <View style={styles.complianceRow}>
                     <CheckCircleIcon color="#16a34a" size={17} />
                     <Text style={styles.complianceText}>Two-Factor Authentication (2FA) is enabled &amp; enforced</Text>
@@ -1043,6 +1195,70 @@ export default function ProfileSettingsScreen({
         onClose={() => setShowUpdateModal(false)}
         isManualCheck={true}
       />
+
+      {/* Enable Biometrics Password Confirmation Modal */}
+      <Modal
+        visible={bioModalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setBioModalVisible(false)}
+      >
+        <View style={styles.bioModalBackdrop}>
+          <View style={styles.bioModalCard}>
+            <View style={styles.bioModalIconCircle}>
+              {biometricType.toLowerCase().includes('face') ? (
+                <FaceIdIcon color="#2563eb" size={32} />
+              ) : (
+                <FingerprintIcon color="#2563eb" size={32} />
+              )}
+            </View>
+            <Text style={styles.bioModalTitle}>Enable {biometricType}</Text>
+            <Text style={styles.bioModalSubtitle}>
+              Enter your password to verify identity and securely register {biometricType} for instant login.
+            </Text>
+
+            {bioPasswordError ? (
+              <View style={styles.bioErrorBox}>
+                <Text style={styles.bioErrorText}>{bioPasswordError}</Text>
+              </View>
+            ) : null}
+
+            <View style={styles.bioModalInputSlot}>
+              <LockIcon color="#94a3b8" size={17} />
+              <TextInput
+                style={styles.bioModalTextInput}
+                placeholder="Current Password"
+                placeholderTextColor="#94a3b8"
+                secureTextEntry={true}
+                value={bioPasswordInput}
+                onChangeText={setBioPasswordInput}
+                autoCapitalize="none"
+              />
+            </View>
+
+            <View style={styles.bioModalActions}>
+              <TouchableOpacity
+                style={styles.bioModalCancelBtn}
+                onPress={() => setBioModalVisible(false)}
+                disabled={bioLoading}
+              >
+                <Text style={styles.bioModalCancelBtnText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.bioModalConfirmBtn, bioLoading && { opacity: 0.7 }]}
+                onPress={handleConfirmEnableBiometrics}
+                disabled={bioLoading}
+              >
+                {bioLoading ? (
+                  <ActivityIndicator color="#ffffff" size="small" />
+                ) : (
+                  <Text style={styles.bioModalConfirmBtnText}>Confirm &amp; Enable</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -1616,5 +1832,141 @@ const styles = StyleSheet.create({
     fontSize: 14.5,
     fontWeight: '700',
     color: '#dc2626'
+  },
+  bioToggleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8fafc',
+    padding: 14,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    marginTop: 4
+  },
+  bioToggleIconWrap: {
+    marginRight: 12,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#eff6ff',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  activeBioBadge: {
+    backgroundColor: '#dcfce7',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#bbf7d0'
+  },
+  activeBioBadgeText: {
+    color: '#15803d',
+    fontSize: 10,
+    fontWeight: '700'
+  },
+  bioModalBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(15, 23, 42, 0.65)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20
+  },
+  bioModalCard: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    padding: 22,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 8
+  },
+  bioModalIconCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#eff6ff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12
+  },
+  bioModalTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#0f172a',
+    marginBottom: 6,
+    textAlign: 'center'
+  },
+  bioModalSubtitle: {
+    fontSize: 13,
+    color: '#64748b',
+    textAlign: 'center',
+    lineHeight: 18,
+    marginBottom: 16
+  },
+  bioErrorBox: {
+    width: '100%',
+    backgroundColor: '#fef2f2',
+    borderWidth: 1,
+    borderColor: '#fecaca',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 12
+  },
+  bioErrorText: {
+    color: '#dc2626',
+    fontSize: 12,
+    textAlign: 'center'
+  },
+  bioModalInputSlot: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8fafc',
+    borderWidth: 1,
+    borderColor: '#cbd5e1',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    height: 46,
+    marginBottom: 18
+  },
+  bioModalTextInput: {
+    flex: 1,
+    marginLeft: 8,
+    fontSize: 14,
+    color: '#0f172a'
+  },
+  bioModalActions: {
+    flexDirection: 'row',
+    gap: 10,
+    width: '100%'
+  },
+  bioModalCancelBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 8,
+    backgroundColor: '#f1f5f9',
+    alignItems: 'center'
+  },
+  bioModalCancelBtnText: {
+    color: '#475569',
+    fontSize: 14,
+    fontWeight: '600'
+  },
+  bioModalConfirmBtn: {
+    flex: 1.4,
+    paddingVertical: 12,
+    borderRadius: 8,
+    backgroundColor: '#2563eb',
+    alignItems: 'center'
+  },
+  bioModalConfirmBtnText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '600'
   }
 });

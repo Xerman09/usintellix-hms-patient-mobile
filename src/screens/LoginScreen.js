@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -17,7 +17,8 @@ import {
 import { THEME } from '../constants/theme';
 import { AuthService } from '../api/auth';
 import { getServerHost, setServerHost, CONFIG } from '../constants/config';
-import { MailIcon, LockIcon, EyeOffIcon, ShieldIcon } from '../components/Icons';
+import { MailIcon, LockIcon, EyeOffIcon, ShieldIcon, FingerprintIcon, FaceIdIcon } from '../components/Icons';
+import { BiometricService } from '../utils/biometricAuth';
 import logoImg from '../../assets/logo.png';
 
 export default function LoginScreen({ onLoginSuccess }) {
@@ -56,12 +57,126 @@ export default function LoginScreen({ onLoginSuccess }) {
   const [userFocused, setUserFocused] = useState(false);
   const [passFocused, setPassFocused] = useState(false);
 
+  // Biometric state (Fingerprint / Face Unlock)
+  const [biometricAvailable, setBiometricAvailable] = useState(false);
+  const [biometricType, setBiometricType] = useState('Biometric Unlock');
+  const [biometricEnabled, setBiometricEnabled] = useState(false);
+  const [savedBioUser, setSavedBioUser] = useState('');
+
   // Hospital Server Connection State
   const [serverHost, setLocalServerHost] = useState(getServerHost());
   const [showServerModal, setShowServerModal] = useState(false);
   const [inputHost, setInputHost] = useState(getServerHost());
   const [testingConnection, setTestingConnection] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState(null);
+
+  useEffect(() => {
+    checkBiometrics();
+  }, []);
+
+  const checkBiometrics = async () => {
+    try {
+      const avail = await BiometricService.checkBiometricAvailability();
+      setBiometricAvailable(avail.available);
+      if (avail.biometricType) {
+        setBiometricType(avail.biometricType);
+      }
+      const enabled = await BiometricService.isBiometricEnabled();
+      setBiometricEnabled(enabled);
+      if (enabled) {
+        const savedName = await BiometricService.getSavedBiometricUsername();
+        if (savedName) {
+          setSavedBioUser(savedName);
+          setUsername(savedName);
+        }
+      }
+    } catch (e) {
+      console.warn('Biometric status check failed:', e);
+    }
+  };
+
+  const handleBiometricLogin = async () => {
+    setAlertInfo(null);
+    setLoading(true);
+    try {
+      const bioAuth = await BiometricService.authenticateWithBiometrics(
+        `Sign in to USIntellix with ${biometricType}`
+      );
+      if (bioAuth.success && bioAuth.credentials) {
+        const { username: bioUser, password: bioPass } = bioAuth.credentials;
+        if (!bioUser || !bioPass) {
+          setAlertInfo({
+            message: 'Saved biometric credentials not found. Please log in with your password once.',
+            type: 'warning'
+          });
+          setLoading(false);
+          return;
+        }
+
+        const result = await AuthService.login(bioUser, bioPass);
+        setLoading(false);
+
+        if (!result.success) {
+          setAlertInfo({
+            message: result.message || 'Biometric authentication failed on server.',
+            type: 'error'
+          });
+          return;
+        }
+
+        if (result.data?.requires_2fa) {
+          setTfaMessage(result.data.message || 'Enter your 6-digit verification code.');
+          setCurrentStep('2fa');
+          return;
+        }
+
+        handlePostLoginState(result.data.user);
+      } else {
+        setLoading(false);
+        if (bioAuth.error && !bioAuth.error.toLowerCase().includes('cancel')) {
+          setAlertInfo({ message: bioAuth.error, type: 'warning' });
+        }
+      }
+    } catch (err) {
+      setLoading(false);
+      setAlertInfo({
+        message: 'Biometric error: ' + (err.message || 'Unknown error'),
+        type: 'error'
+      });
+    }
+  };
+
+  const finalizeSuccessfulLogin = (user) => {
+    if (biometricAvailable && !biometricEnabled && password) {
+      Alert.alert(
+        `Enable ${biometricType}?`,
+        `Would you like to enable ${biometricType} for instant, secure sign-in next time on this device?`,
+        [
+          {
+            text: 'Not Now',
+            style: 'cancel',
+            onPress: () => onLoginSuccess(user)
+          },
+          {
+            text: 'Enable',
+            onPress: async () => {
+              try {
+                await BiometricService.enableBiometrics(username.trim(), password, user);
+                setBiometricEnabled(true);
+                setSavedBioUser(username.trim());
+              } catch (e) {
+                console.warn('Could not save biometric credentials:', e);
+              }
+              onLoginSuccess(user);
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      onLoginSuccess(user);
+    }
+  };
 
   const testServerConnection = async (hostToTest) => {
     const target = (hostToTest || inputHost || '').trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '');
@@ -196,7 +311,7 @@ export default function LoginScreen({ onLoginSuccess }) {
       return;
     }
 
-    onLoginSuccess(user);
+    finalizeSuccessfulLogin(user);
   };
 
   // 2FA
@@ -294,7 +409,7 @@ export default function LoginScreen({ onLoginSuccess }) {
       return;
     }
 
-    onLoginSuccess({ ...nppUser, npp_acknowledged: true });
+    finalizeSuccessfulLogin({ ...nppUser, npp_acknowledged: true });
   };
 
   return (
@@ -363,6 +478,33 @@ export default function LoginScreen({ onLoginSuccess }) {
           {/* ================= STEP 1: LOGIN ================= */}
           {currentStep === 'login' && (
             <View style={styles.formContainer}>
+
+              {/* Quick Biometric Unlock Card */}
+              {biometricEnabled && (
+                <TouchableOpacity
+                  style={styles.biometricQuickCard}
+                  onPress={handleBiometricLogin}
+                  disabled={loading}
+                  activeOpacity={0.85}
+                >
+                  <View style={styles.bioIconCircle}>
+                    {biometricType.toLowerCase().includes('face') ? (
+                      <FaceIdIcon color="#2563eb" size={24} />
+                    ) : (
+                      <FingerprintIcon color="#2563eb" size={24} />
+                    )}
+                  </View>
+                  <View style={styles.bioTextGroup}>
+                    <Text style={styles.bioTitleText}>Quick {biometricType}</Text>
+                    <Text style={styles.bioSubText}>
+                      Tap to unlock {savedBioUser ? `as @${savedBioUser}` : 'with biometrics'}
+                    </Text>
+                  </View>
+                  <View style={styles.bioArrowBadge}>
+                    <Text style={styles.bioArrowText}>→</Text>
+                  </View>
+                </TouchableOpacity>
+              )}
               
               {/* Patient Username / ID Field */}
               <View style={styles.fieldSection}>
@@ -453,16 +595,32 @@ export default function LoginScreen({ onLoginSuccess }) {
               {/* Biometric Login Secondary Button */}
               <TouchableOpacity
                 style={styles.biometricBtn}
-                onPress={() =>
-                  Alert.alert(
-                    'Biometric Login',
-                    'Biometric verification (Face ID / Fingerprint) is enabled for registered executive devices.'
-                  )
-                }
+                onPress={() => {
+                  if (biometricEnabled) {
+                    handleBiometricLogin();
+                  } else if (biometricAvailable) {
+                    Alert.alert(
+                      `${biometricType} Available`,
+                      `Biometric hardware is detected. Please sign in with your password once to activate ${biometricType} for this device.`
+                    );
+                  } else {
+                    Alert.alert(
+                      'Biometrics Not Available',
+                      'No biometric hardware or enrolled fingerprint/face found. Please enroll biometrics in your phone Settings first.'
+                    );
+                  }
+                }}
                 activeOpacity={0.8}
+                disabled={loading}
               >
-                <ShieldIcon color="#2563eb" size={16} />
-                <Text style={styles.biometricBtnText}>Biometric Login</Text>
+                {biometricType.toLowerCase().includes('face') ? (
+                  <FaceIdIcon color="#2563eb" size={18} />
+                ) : (
+                  <FingerprintIcon color="#2563eb" size={18} />
+                )}
+                <Text style={styles.biometricBtnText}>
+                  {biometricEnabled ? `Unlock with ${biometricType}` : `Biometric Sign-In`}
+                </Text>
               </TouchableOpacity>
 
               {/* Server Connection Status Pill */}
@@ -972,6 +1130,51 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#94a3b8',
     letterSpacing: 0.8
+  },
+  biometricQuickCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#eff6ff',
+    borderWidth: 1.5,
+    borderColor: '#bfdbfe',
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 20
+  },
+  bioIconCircle: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#dbeafe',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12
+  },
+  bioTextGroup: {
+    flex: 1
+  },
+  bioTitleText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#1e40af'
+  },
+  bioSubText: {
+    fontSize: 12,
+    color: '#3b82f6',
+    marginTop: 2
+  },
+  bioArrowBadge: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#2563eb',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  bioArrowText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700'
   },
   biometricBtn: {
     width: '100%',

@@ -25,7 +25,10 @@ async function startServer() {
       '.jpg': 'dataurl'
     },
     alias: {
-      'react-native': 'react-native-web'
+      'react-native': 'react-native-web',
+      'react-native-svg': path.resolve(__dirname, 'src/components/SvgWebShim.js'),
+      'expo-local-authentication': path.resolve(__dirname, 'src/utils/LocalAuthWebShim.js'),
+      'expo-secure-store': path.resolve(__dirname, 'src/utils/SecureStoreWebShim.js')
     },
     sourcemap: true
   });

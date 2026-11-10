@@ -1268,7 +1268,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fafbfc',
     paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 28) : 0
   },
   topNavBar: {
@@ -1302,14 +1302,15 @@ const styles = StyleSheet.create({
   },
   portalTagText: {
     fontSize: 10,
-    fontWeight: '700',
-    color: '#0284c7',
-    letterSpacing: 0.8
+    fontWeight: '800',
+    color: '#64748b',
+    letterSpacing: 1.2
   },
   pageTitleText: {
     fontSize: 16,
-    fontWeight: '700',
-    color: '#0f172a',
+    fontWeight: '800',
+    color: '#090d16',
+    letterSpacing: -0.3,
     marginTop: 1
   },
   avatarBadge: {
@@ -1563,22 +1564,22 @@ const styles = StyleSheet.create({
   sectionCard: {
     backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    borderRadius: 12,
+    borderColor: '#e8edf5',
+    borderRadius: 16,
     padding: 22,
     marginBottom: 20,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 2,
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 6,
     elevation: 1
   },
   sectionCardHeader: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: '#0f172a',
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#090d16',
     textTransform: 'uppercase',
-    letterSpacing: 0.5,
+    letterSpacing: 0.8,
     marginBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#f1f5f9',
@@ -1592,8 +1593,9 @@ const styles = StyleSheet.create({
   },
   sectionCardHeaderInline: {
     fontSize: 16,
-    fontWeight: '700',
-    color: '#0f172a'
+    fontWeight: '800',
+    color: '#090d16',
+    letterSpacing: -0.2
   },
   sectionCardSubtitle: {
     fontSize: 13,
@@ -1838,19 +1840,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#f8fafc',
     padding: 14,
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    marginTop: 4
+    borderColor: '#eef2f6',
+    marginTop: 6
   },
   bioToggleIconWrap: {
     marginRight: 12,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#eff6ff',
+    width: 42,
+    height: 42,
+    borderRadius: 12,
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 2
   },
   activeBioBadge: {
     backgroundColor: '#dcfce7',

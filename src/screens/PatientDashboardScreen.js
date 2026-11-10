@@ -384,11 +384,11 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             activeOpacity={0.7}
             onPress={() => handleMyChartNavigate('mychart_results')}
           >
-            <View style={[styles.myChartIconBox, { backgroundColor: '#eff6ff' }]}>
-              <LabIcon color="#2563eb" size={22} />
+            <View style={styles.myChartIconBox}>
+              <LabIcon color="#2563eb" size={20} />
             </View>
             <Text style={styles.myChartCardTitle}>Test Results</Text>
-            <Text style={styles.myChartCardSub}>Lab & Imaging</Text>
+            <Text style={styles.myChartCardSub}>Lab &amp; Imaging</Text>
           </TouchableOpacity>
 
           {/* Card 2: Visits & Summaries */}
@@ -397,11 +397,11 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             activeOpacity={0.7}
             onPress={() => handleMyChartNavigate('mychart_visits')}
           >
-            <View style={[styles.myChartIconBox, { backgroundColor: '#f0f9ff' }]}>
-              <VisitsIcon color="#0284c7" size={22} />
+            <View style={styles.myChartIconBox}>
+              <VisitsIcon color="#0f766e" size={20} />
             </View>
-            <Text style={styles.myChartCardTitle}>Visits & AVS</Text>
-            <Text style={styles.myChartCardSub}>Prep & Summaries</Text>
+            <Text style={styles.myChartCardTitle}>Visits &amp; AVS</Text>
+            <Text style={styles.myChartCardSub}>Prep &amp; Summaries</Text>
           </TouchableOpacity>
 
           {/* Card 3: Billing Statements */}
@@ -410,11 +410,11 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             activeOpacity={0.7}
             onPress={() => handleMyChartNavigate('mychart_billing')}
           >
-            <View style={[styles.myChartIconBox, { backgroundColor: '#ecfdf5' }]}>
-              <BillingIcon color="#059669" size={22} />
+            <View style={styles.myChartIconBox}>
+              <BillingIcon color="#059669" size={20} />
             </View>
             <Text style={styles.myChartCardTitle}>Statements</Text>
-            <Text style={styles.myChartCardSub}>Bills & Receipts</Text>
+            <Text style={styles.myChartCardSub}>Bills &amp; Receipts</Text>
           </TouchableOpacity>
 
           {/* Card 4: e-Check-In */}
@@ -423,8 +423,8 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             activeOpacity={0.7}
             onPress={() => handleMyChartNavigate('mychart_checkin')}
           >
-            <View style={[styles.myChartIconBox, { backgroundColor: '#fffbeb' }]}>
-              <CheckinIcon color="#d97706" size={22} />
+            <View style={styles.myChartIconBox}>
+              <CheckinIcon color="#d97706" size={20} />
             </View>
             <Text style={styles.myChartCardTitle}>e-Check-In</Text>
             <Text style={styles.myChartCardSub}>Fast-Track Pass</Text>
@@ -436,11 +436,11 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             activeOpacity={0.7}
             onPress={() => handleMyChartNavigate('mychart_track')}
           >
-            <View style={[styles.myChartIconBox, { backgroundColor: '#fff1f2' }]}>
-              <TrackHealthIcon color="#e11d48" size={22} />
+            <View style={styles.myChartIconBox}>
+              <TrackHealthIcon color="#e11d48" size={20} />
             </View>
             <Text style={styles.myChartCardTitle}>Track Health</Text>
-            <Text style={styles.myChartCardSub}>Vitals & Goals</Text>
+            <Text style={styles.myChartCardSub}>Vitals &amp; Goals</Text>
           </TouchableOpacity>
 
           {/* Card 6: Family & Share */}
@@ -449,21 +449,23 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             activeOpacity={0.7}
             onPress={() => handleMyChartNavigate('mychart_account')}
           >
-            <View style={[styles.myChartIconBox, { backgroundColor: '#f5f3ff' }]}>
-              <ProxyIcon color="#7c3aed" size={22} />
+            <View style={styles.myChartIconBox}>
+              <ProxyIcon color="#7c3aed" size={20} />
             </View>
-            <Text style={styles.myChartCardTitle}>Family & Share</Text>
-            <Text style={styles.myChartCardSub}>Proxy & Links</Text>
+            <Text style={styles.myChartCardTitle}>Family &amp; Share</Text>
+            <Text style={styles.myChartCardSub}>Proxy &amp; Links</Text>
           </TouchableOpacity>
         </View>
 
         {/* Section Header */}
         <View style={styles.sectionHeaderRow}>
-          <Text style={styles.sectionHeaderTitle}>Services &amp; Actions</Text>
-          <Text style={styles.sectionHeaderSub}>Self-service care</Text>
+          <View>
+            <Text style={styles.sectionHeaderTitle}>Services &amp; Actions</Text>
+            <Text style={styles.sectionHeaderSub}>Self-service care</Text>
+          </View>
         </View>
 
-        {/* 4 Interactive Service Action Cards (2x2 Grid) */}
+        {/* 4 Interactive Service Action Cards */}
         <View style={styles.cardsGrid}>
           {/* Card 1: Appointments */}
           <TouchableOpacity
@@ -472,8 +474,8 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             onPress={() => setShowAppointments(true)}
           >
             <View style={styles.gridCardTopRow}>
-              <View style={[styles.cardIconCircle, { backgroundColor: '#eff6ff' }]}>
-                <CalendarIcon color="#2563eb" size={20} />
+              <View style={styles.cardIconCircle}>
+                <CalendarIcon color="#090d16" size={20} />
               </View>
               <View style={styles.cardArrowCircle}>
                 <ChevronRightIcon color="#94a3b8" size={13} />
@@ -482,7 +484,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             <Text style={styles.gridCardTitle}>Appointments</Text>
             <Text style={styles.gridCardDesc}>View upcoming visits &amp; schedule</Text>
             <View style={styles.gridCardActionRow}>
-              <Text style={[styles.gridCardActionText, { color: '#2563eb' }]}>Manage visits →</Text>
+              <Text style={styles.gridCardActionText}>Manage visits →</Text>
             </View>
           </TouchableOpacity>
 
@@ -493,8 +495,8 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             onPress={() => setShowPrescriptions(true)}
           >
             <View style={styles.gridCardTopRow}>
-              <View style={[styles.cardIconCircle, { backgroundColor: '#f5f3ff' }]}>
-                <PillIcon color="#7c3aed" size={20} />
+              <View style={styles.cardIconCircle}>
+                <PillIcon color="#090d16" size={20} />
               </View>
               <View style={styles.cardArrowCircle}>
                 <ChevronRightIcon color="#94a3b8" size={13} />
@@ -503,7 +505,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             <Text style={styles.gridCardTitle}>Prescriptions</Text>
             <Text style={styles.gridCardDesc}>Active medications &amp; refills</Text>
             <View style={styles.gridCardActionRow}>
-              <Text style={[styles.gridCardActionText, { color: '#7c3aed' }]}>Active Rx →</Text>
+              <Text style={styles.gridCardActionText}>Active Rx →</Text>
             </View>
           </TouchableOpacity>
 
@@ -517,8 +519,8 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             }}
           >
             <View style={styles.gridCardTopRow}>
-              <View style={[styles.cardIconCircle, { backgroundColor: '#ecfdf5' }]}>
-                <RecordsIcon color="#059669" size={20} />
+              <View style={styles.cardIconCircle}>
+                <RecordsIcon color="#090d16" size={20} />
               </View>
               <View style={styles.cardArrowCircle}>
                 <ChevronRightIcon color="#94a3b8" size={13} />
@@ -527,12 +529,11 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             <Text style={styles.gridCardTitle}>Health Records</Text>
             <Text style={styles.gridCardDesc}>Lab results &amp; CCD charts</Text>
             <View style={styles.gridCardActionRow}>
-              <Text style={[styles.gridCardActionText, { color: '#059669' }]}>View chart →</Text>
+              <Text style={styles.gridCardActionText}>View chart →</Text>
             </View>
           </TouchableOpacity>
 
-          {/* My Conditions: the problem list, with what each diagnosis means and
-              what to do about it. Opens Health Records straight on Conditions. */}
+          {/* My Conditions */}
           <TouchableOpacity
             style={styles.gridCard}
             activeOpacity={0.7}
@@ -542,8 +543,8 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             }}
           >
             <View style={styles.gridCardTopRow}>
-              <View style={[styles.cardIconCircle, { backgroundColor: '#eff6ff' }]}>
-                <MedicalClipboardIcon color="#2563eb" size={20} />
+              <View style={styles.cardIconCircle}>
+                <MedicalClipboardIcon color="#090d16" size={20} />
               </View>
               <View style={styles.cardArrowCircle}>
                 <ChevronRightIcon color="#94a3b8" size={13} />
@@ -552,19 +553,19 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             <Text style={styles.gridCardTitle}>My Conditions</Text>
             <Text style={styles.gridCardDesc}>What your diagnosis means</Text>
             <View style={styles.gridCardActionRow}>
-              <Text style={[styles.gridCardActionText, { color: '#2563eb' }]}>Do&apos;s &amp; don&apos;ts →</Text>
+              <Text style={styles.gridCardActionText}>Do&apos;s &amp; don&apos;ts →</Text>
             </View>
           </TouchableOpacity>
 
-          {/* Card 4: Messages */}
+          {/* Card 5: Messages */}
           <TouchableOpacity
             style={styles.gridCard}
             activeOpacity={0.7}
             onPress={() => setShowMessages(true)}
           >
             <View style={styles.gridCardTopRow}>
-              <View style={[styles.cardIconCircle, { backgroundColor: '#f0f9ff' }]}>
-                <ChatIcon color="#0284c7" size={20} />
+              <View style={styles.cardIconCircle}>
+                <ChatIcon color="#090d16" size={20} />
               </View>
               <View style={styles.cardArrowCircle}>
                 <ChevronRightIcon color="#94a3b8" size={13} />
@@ -573,7 +574,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             <Text style={styles.gridCardTitle}>Messages</Text>
             <Text style={styles.gridCardDesc}>Direct secure care team chat</Text>
             <View style={styles.gridCardActionRow}>
-              <Text style={[styles.gridCardActionText, { color: '#0284c7' }]}>Open chat →</Text>
+              <Text style={styles.gridCardActionText}>Open chat →</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -788,12 +789,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fafbfc',
     paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 28) : 0
   },
   topNavBar: {
     width: '100%',
-    height: 70,
+    height: 66,
     backgroundColor: '#ffffff',
     borderBottomWidth: 1,
     borderBottomColor: '#f1f5f9',
@@ -807,27 +808,31 @@ const styles = StyleSheet.create({
     height: 40,
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    borderRadius: 10,
-    backgroundColor: '#f8fafc',
+    borderRadius: 12,
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 14
+    marginRight: 14,
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 3
   },
   userIdentityColumn: {
     flex: 1,
     justifyContent: 'center'
   },
   portalTagText: {
-    fontSize: 10.5,
+    fontSize: 10,
     fontWeight: '800',
-    color: '#0284c7',
-    letterSpacing: 0.8,
+    color: '#64748b',
+    letterSpacing: 1.2,
     marginBottom: 2
   },
   userFullNameText: {
     fontSize: 16,
     fontWeight: '800',
-    color: '#0f172a',
+    color: '#090d16',
     letterSpacing: -0.3
   },
   topRightActions: {
@@ -836,20 +841,24 @@ const styles = StyleSheet.create({
     gap: 8
   },
   bellBtn: {
-    width: 38,
-    height: 38,
+    width: 40,
+    height: 40,
     borderRadius: 12,
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
     borderWidth: 1,
-    borderColor: '#e2e8f0'
+    borderColor: '#e2e8f0',
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 3
   },
   bellBadge: {
     position: 'absolute',
-    top: -4,
-    right: -4,
+    top: -3,
+    right: -3,
     backgroundColor: '#ef4444',
     minWidth: 18,
     height: 18,
@@ -866,29 +875,29 @@ const styles = StyleSheet.create({
     fontWeight: '800'
   },
   avatarBadge: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    backgroundColor: '#0d9488',
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: '#090d16',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: '#ffffff',
-    shadowColor: '#000000',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    shadowColor: '#0f172a',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
-    shadowRadius: 5,
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
     elevation: 3,
     position: 'relative'
   },
   avatarImg: {
     width: '100%',
     height: '100%',
-    borderRadius: 21
+    borderRadius: 12
   },
   avatarInitialsText: {
     color: '#ffffff',
-    fontSize: 15,
+    fontSize: 14.5,
     fontWeight: '800',
     letterSpacing: 0.5
   },
@@ -896,9 +905,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -1,
     right: -1,
-    width: 11,
-    height: 11,
-    borderRadius: 5.5,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
     backgroundColor: '#10b981',
     borderWidth: 2,
     borderColor: '#ffffff'
@@ -910,14 +919,14 @@ const styles = StyleSheet.create({
   heroCard: {
     backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    borderRadius: 16,
-    padding: 18,
+    borderColor: '#e8edf5',
+    borderRadius: 18,
+    padding: 20,
     marginBottom: 20,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.04,
-    shadowRadius: 4,
+    shadowRadius: 10,
     elevation: 2
   },
   heroHeaderRow: {
@@ -930,56 +939,61 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: '#ecfdf5',
-    paddingHorizontal: 9,
-    paddingVertical: 4,
+    backgroundColor: '#090d16',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     borderRadius: 20
   },
   statusLiveDot: {
-    width: 7,
-    height: 7,
-    borderRadius: 3.5,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
     backgroundColor: '#10b981'
   },
   heroStatusText: {
-    fontSize: 10.5,
+    fontSize: 10,
     fontWeight: '800',
-    color: '#047857',
-    letterSpacing: 0.5
+    color: '#ffffff',
+    letterSpacing: 0.8
   },
   mrnBadge: {
-    backgroundColor: '#eff6ff',
+    backgroundColor: '#f1f5f9',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    borderRadius: 8,
     paddingHorizontal: 9,
-    paddingVertical: 4,
-    borderRadius: 6
+    paddingVertical: 4
   },
   mrnBadgeText: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#2563eb'
+    color: '#475569',
+    letterSpacing: 0.5
   },
   heroGreetingText: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '800',
-    color: '#0f172a',
-    marginBottom: 3,
-    letterSpacing: -0.3
+    color: '#090d16',
+    marginTop: 14,
+    marginBottom: 4,
+    letterSpacing: -0.6
   },
   heroSubText: {
-    fontSize: 12.5,
+    fontSize: 13.5,
     color: '#64748b',
-    lineHeight: 18,
-    marginBottom: 14
+    lineHeight: 20,
+    marginBottom: 16,
+    letterSpacing: -0.1
   },
   heroMetricsBar: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f8fafc',
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#f1f5f9',
-    paddingVertical: 9,
-    paddingHorizontal: 12
+    borderColor: '#eef2f6',
+    paddingVertical: 12,
+    paddingHorizontal: 14
   },
   metricItem: {
     flex: 1,
@@ -987,33 +1001,33 @@ const styles = StyleSheet.create({
   },
   metricLabel: {
     fontSize: 9.5,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#94a3b8',
-    letterSpacing: 0.5,
-    marginBottom: 2
+    letterSpacing: 1,
+    marginBottom: 3
   },
   metricValue: {
-    fontSize: 12,
+    fontSize: 12.5,
     fontWeight: '700',
-    color: '#1e293b'
+    color: '#090d16'
   },
   metricDivider: {
     width: 1,
-    height: 20,
+    height: 22,
     backgroundColor: '#e2e8f0'
   },
   sectionHeaderRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'baseline',
-    marginBottom: 12,
+    marginBottom: 14,
     paddingHorizontal: 2
   },
   sectionHeaderTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '800',
-    color: '#0f172a',
-    letterSpacing: -0.3
+    color: '#090d16',
+    letterSpacing: -0.4
   },
   sectionHeaderSub: {
     fontSize: 12,
@@ -1030,14 +1044,14 @@ const styles = StyleSheet.create({
     width: '48.5%',
     backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    borderRadius: 14,
-    padding: 15,
+    borderColor: '#e8edf5',
+    borderRadius: 16,
+    padding: 16,
     marginBottom: 12,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 3,
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 6,
     elevation: 1
   },
   gridCardTopRow: {
@@ -1047,9 +1061,12 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   cardIconCircle: {
-    width: 42,
-    height: 42,
+    width: 40,
+    height: 40,
     borderRadius: 12,
+    backgroundColor: '#f8fafc',
+    borderWidth: 1,
+    borderColor: '#eef2f6',
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -1064,43 +1081,47 @@ const styles = StyleSheet.create({
   gridCardTitle: {
     fontSize: 14.5,
     fontWeight: '700',
-    color: '#0f172a',
-    marginBottom: 3
+    color: '#090d16',
+    marginBottom: 3,
+    letterSpacing: -0.2
   },
   gridCardDesc: {
     fontSize: 11.5,
     color: '#64748b',
     lineHeight: 16,
-    marginBottom: 10
+    marginBottom: 12
   },
   gridCardActionRow: {
     flexDirection: 'row',
     alignItems: 'center'
   },
   gridCardActionText: {
-    fontSize: 11.5,
-    fontWeight: '700'
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#090d16'
   },
   featuredRemindCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f0fdfa',
+    backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: '#ccfbf1',
-    borderRadius: 14,
+    borderColor: '#e8edf5',
+    borderRadius: 16,
     padding: 16,
     marginBottom: 12,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.03,
-    shadowRadius: 3,
+    shadowRadius: 6,
     elevation: 1
   },
   featuredRemindIconBox: {
     width: 44,
     height: 44,
     borderRadius: 12,
-    backgroundColor: '#ccfbf1',
+    backgroundColor: '#f0fdfa',
+    borderWidth: 1,
+    borderColor: '#ccfbf1',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 14
@@ -1118,7 +1139,8 @@ const styles = StyleSheet.create({
   featuredRemindTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#0f766e'
+    color: '#090d16',
+    letterSpacing: -0.2
   },
   preventiveBadge: {
     backgroundColor: '#0d9488',
@@ -1132,23 +1154,23 @@ const styles = StyleSheet.create({
     color: '#ffffff'
   },
   featuredRemindDesc: {
-    fontSize: 11.5,
-    color: '#115e59',
-    lineHeight: 16
+    fontSize: 12,
+    color: '#64748b',
+    lineHeight: 17
   },
   featuredReportCard: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    borderRadius: 14,
+    borderColor: '#e8edf5',
+    borderRadius: 16,
     padding: 16,
     marginBottom: 20,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 3,
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 6,
     elevation: 1
   },
   featuredReportIconBox: {
@@ -1156,6 +1178,8 @@ const styles = StyleSheet.create({
     height: 44,
     borderRadius: 12,
     backgroundColor: '#eef2ff',
+    borderWidth: 1,
+    borderColor: '#e0e7ff',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 14
@@ -1167,13 +1191,14 @@ const styles = StyleSheet.create({
   featuredReportTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#0f172a',
-    marginBottom: 2
+    color: '#090d16',
+    marginBottom: 2,
+    letterSpacing: -0.2
   },
   featuredReportDesc: {
-    fontSize: 11.5,
+    fontSize: 12,
     color: '#64748b',
-    lineHeight: 16
+    lineHeight: 17
   },
   headerRightBadges: {
     flexDirection: 'row',
@@ -1200,24 +1225,28 @@ const styles = StyleSheet.create({
   todoHeroBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#0891b2',
+    backgroundColor: '#090d16',
     borderRadius: 16,
-    padding: 14,
-    marginBottom: 16,
-    shadowColor: '#0891b2',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
+    padding: 16,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#1e293b',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
     elevation: 2
   },
   todoHeroIconBox: {
-    width: 38,
-    height: 38,
-    borderRadius: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: 'rgba(245, 158, 11, 0.15)',
+    borderWidth: 1,
+    borderColor: 'rgba(245, 158, 11, 0.3)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12
+    marginRight: 14
   },
   todoHeroTextBox: {
     flex: 1,
@@ -1226,13 +1255,14 @@ const styles = StyleSheet.create({
   todoHeroTitleRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    marginBottom: 2
+    gap: 8,
+    marginBottom: 3
   },
   todoHeroTitle: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '800',
-    color: '#ffffff'
+    color: '#ffffff',
+    letterSpacing: -0.2
   },
   todoBadgeRed: {
     backgroundColor: '#dc2626',
@@ -1246,7 +1276,7 @@ const styles = StyleSheet.create({
     color: '#ffffff'
   },
   todoBadgeBlue: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
     paddingHorizontal: 6,
     paddingVertical: 1,
     borderRadius: 6
@@ -1257,25 +1287,25 @@ const styles = StyleSheet.create({
     color: '#ffffff'
   },
   todoHeroSub: {
-    fontSize: 11.5,
-    color: '#cffafe',
-    lineHeight: 15
+    fontSize: 12,
+    color: '#94a3b8',
+    lineHeight: 16
   },
   todoPillBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
-    backgroundColor: '#ecfeff',
+    gap: 5,
+    backgroundColor: '#f1f5f9',
     borderWidth: 1,
-    borderColor: '#cffafe',
+    borderColor: '#e2e8f0',
     paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingVertical: 5,
     borderRadius: 12
   },
   todoPillBtnText: {
-    fontSize: 11.5,
-    fontWeight: '700',
-    color: '#0891b2'
+    fontSize: 11,
+    fontWeight: '800',
+    color: '#0f172a'
   },
   myChartGrid: {
     flexDirection: 'row',
@@ -1288,20 +1318,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#e8edf5',
     paddingVertical: 14,
     paddingHorizontal: 8,
     alignItems: 'center',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.03,
-    shadowRadius: 2,
+    shadowRadius: 5,
     elevation: 1
   },
   myChartIconBox: {
-    width: 44,
-    height: 44,
+    width: 42,
+    height: 42,
     borderRadius: 12,
+    backgroundColor: '#f8fafc',
+    borderWidth: 1,
+    borderColor: '#eef2f6',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8
@@ -1313,7 +1346,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   myChartCardSub: {
-    fontSize: 10,
+    fontSize: 10.5,
     color: '#64748b',
     textAlign: 'center',
     marginTop: 2

@@ -424,29 +424,35 @@ export default function LoginScreen({ onLoginSuccess }) {
         showsVerticalScrollIndicator={false}
       >
         
-        {/* Soft Wave Header Area with USIntellix Logo Badge */}
-        <View style={styles.topCurvedHeader}>
-          <View style={styles.topIconBadge}>
+        {/* Top Architectural Brand Header */}
+        <View style={styles.topBrandHeader}>
+          <View style={styles.brandEmblemFrame}>
             <Image
               source={logoImg}
               style={styles.brandLogoImg}
               resizeMode="contain"
             />
           </View>
+          <View style={styles.brandMetaGroup}>
+            <Text style={styles.brandKicker}>USINTELLIX HEALTHCARE</Text>
+            <Text style={styles.brandTitle}>Patient Portal</Text>
+          </View>
+          <View style={styles.brandSecurityTag}>
+            <View style={styles.securityPulseDot} />
+            <Text style={styles.securityTagText}>TLS 256</Text>
+          </View>
         </View>
 
         {/* Content Body */}
         <View style={styles.contentBody}>
 
-          {/* Clean Brand Title */}
-          <View style={styles.brandTitleRow}>
-            <Text style={styles.brandTitleTeal}>USINTELLIX </Text>
-            <Text style={styles.brandTitleBlack}>PATIENT PORTAL</Text>
+          {/* Welcome Typography Block */}
+          <View style={styles.welcomeBlock}>
+            <Text style={styles.welcomeHeading}>Sign In</Text>
+            <Text style={styles.welcomeSubheading}>
+              Access synchronized medical records, active prescriptions, and care team communications.
+            </Text>
           </View>
-
-          {/* Welcome back subtitle */}
-          <Text style={styles.welcomeHeading}>Welcome back</Text>
-          <Text style={styles.welcomeSubheading}>Sign in to your patient portal</Text>
 
           {/* Dynamic Alert Banner */}
           {alertInfo && (
@@ -469,7 +475,7 @@ export default function LoginScreen({ onLoginSuccess }) {
                   }}
                   activeOpacity={0.8}
                 >
-                  <Text style={styles.configServerErrorBtnText}>⚙️ Change Hospital Server IP</Text>
+                  <Text style={styles.configServerErrorBtnText}>Change Hospital Server IP</Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -479,39 +485,44 @@ export default function LoginScreen({ onLoginSuccess }) {
           {currentStep === 'login' && (
             <View style={styles.formContainer}>
 
-              {/* Quick Biometric Unlock Card */}
+              {/* Executive Titanium Biometric Quick Unlock Card */}
               {biometricEnabled && (
                 <TouchableOpacity
-                  style={styles.biometricQuickCard}
+                  style={styles.biometricExecutiveCard}
                   onPress={handleBiometricLogin}
                   disabled={loading}
-                  activeOpacity={0.85}
+                  activeOpacity={0.88}
                 >
-                  <View style={styles.bioIconCircle}>
+                  <View style={styles.bioGlyphDisc}>
                     {biometricType.toLowerCase().includes('face') ? (
-                      <FaceIdIcon color="#2563eb" size={24} />
+                      <FaceIdIcon color="#3b82f6" size={24} />
                     ) : (
-                      <FingerprintIcon color="#2563eb" size={24} />
+                      <FingerprintIcon color="#3b82f6" size={24} />
                     )}
                   </View>
-                  <View style={styles.bioTextGroup}>
-                    <Text style={styles.bioTitleText}>Quick {biometricType}</Text>
-                    <Text style={styles.bioSubText}>
-                      Tap to unlock {savedBioUser ? `as @${savedBioUser}` : 'with biometrics'}
+                  <View style={styles.bioMetaCol}>
+                    <View style={styles.bioMetaTopRow}>
+                      <Text style={styles.bioMetaTag}>SAVED BIOMETRIC PROFILE</Text>
+                      <View style={styles.bioVerifiedPill}>
+                        <Text style={styles.bioVerifiedPillText}>READY</Text>
+                      </View>
+                    </View>
+                    <Text style={styles.bioAccountName} numberOfLines={1}>
+                      {savedBioUser ? `@${savedBioUser}` : 'Biometric Account'}
                     </Text>
                   </View>
-                  <View style={styles.bioArrowBadge}>
-                    <Text style={styles.bioArrowText}>→</Text>
+                  <View style={styles.bioUnlockActionPill}>
+                    <Text style={styles.bioUnlockActionText}>Unlock</Text>
                   </View>
                 </TouchableOpacity>
               )}
               
               {/* Patient Username / ID Field */}
               <View style={styles.fieldSection}>
-                <Text style={styles.fieldUpperLabel}>PATIENT USERNAME OR ID</Text>
+                <Text style={styles.fieldUpperLabel}>PATIENT IDENTIFIER OR EMAIL</Text>
                 <View style={[styles.fieldRow, userFocused && styles.fieldRowFocused]}>
                   <View style={styles.fieldIconSlot}>
-                    <MailIcon color="#94a3b8" size={17} />
+                    <MailIcon color={userFocused ? '#0f172a' : '#94a3b8'} size={18} />
                   </View>
                   <TextInput
                     style={styles.textInputField}
@@ -530,7 +541,7 @@ export default function LoginScreen({ onLoginSuccess }) {
               {/* Password Field */}
               <View style={styles.fieldSection}>
                 <View style={styles.passwordLabelRow}>
-                  <Text style={styles.fieldUpperLabel}>PASSWORD</Text>
+                  <Text style={styles.fieldUpperLabel}>ACCOUNT PASSWORD</Text>
                   <TouchableOpacity
                     onPress={() =>
                       Alert.alert(
@@ -546,11 +557,11 @@ export default function LoginScreen({ onLoginSuccess }) {
 
                 <View style={[styles.fieldRow, passFocused && styles.fieldRowFocused]}>
                   <View style={styles.fieldIconSlot}>
-                    <LockIcon color="#94a3b8" size={17} />
+                    <LockIcon color={passFocused ? '#0f172a' : '#94a3b8'} size={18} />
                   </View>
                   <TextInput
                     style={[styles.textInputField, { paddingRight: 40 }]}
-                    placeholder="••••••••"
+                    placeholder="••••••••••••"
                     placeholderTextColor="#94a3b8"
                     value={password}
                     onChangeText={setPassword}
@@ -563,7 +574,7 @@ export default function LoginScreen({ onLoginSuccess }) {
                     onPress={() => setShowPassword(!showPassword)}
                     hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                   >
-                    <EyeOffIcon color="#94a3b8" size={17} />
+                    <EyeOffIcon color="#94a3b8" size={18} />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -578,17 +589,14 @@ export default function LoginScreen({ onLoginSuccess }) {
                 {loading ? (
                   <ActivityIndicator color="#ffffff" size="small" />
                 ) : (
-                  <View style={styles.btnContentRow}>
-                    <Text style={styles.primarySignInText}>Sign In</Text>
-                    <Text style={styles.arrowIcon}> →</Text>
-                  </View>
+                  <Text style={styles.primarySignInText}>Sign In to Portal</Text>
                 )}
               </TouchableOpacity>
 
               {/* OR Divider */}
               <View style={styles.orDividerContainer}>
                 <View style={styles.orLine} />
-                <Text style={styles.orText}>OR</Text>
+                <Text style={styles.orText}>OR BIOMETRIC AUTHENTICATION</Text>
                 <View style={styles.orLine} />
               </View>
 
@@ -601,7 +609,7 @@ export default function LoginScreen({ onLoginSuccess }) {
                   } else if (biometricAvailable) {
                     Alert.alert(
                       `${biometricType} Available`,
-                      `Biometric hardware is detected. Please sign in with your password once to activate ${biometricType} for this device.`
+                      `Biometric sensor is detected. Please sign in with your password once to activate ${biometricType} for this device.`
                     );
                   } else {
                     Alert.alert(
@@ -614,16 +622,16 @@ export default function LoginScreen({ onLoginSuccess }) {
                 disabled={loading}
               >
                 {biometricType.toLowerCase().includes('face') ? (
-                  <FaceIdIcon color="#2563eb" size={18} />
+                  <FaceIdIcon color="#0f172a" size={18} />
                 ) : (
-                  <FingerprintIcon color="#2563eb" size={18} />
+                  <FingerprintIcon color="#0f172a" size={18} />
                 )}
                 <Text style={styles.biometricBtnText}>
-                  {biometricEnabled ? `Unlock with ${biometricType}` : `Biometric Sign-In`}
+                  {biometricEnabled ? `Unlock with ${biometricType}` : `Fast ${biometricType} Sign-In`}
                 </Text>
               </TouchableOpacity>
 
-              {/* Server Connection Status Pill */}
+              {/* Server Connection Status Chip */}
               <TouchableOpacity
                 style={styles.serverPill}
                 onPress={() => {
@@ -634,9 +642,17 @@ export default function LoginScreen({ onLoginSuccess }) {
                 activeOpacity={0.7}
               >
                 <View style={styles.serverStatusDot} />
-                <Text style={styles.serverPillText}>Server: {serverHost}</Text>
-                <Text style={styles.serverPillChange}> (Tap to change)</Text>
+                <Text style={styles.serverPillText}>Host: {serverHost}</Text>
+                <Text style={styles.serverPillChange}>Configure</Text>
               </TouchableOpacity>
+
+              {/* Compliance Trust Seal */}
+              <View style={styles.complianceSealContainer}>
+                <ShieldIcon color="#94a3b8" size={14} />
+                <Text style={styles.complianceSealText}>
+                  HIPAA &amp; HITECH Compliant · 256-bit End-to-End Encryption
+                </Text>
+              </View>
 
             </View>
           )}
@@ -948,89 +964,110 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#eff6ff',
+    backgroundColor: '#fafbfc',
     paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) : 0
   },
   scrollWrapper: {
     flexGrow: 1,
     width: '100%'
   },
-  topCurvedHeader: {
-    width: '100%',
-    height: 125,
-    backgroundColor: '#eff6ff',
-    borderBottomLeftRadius: 36,
-    borderBottomRightRadius: 36,
+  topBrandHeader: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    paddingHorizontal: 28,
+    paddingTop: 32,
+    paddingBottom: 20
   },
-  topIconBadge: {
-    width: 64,
-    height: 64,
+  brandEmblemFrame: {
+    width: 46,
+    height: 46,
     borderRadius: 12,
     backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#1d4ed8',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3,
     borderWidth: 1,
-    borderColor: '#dbeafe'
+    borderColor: '#e2e8f0',
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+    elevation: 2,
+    marginRight: 12
   },
   brandLogoImg: {
-    width: 44,
-    height: 44
+    width: 32,
+    height: 32
   },
-  contentBody: {
-    paddingHorizontal: 26,
-    paddingTop: 24,
-    paddingBottom: 36
+  brandMetaGroup: {
+    flex: 1
   },
-  brandTitleRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20
-  },
-  brandTitleTeal: {
-    fontSize: 14,
+  brandKicker: {
+    fontSize: 10.5,
     fontWeight: '800',
-    color: '#2563eb',
-    letterSpacing: 2
+    color: '#64748b',
+    letterSpacing: 1.2
   },
-  brandTitleBlack: {
-    fontSize: 14,
-    fontWeight: '800',
-    color: '#0f172a',
-    letterSpacing: 2
-  },
-  welcomeHeading: {
-    fontSize: 27,
+  brandTitle: {
+    fontSize: 15,
     fontWeight: '700',
     color: '#0f172a',
-    textAlign: 'center',
-    letterSpacing: -0.4,
-    marginBottom: 6
+    letterSpacing: -0.2
+  },
+  brandSecurityTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: '#f1f5f9',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#e2e8f0'
+  },
+  securityPulseDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#10b981'
+  },
+  securityTagText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#475569',
+    letterSpacing: 0.8
+  },
+  contentBody: {
+    paddingHorizontal: 28,
+    paddingTop: 12,
+    paddingBottom: 40
+  },
+  welcomeBlock: {
+    marginBottom: 26
+  },
+  welcomeHeading: {
+    fontSize: 30,
+    fontWeight: '800',
+    color: '#090d16',
+    letterSpacing: -0.8,
+    marginBottom: 8
   },
   welcomeSubheading: {
-    fontSize: 13.5,
+    fontSize: 14,
     color: '#64748b',
-    textAlign: 'center',
-    marginBottom: 26
+    lineHeight: 21,
+    letterSpacing: -0.1
   },
   formContainer: {
     width: '100%'
   },
   fieldSection: {
-    marginBottom: 16
+    marginBottom: 18
   },
   fieldUpperLabel: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#94a3b8',
-    letterSpacing: 0.8,
+    color: '#475569',
+    letterSpacing: 1,
     marginBottom: 8
   },
   passwordLabelRow: {
@@ -1047,15 +1084,21 @@ const styles = StyleSheet.create({
   fieldRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f8fafc',
-    borderRadius: 6,
-    height: 48,
-    paddingHorizontal: 12,
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    height: 52,
+    paddingHorizontal: 14,
     borderWidth: 1,
-    borderColor: '#e2e8f0'
+    borderColor: '#e2e8f0',
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 3,
+    elevation: 1
   },
   fieldRowFocused: {
-    borderColor: '#2563eb',
+    borderColor: '#090d16',
+    borderWidth: 1.5,
     backgroundColor: '#ffffff'
   },
   fieldIconSlot: {
@@ -1066,8 +1109,9 @@ const styles = StyleSheet.create({
   textInputField: {
     flex: 1,
     height: '100%',
-    color: '#0f172a',
-    fontSize: 14.5,
+    color: '#090d16',
+    fontSize: 15,
+    fontWeight: '500',
     paddingVertical: 0,
     paddingHorizontal: 0,
     backgroundColor: 'transparent',
@@ -1086,33 +1130,23 @@ const styles = StyleSheet.create({
   },
   primarySignInBtn: {
     width: '100%',
-    height: 50,
-    backgroundColor: '#0f172a',
-    borderRadius: 6,
+    height: 52,
+    backgroundColor: '#090d16',
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 3
-  },
-  btnContentRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
+    marginTop: 12,
+    shadowColor: '#090d16',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.18,
+    shadowRadius: 8,
+    elevation: 4
   },
   primarySignInText: {
     color: '#ffffff',
     fontSize: 15,
-    fontWeight: '700'
-  },
-  arrowIcon: {
-    color: '#ffffff',
-    fontSize: 15,
     fontWeight: '700',
-    marginLeft: 4
+    letterSpacing: -0.1
   },
   orDividerContainer: {
     flexDirection: 'row',
@@ -1125,78 +1159,153 @@ const styles = StyleSheet.create({
     backgroundColor: '#e2e8f0'
   },
   orText: {
-    marginHorizontal: 14,
-    fontSize: 11,
-    fontWeight: '700',
+    marginHorizontal: 12,
+    fontSize: 10,
+    fontWeight: '800',
     color: '#94a3b8',
-    letterSpacing: 0.8
+    letterSpacing: 1.2
   },
-  biometricQuickCard: {
+  biometricExecutiveCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#eff6ff',
-    borderWidth: 1.5,
-    borderColor: '#bfdbfe',
-    borderRadius: 10,
-    padding: 12,
-    marginBottom: 20
+    backgroundColor: '#090d16',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: '#1e293b',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 10,
+    elevation: 4
   },
-  bioIconCircle: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: '#dbeafe',
+  bioGlyphDisc: {
+    width: 48,
+    height: 48,
+    borderRadius: 14,
+    backgroundColor: 'rgba(59, 130, 246, 0.14)',
+    borderWidth: 1,
+    borderColor: 'rgba(59, 130, 246, 0.28)',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12
+    marginRight: 14
   },
-  bioTextGroup: {
+  bioMetaCol: {
     flex: 1
   },
-  bioTitleText: {
+  bioMetaTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 4
+  },
+  bioMetaTag: {
+    fontSize: 9.5,
+    fontWeight: '800',
+    letterSpacing: 1,
+    color: '#94a3b8'
+  },
+  bioVerifiedPill: {
+    backgroundColor: 'rgba(16, 185, 129, 0.16)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: 'rgba(16, 185, 129, 0.3)'
+  },
+  bioVerifiedPillText: {
+    fontSize: 9.5,
+    fontWeight: '800',
+    color: '#34d399',
+    letterSpacing: 0.5
+  },
+  bioAccountName: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#1e40af'
-  },
-  bioSubText: {
-    fontSize: 12,
-    color: '#3b82f6',
-    marginTop: 2
-  },
-  bioArrowBadge: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#2563eb',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  bioArrowText: {
     color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '700'
+    letterSpacing: -0.2
+  },
+  bioUnlockActionPill: {
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 10
+  },
+  bioUnlockActionText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#090d16'
   },
   biometricBtn: {
     width: '100%',
-    height: 48,
-    backgroundColor: '#f8fafc',
+    height: 50,
+    backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    borderRadius: 6,
+    borderRadius: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8
+    gap: 10,
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 2
   },
   biometricBtnText: {
     color: '#0f172a',
     fontSize: 14,
+    fontWeight: '700'
+  },
+  serverPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 22,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    backgroundColor: '#f1f5f9',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    alignSelf: 'center'
+  },
+  serverStatusDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 3.5,
+    backgroundColor: '#10b981',
+    marginRight: 8
+  },
+  serverPillText: {
+    fontSize: 12,
+    color: '#475569',
     fontWeight: '600'
   },
+  serverPillChange: {
+    fontSize: 12,
+    color: '#2563eb',
+    fontWeight: '700',
+    marginLeft: 8
+  },
+  complianceSealContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    marginTop: 24
+  },
+  complianceSealText: {
+    fontSize: 11,
+    color: '#94a3b8',
+    fontWeight: '600',
+    letterSpacing: 0.2
+  },
   alertBox: {
-    padding: 12,
-    borderRadius: 6,
-    marginBottom: 16
+    padding: 14,
+    borderRadius: 10,
+    marginBottom: 20
   },
   alertError: {
     backgroundColor: '#fef2f2',
@@ -1214,24 +1323,40 @@ const styles = StyleSheet.create({
     borderColor: '#a7f3d0'
   },
   alertText: {
-    fontSize: 12.5,
+    fontSize: 13,
     color: '#0f172a',
-    lineHeight: 17,
+    lineHeight: 18,
     textAlign: 'center'
   },
-  stepTitle: {
-    fontSize: 18,
+  configServerErrorBtn: {
+    marginTop: 8,
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#fca5a5',
+    paddingVertical: 7,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+    alignSelf: 'center'
+  },
+  configServerErrorBtnText: {
+    fontSize: 12,
     fontWeight: '700',
+    color: '#b91c1c'
+  },
+  stepTitle: {
+    fontSize: 20,
+    fontWeight: '800',
     color: '#0f172a',
     textAlign: 'center',
-    marginBottom: 6
+    marginBottom: 6,
+    letterSpacing: -0.4
   },
   stepSubtitle: {
-    fontSize: 13,
+    fontSize: 13.5,
     color: '#64748b',
     textAlign: 'center',
-    marginBottom: 18,
-    lineHeight: 18
+    marginBottom: 20,
+    lineHeight: 19
   },
   otpInput: {
     textAlign: 'center',
@@ -1271,51 +1396,6 @@ const styles = StyleSheet.create({
   checkboxCustomActive: {
     backgroundColor: '#0d9488',
     borderColor: '#0d9488'
-  },
-  configServerErrorBtn: {
-    marginTop: 8,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#fca5a5',
-    paddingVertical: 7,
-    paddingHorizontal: 12,
-    borderRadius: 6,
-    alignSelf: 'center'
-  },
-  configServerErrorBtnText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#b91c1c'
-  },
-  serverPill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 18,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#f8fafc',
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#e2e8f0',
-    alignSelf: 'center'
-  },
-  serverStatusDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#10b981',
-    marginRight: 6
-  },
-  serverPillText: {
-    fontSize: 12,
-    color: '#475569',
-    fontWeight: '600'
-  },
-  serverPillChange: {
-    fontSize: 11.5,
-    color: '#0284c7',
-    fontWeight: '700'
   },
   modalBackdrop: {
     flex: 1,

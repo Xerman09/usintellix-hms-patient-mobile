@@ -10,7 +10,9 @@ import {
   Alert
 } from 'react-native';
 import { AppointmentService } from '../api/appointments';
-import { CalendarIcon } from '../components/Icons';
+import { MyChartService } from '../api/mychart';
+import { CalendarIcon, CheckCircleIcon, CloseIcon, AlertTriangleIcon } from '../components/Icons';
+import AppointmentChangeModal from './AppointmentChangeModal';
 
 export default function AppointmentsModal({ visible, onClose, patientId }) {
   const [activeTab, setActiveTab] = useState('list'); // 'list' | 'book'
@@ -25,25 +27,50 @@ export default function AppointmentsModal({ visible, onClose, patientId }) {
   const [appointmentTime, setAppointmentTime] = useState('09:00:00');
   const [reason, setReason] = useState('');
 
+  // Phase M10: moving, cancelling and confirming an appointment.
+  const [change, setChange] = useState(null);       // { mode, appointment }
+  const [confirming, setConfirming] = useState(null); // id being confirmed
+
   useEffect(() => {
     if (visible) {
       loadData();
     }
   }, [visible]);
 
+  /**
+   * "I'll be there." Confirming is allowed right up to the appointment, including
+   * after changes have closed, so it is the one action always worth offering.
+   */
+  const confirmAppointment = async (id) => {
+    setConfirming(id);
+    try {
+      const res = await MyChartService.confirmAppointment(id);
+      if (res?.success) {
+        await loadData();
+        Alert.alert('Thank you', res.message || 'The clinic knows you are coming.');
+      } else {
+        Alert.alert('Could not confirm', res?.message || 'Please try again.');
+      }
+    } catch (e) {
+      Alert.alert('Could not confirm', 'Please check your connection and try again.');
+    } finally {
+      setConfirming(null);
+    }
+  };
+
   const loadData = async () => {
     setLoading(true);
     try {
+      // The list comes from My Chart, not the staff /appointments endpoint,
+      // because only that one says what the patient may do with each booking
+      // (can_reschedule / can_cancel / can_confirm, and why not).
       const [apptsRes, provRes] = await Promise.all([
-        AppointmentService.getAppointments(),
+        MyChartService.getMyAppointments(),
         AppointmentService.getProviders()
       ]);
 
-      console.log('Appointments API response:', apptsRes);
-      console.log('Providers API response:', provRes);
-
-      if (apptsRes.success && Array.isArray(apptsRes.data)) {
-        setAppointments(apptsRes.data);
+      if (apptsRes?.success && Array.isArray(apptsRes.data?.items)) {
+        setAppointments(apptsRes.data.items);
       } else {
         setAppointments([]);
       }
@@ -167,26 +194,79 @@ export default function AppointmentsModal({ visible, onClose, patientId }) {
                 <View key={appt.id || idx} style={styles.apptCard}>
                   <View style={styles.apptCardHeader}>
                     <Text style={styles.apptDateText}>
-                      {appt.appointment_date}  •  {appt.appointment_time?.slice(0, 5) || '09:00'}
+                      {appt.date}{appt.all_day ? '  •  All day' : `  •  ${String(appt.time || '').slice(0, 5)}`}
                     </Text>
-                    <View style={styles.statusPill}>
-                      <Text style={styles.statusPillText}>{appt.status || 'Scheduled'}</Text>
+                    <View style={[styles.statusPill, appt.status === 'cancelled' && styles.statusPillCancelled]}>
+                      <Text style={[styles.statusPillText, appt.status === 'cancelled' && styles.statusPillTextCancelled]}>
+                        {appt.status || 'scheduled'}
+                      </Text>
                     </View>
                   </View>
                   <Text style={styles.apptTitleText}>{appt.title || 'Medical Consultation'}</Text>
-                  {(appt.provider_first_name || appt.provider_last_name) ? (
-                    <Text style={styles.apptDoctorText}>
-                      Doctor: Dr. {appt.provider_first_name || ''} {appt.provider_last_name || ''}
-                    </Text>
-                  ) : appt.provider_name ? (
-                    <Text style={styles.apptDoctorText}>Doctor: {appt.provider_name}</Text>
+                  {appt.doctor ? <Text style={styles.apptDoctorText}>Doctor: Dr. {appt.doctor}</Text> : null}
+                  {appt.facility ? <Text style={styles.apptDoctorText}>Location: {appt.facility}</Text> : null}
+                  {appt.reason ? <Text style={styles.apptReasonText}>Note: {appt.reason}</Text> : null}
+
+                  {appt.moved_from ? (
+                    <Text style={styles.apptMovedText}>Moved from {appt.moved_from}</Text>
                   ) : null}
-                  {appt.facility_name ? (
-                    <Text style={styles.apptDoctorText}>Location: {appt.facility_name}</Text>
+
+                  {appt.confirmed ? (
+                    <View style={styles.confirmedRow}>
+                      <CheckCircleIcon color="#16a34a" size={13} />
+                      <Text style={styles.confirmedText}>You confirmed you are coming</Text>
+                    </View>
                   ) : null}
-                  {appt.reason && (
-                    <Text style={styles.apptReasonText}>Note: {appt.reason}</Text>
-                  )}
+
+                  {appt.status === 'cancelled' && appt.cancel_reason ? (
+                    <Text style={styles.apptReasonText}>Cancelled: {appt.cancel_reason}</Text>
+                  ) : null}
+
+                  {/* What the patient may actually do with this one. A blocked
+                      action shows the clinic's reason instead of a dead button. */}
+                  {(appt.can_confirm || appt.can_reschedule || appt.can_cancel) ? (
+                    <View style={styles.actionRow}>
+                      {appt.can_confirm && !appt.confirmed ? (
+                        <TouchableOpacity
+                          style={[styles.actionChip, styles.actionChipPrimary]}
+                          onPress={() => confirmAppointment(appt.id)}
+                          disabled={confirming === appt.id}
+                        >
+                          {confirming === appt.id
+                            ? <ActivityIndicator size="small" color="#166534" />
+                            : <CheckCircleIcon color="#166534" size={13} />}
+                          <Text style={[styles.actionChipText, { color: '#166534' }]}>I'll be there</Text>
+                        </TouchableOpacity>
+                      ) : null}
+
+                      {appt.can_reschedule ? (
+                        <TouchableOpacity
+                          style={styles.actionChip}
+                          onPress={() => setChange({ mode: 'reschedule', appointment: appt })}
+                        >
+                          <CalendarIcon color="#1d4ed8" size={13} />
+                          <Text style={[styles.actionChipText, { color: '#1d4ed8' }]}>Move</Text>
+                        </TouchableOpacity>
+                      ) : null}
+
+                      {appt.can_cancel ? (
+                        <TouchableOpacity
+                          style={[styles.actionChip, styles.actionChipDanger]}
+                          onPress={() => setChange({ mode: 'cancel', appointment: appt })}
+                        >
+                          <CloseIcon color="#b91c1c" size={12} />
+                          <Text style={[styles.actionChipText, { color: '#b91c1c' }]}>Cancel</Text>
+                        </TouchableOpacity>
+                      ) : null}
+                    </View>
+                  ) : null}
+
+                  {appt.blocked_reason ? (
+                    <View style={styles.blockedRow}>
+                      <AlertTriangleIcon color="#92400e" size={12} />
+                      <Text style={styles.blockedText}>{appt.blocked_reason}</Text>
+                    </View>
+                  ) : null}
                 </View>
               ))
             )}
@@ -265,6 +345,17 @@ export default function AppointmentsModal({ visible, onClose, patientId }) {
           </ScrollView>
         )}
       </View>
+
+      <AppointmentChangeModal
+        visible={!!change}
+        mode={change?.mode}
+        appointment={change?.appointment}
+        onClose={() => setChange(null)}
+        onDone={async (message) => {
+          await loadData();
+          if (message) Alert.alert('Done', message);
+        }}
+      />
     </View>
   );
 }
@@ -432,6 +523,33 @@ const styles = StyleSheet.create({
     color: '#2563eb',
     textTransform: 'capitalize'
   },
+  statusPillCancelled: { backgroundColor: '#fef2f2' },
+  statusPillTextCancelled: { color: '#b91c1c' },
+
+  apptMovedText: { fontSize: 11.5, color: '#92400e', marginTop: 4, fontStyle: 'italic' },
+
+  confirmedRow: { flexDirection: 'row', alignItems: 'center', marginTop: 6 },
+  confirmedText: { fontSize: 11.5, fontWeight: '600', color: '#166534', marginLeft: 5 },
+
+  actionRow: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 10 },
+  actionChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#bfdbfe',
+    backgroundColor: '#eff6ff',
+    borderRadius: 999,
+    paddingVertical: 6,
+    paddingHorizontal: 11,
+    marginRight: 7,
+    marginBottom: 6
+  },
+  actionChipPrimary: { backgroundColor: '#f0fdf4', borderColor: '#bbf7d0' },
+  actionChipDanger: { backgroundColor: '#fef2f2', borderColor: '#fecaca' },
+  actionChipText: { fontSize: 11.5, fontWeight: '700', marginLeft: 5 },
+
+  blockedRow: { flexDirection: 'row', alignItems: 'flex-start', marginTop: 8 },
+  blockedText: { flex: 1, fontSize: 11.5, color: '#92400e', marginLeft: 5, lineHeight: 16 },
   apptTitleText: {
     fontSize: 14.5,
     fontWeight: '700',

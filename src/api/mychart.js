@@ -156,6 +156,48 @@ export const MyChartService = {
   },
 
   // -------------------------------------------------------------
+  // 4b. Appointment self-service (Phase M10)
+  // -------------------------------------------------------------
+
+  /**
+   * The patient's own upcoming appointments. Each item carries can_reschedule,
+   * can_cancel, can_confirm and, where an action is not allowed, blocked_reason —
+   * show that sentence rather than a dead button.
+   */
+  async getMyAppointments() {
+    return apiRequest('/mychart/appointments');
+  },
+
+  /** Free times with the same doctor, grouped by day: [{ date, times: [...] }]. */
+  async getAppointmentSlots(appointmentId) {
+    return apiRequest(`/mychart/appointments/slots?appointment_id=${Number(appointmentId)}`);
+  },
+
+  /** Move an appointment. The doctor stays the same; only date and time change. */
+  async rescheduleAppointment(appointmentId, date, time) {
+    return apiRequest('/mychart/appointments/reschedule', {
+      method: 'POST',
+      body: JSON.stringify({ appointment_id: Number(appointmentId), date, time })
+    });
+  },
+
+  /** Cancel an appointment. A reason is required — the clinic reuses the slot. */
+  async cancelAppointment(appointmentId, reason) {
+    return apiRequest('/mychart/appointments/cancel', {
+      method: 'POST',
+      body: JSON.stringify({ appointment_id: Number(appointmentId), reason })
+    });
+  },
+
+  /** "I am coming." Stays available inside the cut-off, when changes have closed. */
+  async confirmAppointment(appointmentId) {
+    return apiRequest('/mychart/appointments/confirm', {
+      method: 'POST',
+      body: JSON.stringify({ appointment_id: Number(appointmentId) })
+    });
+  },
+
+  // -------------------------------------------------------------
   // 5. Billing & Statements (Phase M4)
   // -------------------------------------------------------------
 

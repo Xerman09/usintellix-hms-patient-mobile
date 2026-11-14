@@ -51,6 +51,7 @@ import MyChartNotificationsModal from '../components/MyChartNotificationsModal';
 import MyChartTrackHealthModal from '../components/MyChartTrackHealthModal';
 import MyChartSharingModal from '../components/MyChartSharingModal';
 import MyChartInsuranceModal from '../components/MyChartInsuranceModal';
+import MyChartQuestionnairesModal from '../components/MyChartQuestionnairesModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -67,6 +68,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   // the My Conditions tile, so the diagnosis guides are the first thing they see.
   const [healthRecordsTab, setHealthRecordsTab] = useState('summary');
   const [showInsurance, setShowInsurance] = useState(false);
+  const [showQuestionnaires, setShowQuestionnaires] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [showClinicalReminders, setShowClinicalReminders] = useState(false);
   const [showMedicalReports, setShowMedicalReports] = useState(false);
@@ -184,6 +186,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         break;
       case 'mychart_track':
         setShowTrackHealthModal(true);
+        break;
+      case 'mychart_questionnaires':
+        setShowQuestionnaires(true);
         break;
       default:
         break;
@@ -582,6 +587,29 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             </View>
           </TouchableOpacity>
 
+          {/* Questionnaires the care team asked for between visits. The tile says
+              "asked by your team" rather than naming an instrument: a tile reading
+              "Depression questionnaire" is visible to anyone looking over a shoulder. */}
+          <TouchableOpacity
+            style={styles.gridCard}
+            activeOpacity={0.7}
+            onPress={() => setShowQuestionnaires(true)}
+          >
+            <View style={styles.gridCardTopRow}>
+              <View style={styles.cardIconCircle}>
+                <ClipboardIcon color="#090d16" size={20} />
+              </View>
+              <View style={styles.cardArrowCircle}>
+                <ChevronRightIcon color="#94a3b8" size={13} />
+              </View>
+            </View>
+            <Text style={styles.gridCardTitle}>Questionnaires</Text>
+            <Text style={styles.gridCardDesc}>Asked by your care team</Text>
+            <View style={styles.gridCardActionRow}>
+              <Text style={styles.gridCardActionText}>Answer at home →</Text>
+            </View>
+          </TouchableOpacity>
+
           {/* Card 5: Messages */}
           <TouchableOpacity
             style={styles.gridCard}
@@ -672,6 +700,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         onClose={() => setShowInsurance(false)}
       />
 
+      {/* Phase M13: questionnaires the care team sent to answer at home */}
+      <MyChartQuestionnairesModal
+        visible={showQuestionnaires}
+        onClose={() => setShowQuestionnaires(false)}
+      />
+
       {/* Messages Interactive Bottom Sheet */}
       <MessagesModal
         visible={showMessages}
@@ -717,6 +751,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           else if (tab === 'mychart_checkin') handleMyChartNavigate('mychart_checkin');
           else if (tab === 'mychart_billing') handleMyChartNavigate('mychart_billing');
           else if (tab === 'mychart_visits') handleMyChartNavigate('mychart_visits');
+          else if (tab === 'mychart_questionnaires') handleMyChartNavigate('mychart_questionnaires');
           else if (tab === 'messages') setShowMessages(true);
         }}
       />
@@ -759,6 +794,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           else if (tab === 'mychart_billing') handleMyChartNavigate('mychart_billing');
           else if (tab === 'mychart_visits') handleMyChartNavigate('mychart_visits');
           else if (tab === 'mychart_checkin') handleMyChartNavigate('mychart_checkin');
+          else if (tab === 'mychart_questionnaires') handleMyChartNavigate('mychart_questionnaires');
           else if (tab === 'messages') setShowMessages(true);
         }}
       />

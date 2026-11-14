@@ -20,6 +20,7 @@ import {
   BillingIcon,
   CalendarIcon,
   ChatIcon,
+  ClipboardIcon,
   RecordsIcon
 } from './Icons';
 
@@ -70,6 +71,8 @@ export default function MyChartTodoModal({
         return <CalendarIcon color="#0284c7" size={18} />;
       case 'messages':
         return <ChatIcon color="#7c3aed" size={18} />;
+      case 'questionnaire':
+        return <ClipboardIcon color="#2563eb" size={18} />;
       default:
         return <RecordsIcon color="#64748b" size={18} />;
     }

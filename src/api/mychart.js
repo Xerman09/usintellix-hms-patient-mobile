@@ -234,6 +234,43 @@ export const MyChartService = {
   },
 
   // -------------------------------------------------------------
+  // 4d. Questionnaires between visits (Phase M13)
+  // -------------------------------------------------------------
+
+  /**
+   * Questionnaires the care team has sent to answer at home: `waiting` (each with
+   * can_answer and a status_text to show instead of a dead button) and `answered`.
+   *
+   * No score ever comes back here. PHQ-9 and GAD-7 are scored on the server and
+   * read by the care team; showing a patient a number they cannot interpret is
+   * worse than showing none.
+   */
+  async getMyQuestionnaires() {
+    return apiRequest('/mychart/questionnaires');
+  },
+
+  /**
+   * The questions of one of them. Question types are text, textarea, yesno,
+   * choice, checkboxes and `scale` — a scale question's answer is the INDEX of
+   * the chosen option (0 to 3), not its label.
+   */
+  async getQuestionnaireForm(assignmentId) {
+    return apiRequest(`/mychart/questionnaires/form?id=${Number(assignmentId)}`);
+  },
+
+  /**
+   * Send the answers. `answers` is keyed by each question's `key`. The reply's
+   * data.team_notified is true when a scored answer crossed the instrument's
+   * band and the care team was alerted today — say so, do not say the score.
+   */
+  async submitQuestionnaire(assignmentId, answers) {
+    return apiRequest('/mychart/questionnaires/submit', {
+      method: 'POST',
+      body: JSON.stringify({ id: Number(assignmentId), answers })
+    });
+  },
+
+  // -------------------------------------------------------------
   // 5. Billing & Statements (Phase M4)
   // -------------------------------------------------------------
 

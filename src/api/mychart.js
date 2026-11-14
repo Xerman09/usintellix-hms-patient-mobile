@@ -198,6 +198,42 @@ export const MyChartService = {
   },
 
   // -------------------------------------------------------------
+  // 4c. Insurance self-service (Phase M12)
+  // -------------------------------------------------------------
+
+  /**
+   * The cover the hospital holds, this patient's own change requests, and the
+   * insurer list to choose from. Each coverage row carries `status_text`, which
+   * says in words whether it is active or expired — show that rather than a date.
+   */
+  async getMyInsurance() {
+    return apiRequest('/mychart/insurance');
+  },
+
+  /**
+   * Ask for cover to be added, corrected or removed. This does not change the
+   * record: the desk applies it after checking the card.
+   *
+   * @param {Object} payload { action: 'add'|'update'|'remove', patient_insurance_id?,
+   *   insurance_id?, insurer_name_text?, insurance_type?, policy_number?,
+   *   group_number?, subscriber_name?, effective_date?, note?, upload_id? }
+   */
+  async requestInsuranceChange(payload) {
+    return apiRequest('/mychart/insurance/request', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  },
+
+  /** Cancel a request the clinic has not looked at yet. */
+  async withdrawInsuranceRequest(requestId) {
+    return apiRequest('/mychart/insurance/withdraw', {
+      method: 'POST',
+      body: JSON.stringify({ id: Number(requestId) })
+    });
+  },
+
+  // -------------------------------------------------------------
   // 5. Billing & Statements (Phase M4)
   // -------------------------------------------------------------
 

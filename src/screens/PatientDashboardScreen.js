@@ -31,7 +31,8 @@ import {
   TrackHealthIcon,
   ProxyIcon,
   TodoIcon,
-  MedicalClipboardIcon
+  MedicalClipboardIcon,
+  ShieldIcon
 } from '../components/Icons';
 import AppointmentsModal from '../components/AppointmentsModal';
 import PrescriptionsModal from '../components/PrescriptionsModal';
@@ -49,6 +50,7 @@ import MyChartCheckinModal from '../components/MyChartCheckinModal';
 import MyChartNotificationsModal from '../components/MyChartNotificationsModal';
 import MyChartTrackHealthModal from '../components/MyChartTrackHealthModal';
 import MyChartSharingModal from '../components/MyChartSharingModal';
+import MyChartInsuranceModal from '../components/MyChartInsuranceModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -64,6 +66,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   // Which tab Health Records opens on. 'problems' when the patient came in through
   // the My Conditions tile, so the diagnosis guides are the first thing they see.
   const [healthRecordsTab, setHealthRecordsTab] = useState('summary');
+  const [showInsurance, setShowInsurance] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [showClinicalReminders, setShowClinicalReminders] = useState(false);
   const [showMedicalReports, setShowMedicalReports] = useState(false);
@@ -557,6 +560,28 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             </View>
           </TouchableOpacity>
 
+          {/* My Insurance: the cover the hospital will bill against, and asking for
+              it to be corrected without queuing at the desk. */}
+          <TouchableOpacity
+            style={styles.gridCard}
+            activeOpacity={0.7}
+            onPress={() => setShowInsurance(true)}
+          >
+            <View style={styles.gridCardTopRow}>
+              <View style={styles.cardIconCircle}>
+                <ShieldIcon color="#090d16" size={20} />
+              </View>
+              <View style={styles.cardArrowCircle}>
+                <ChevronRightIcon color="#94a3b8" size={13} />
+              </View>
+            </View>
+            <Text style={styles.gridCardTitle}>My Insurance</Text>
+            <Text style={styles.gridCardDesc}>Cover on file &amp; corrections</Text>
+            <View style={styles.gridCardActionRow}>
+              <Text style={styles.gridCardActionText}>Check cover →</Text>
+            </View>
+          </TouchableOpacity>
+
           {/* Card 5: Messages */}
           <TouchableOpacity
             style={styles.gridCard}
@@ -639,6 +664,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         visible={showHealthRecords}
         onClose={() => setShowHealthRecords(false)}
         initialTab={healthRecordsTab}
+      />
+
+      {/* Phase M12: insurance on file, and change requests */}
+      <MyChartInsuranceModal
+        visible={showInsurance}
+        onClose={() => setShowInsurance(false)}
       />
 
       {/* Messages Interactive Bottom Sheet */}

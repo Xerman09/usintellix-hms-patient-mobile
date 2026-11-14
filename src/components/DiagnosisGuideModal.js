@@ -176,9 +176,11 @@ export default function DiagnosisGuideModal({
 }
 
 const styles = StyleSheet.create({
+  // Matches the app's redesigned surfaces: #fafbfc page, 14pt cards with a hairline
+  // border and a barely-there shadow, 800-weight headings with tightened tracking.
   safeArea: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#fafbfc',
     paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) : 0
   },
   header: {
@@ -199,7 +201,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  headerTitle: { fontSize: 16, fontWeight: '700', color: '#0f172a' },
+  headerTitle: { fontSize: 16, fontWeight: '800', color: '#0f172a', letterSpacing: -0.3 },
   headerSubtitle: { fontSize: 11.5, color: '#64748b', marginTop: 1 },
   closeBtn: { padding: 6, marginLeft: 8 },
 
@@ -207,26 +209,36 @@ const styles = StyleSheet.create({
 
   dxCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    padding: 14,
-    marginBottom: 12
+    padding: 18,
+    marginBottom: 14,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 2
   },
-  dxLabel: { fontSize: 10.5, fontWeight: '800', color: '#94a3b8', letterSpacing: 0.6 },
-  dxText: { fontSize: 15, fontWeight: '700', color: '#0f172a', marginTop: 4, lineHeight: 21 },
-  dxCode: { fontSize: 11.5, color: '#94a3b8', marginTop: 4 },
+  dxLabel: { fontSize: 11, fontWeight: '800', color: '#94a3b8', letterSpacing: 0.8 },
+  dxText: { fontSize: 16, fontWeight: '800', color: '#0f172a', marginTop: 5, lineHeight: 22, letterSpacing: -0.3 },
+  dxCode: { fontSize: 11.5, color: '#94a3b8', marginTop: 5 },
 
   sectionCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    padding: 14,
-    marginBottom: 12
+    padding: 18,
+    marginBottom: 14,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1
   },
-  sectionTitle: { fontSize: 13.5, fontWeight: '700', color: '#0f172a', marginBottom: 8 },
-  bodyText: { fontSize: 13.5, color: '#334155', lineHeight: 20 },
+  sectionTitle: { fontSize: 12, fontWeight: '700', color: '#64748b', letterSpacing: 0.8, marginBottom: 10, textTransform: 'uppercase' },
+  bodyText: { fontSize: 14, color: '#334155', lineHeight: 21 },
 
   instructionCard: { backgroundColor: '#f0fdf4', borderColor: '#bbf7d0' },
   instructionText: { fontSize: 13.5, color: '#14532d', lineHeight: 20, marginBottom: 6 },
@@ -243,20 +255,20 @@ const styles = StyleSheet.create({
   urgentCard: { backgroundColor: '#fef2f2', borderColor: '#fecaca' },
   urgentNote: { fontSize: 12, fontWeight: '700', color: '#991b1b', marginTop: 6 },
 
-  bulletRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 8 },
+  bulletRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 9 },
   bulletIcon: { width: 20, paddingTop: 2, alignItems: 'flex-start' },
-  bulletText: { flex: 1, fontSize: 13.5, color: '#334155', lineHeight: 20 },
+  bulletText: { flex: 1, fontSize: 14, color: '#334155', lineHeight: 21 },
 
   footerCard: {
     backgroundColor: '#f1f5f9',
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    padding: 14,
+    padding: 16,
     marginTop: 4
   },
   footerIconRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
-  footerTitle: { fontSize: 12.5, fontWeight: '700', color: '#475569', marginLeft: 6 },
-  footerText: { fontSize: 12, color: '#64748b', lineHeight: 18 },
-  footerSource: { fontSize: 11, color: '#94a3b8', marginTop: 6 }
+  footerTitle: { fontSize: 12, fontWeight: '700', color: '#475569', marginLeft: 6, letterSpacing: 0.4 },
+  footerText: { fontSize: 12.5, color: '#64748b', lineHeight: 18.5 },
+  footerSource: { fontSize: 11, color: '#94a3b8', marginTop: 7 }
 });

@@ -259,9 +259,10 @@ export default function AppointmentChangeModal({
 }
 
 const styles = StyleSheet.create({
+  // Same surfaces as the rest of the redesigned app: #fafbfc page, 14pt cards.
   safeArea: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#fafbfc',
     paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) : 0
   },
   header: {
@@ -282,30 +283,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  headerTitle: { fontSize: 15.5, fontWeight: '700', color: '#0f172a' },
+  headerTitle: { fontSize: 15.5, fontWeight: '800', color: '#0f172a', letterSpacing: -0.3 },
   headerSubtitle: { fontSize: 11.5, color: '#64748b', marginTop: 1 },
   closeBtn: { padding: 6, marginLeft: 8 },
 
   currentCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    padding: 14,
-    marginBottom: 14
+    padding: 18,
+    marginBottom: 16,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 2
   },
-  currentLabel: { fontSize: 10.5, fontWeight: '800', color: '#94a3b8', letterSpacing: 0.6 },
-  currentWhen: { fontSize: 15, fontWeight: '700', color: '#0f172a', marginTop: 4 },
-  currentMeta: { fontSize: 12.5, color: '#64748b', marginTop: 2 },
+  currentLabel: { fontSize: 11, fontWeight: '800', color: '#94a3b8', letterSpacing: 0.8 },
+  currentWhen: { fontSize: 16, fontWeight: '800', color: '#0f172a', marginTop: 5, letterSpacing: -0.3 },
+  currentMeta: { fontSize: 12.5, color: '#64748b', marginTop: 3 },
 
-  fieldLabel: { fontSize: 10.5, fontWeight: '800', color: '#64748b', letterSpacing: 0.6, marginBottom: 6 },
+  fieldLabel: { fontSize: 11, fontWeight: '800', color: '#64748b', letterSpacing: 0.8, marginBottom: 7 },
   hint: { fontSize: 12, color: '#64748b', lineHeight: 17, marginBottom: 10 },
 
   textArea: {
     backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    borderRadius: 10,
+    borderRadius: 12,
     padding: 12,
     fontSize: 14,
     color: '#0f172a',
@@ -338,7 +344,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fef2f2',
     borderWidth: 1,
     borderColor: '#fecaca',
-    borderRadius: 10,
+    borderRadius: 12,
     padding: 11,
     marginBottom: 12
   },
@@ -348,7 +354,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fffbeb',
     borderWidth: 1,
     borderColor: '#fde68a',
-    borderRadius: 10,
+    borderRadius: 12,
     padding: 11,
     marginTop: 4
   },
@@ -364,7 +370,7 @@ const styles = StyleSheet.create({
   secondaryBtn: {
     paddingVertical: 13,
     paddingHorizontal: 18,
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: '#cbd5e1',
     marginRight: 10,
@@ -376,7 +382,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#1d4ed8',
     paddingVertical: 13,
-    borderRadius: 10,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center'
   },

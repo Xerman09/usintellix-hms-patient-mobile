@@ -193,15 +193,19 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e2e8f0'
   },
   headerTitleRow: { flexDirection: 'row', alignItems: 'center', flex: 1 },
+  // 34/17 and 15.5pt, matching the header metrics every other My Chart modal
+  // settled on. This screen was built before those were fixed and sat 2px and
+  // half a point larger, which showed when a patient moved between it and the
+  // visit it was opened from.
   iconCircle: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     backgroundColor: '#eff6ff',
     alignItems: 'center',
     justifyContent: 'center'
   },
-  headerTitle: { fontSize: 16, fontWeight: '800', color: '#0f172a', letterSpacing: -0.3 },
+  headerTitle: { fontSize: 15.5, fontWeight: '800', color: '#0f172a', letterSpacing: -0.3 },
   headerSubtitle: { fontSize: 11.5, color: '#64748b', marginTop: 1 },
   closeBtn: { padding: 6, marginLeft: 8 },
 

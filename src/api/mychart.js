@@ -310,6 +310,76 @@ export const MyChartService = {
   },
 
   // -------------------------------------------------------------
+  // 4f. What this will cost (Phase M16)
+  // -------------------------------------------------------------
+
+  /**
+   * The estimates issued to this patient, and any cost questions they have
+   * outstanding.
+   *
+   * Every figure on an estimate was snapshotted when it was issued -- including
+   * the currency -- so an estimate re-read later shows what the patient was
+   * told, not today's price list. Use `quoted_display` rather than formatting
+   * `quoted_total` here: the server formats with the currency recorded on that
+   * estimate, which may not be the hospital's current one.
+   *
+   * `expired` is computed on read from valid_until, and `status_text` is the
+   * sentence to show for it. An expired estimate is still returned, because a
+   * patient should be able to see what they were quoted and that it has lapsed.
+   */
+  async getEstimates() {
+    return apiRequest('/mychart/estimates');
+  },
+
+  /**
+   * The hospital's priced packages, for browsing before asking.
+   *
+   * Both prices come back (`standard_total` and `discounted_total`) because
+   * which one applies is a billing decision, and `has_breakdown` says whether
+   * an item-by-item view exists for that package at all -- most are priced as
+   * one bundle, so the inclusions and exclusions text is the useful part.
+   */
+  async getEstimateCatalogue() {
+    return apiRequest('/mychart/estimates/catalogue');
+  },
+
+  /**
+   * One estimate in full, including its lines when it has any.
+   *
+   * A POST because it carries an id; the server resolves the patient itself and
+   * will not return somebody else's estimate.
+   */
+  async getEstimate(estimateId) {
+    return apiRequest('/mychart/estimates/show', {
+      method: 'POST',
+      body: JSON.stringify({ id: Number(estimateId) })
+    });
+  },
+
+  /**
+   * Ask the billing desk what something will cost.
+   *
+   * Either a package from the catalogue or free text -- the most common
+   * question is about something with no package at all.
+   *
+   * @param {Object} payload { package_id?, asked_about?, note? }
+   */
+  async requestEstimate(payload) {
+    return apiRequest('/mychart/estimates/request', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  },
+
+  /** Take back a cost question the desk has not answered yet. */
+  async withdrawEstimateRequest(requestId) {
+    return apiRequest('/mychart/estimates/withdraw', {
+      method: 'POST',
+      body: JSON.stringify({ id: Number(requestId) })
+    });
+  },
+
+  // -------------------------------------------------------------
   // 5. Billing & Statements (Phase M4)
   // -------------------------------------------------------------
 

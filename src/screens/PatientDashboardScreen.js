@@ -33,7 +33,8 @@ import {
   TodoIcon,
   MedicalClipboardIcon,
   ShieldIcon,
-  ShieldCheckIcon
+  ShieldCheckIcon,
+  ReceiptIcon
 } from '../components/Icons';
 import AppointmentsModal from '../components/AppointmentsModal';
 import PrescriptionsModal from '../components/PrescriptionsModal';
@@ -54,6 +55,7 @@ import MyChartSharingModal from '../components/MyChartSharingModal';
 import MyChartInsuranceModal from '../components/MyChartInsuranceModal';
 import MyChartQuestionnairesModal from '../components/MyChartQuestionnairesModal';
 import MyChartHealthMaintenanceModal from '../components/MyChartHealthMaintenanceModal';
+import MyChartEstimatesModal from '../components/MyChartEstimatesModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -72,6 +74,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   const [showInsurance, setShowInsurance] = useState(false);
   const [showQuestionnaires, setShowQuestionnaires] = useState(false);
   const [showHealthMaintenance, setShowHealthMaintenance] = useState(false);
+  const [showEstimates, setShowEstimates] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [showClinicalReminders, setShowClinicalReminders] = useState(false);
   const [showMedicalReports, setShowMedicalReports] = useState(false);
@@ -195,6 +198,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         break;
       case 'mychart_health_maintenance':
         setShowHealthMaintenance(true);
+        break;
+      case 'mychart_estimates':
+        setShowEstimates(true);
         break;
       default:
         break;
@@ -639,6 +645,30 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             </View>
           </TouchableOpacity>
 
+          {/* Phase M16. "Costs", not "Bills" -- the Billing tile next to it is
+              money already owed, and these are figures for care that has not
+              happened yet. Nothing on the tile names a treatment, for the same
+              lock-screen reason as the Staying Well tile above. */}
+          <TouchableOpacity
+            style={styles.gridCard}
+            activeOpacity={0.7}
+            onPress={() => setShowEstimates(true)}
+          >
+            <View style={styles.gridCardTopRow}>
+              <View style={styles.cardIconCircle}>
+                <ReceiptIcon color="#090d16" size={20} />
+              </View>
+              <View style={styles.cardArrowCircle}>
+                <ChevronRightIcon color="#94a3b8" size={13} />
+              </View>
+            </View>
+            <Text style={styles.gridCardTitle}>Costs</Text>
+            <Text style={styles.gridCardDesc}>What planned care costs</Text>
+            <View style={styles.gridCardActionRow}>
+              <Text style={styles.gridCardActionText}>See estimates →</Text>
+            </View>
+          </TouchableOpacity>
+
           {/* Card 5: Messages */}
           <TouchableOpacity
             style={styles.gridCard}
@@ -741,6 +771,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         onClose={() => setShowHealthMaintenance(false)}
       />
 
+      {/* Phase M16: what planned treatment costs, and estimates issued to you */}
+      <MyChartEstimatesModal
+        visible={showEstimates}
+        onClose={() => setShowEstimates(false)}
+      />
+
       {/* Messages Interactive Bottom Sheet */}
       <MessagesModal
         visible={showMessages}
@@ -788,6 +824,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           else if (tab === 'mychart_visits') handleMyChartNavigate('mychart_visits');
           else if (tab === 'mychart_questionnaires') handleMyChartNavigate('mychart_questionnaires');
           else if (tab === 'mychart_health_maintenance') handleMyChartNavigate('mychart_health_maintenance');
+          else if (tab === 'mychart_estimates') handleMyChartNavigate('mychart_estimates');
           else if (tab === 'messages') setShowMessages(true);
         }}
       />
@@ -832,6 +869,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           else if (tab === 'mychart_checkin') handleMyChartNavigate('mychart_checkin');
           else if (tab === 'mychart_questionnaires') handleMyChartNavigate('mychart_questionnaires');
           else if (tab === 'mychart_health_maintenance') handleMyChartNavigate('mychart_health_maintenance');
+          else if (tab === 'mychart_estimates') handleMyChartNavigate('mychart_estimates');
           else if (tab === 'messages') setShowMessages(true);
         }}
       />

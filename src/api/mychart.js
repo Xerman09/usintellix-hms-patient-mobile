@@ -380,6 +380,84 @@ export const MyChartService = {
   },
 
   // -------------------------------------------------------------
+  // 4g. Online visits (Phase M15a)
+  // -------------------------------------------------------------
+
+  /**
+   * This patient's online visits.
+   *
+   * `can_raise` is false when they already have one open, and `blocked_reason`
+   * explains when the whole feature is switched off -- it ships off, because an
+   * e-visit puts clinical triage in front of a patient.
+   *
+   * Refused e-visits are never in this list. A red-flag answer is refused on
+   * screen at the moment of submission; listing it afterwards as though it were
+   * in progress is the exact confusion the refusal exists to prevent.
+   */
+  async getEvisits() {
+    return apiRequest('/mychart/evisits');
+  },
+
+  /** What an online visit can be raised about, with each one's "not for this" warning. */
+  async getEvisitReasons() {
+    return apiRequest('/mychart/evisits/reasons');
+  },
+
+  /**
+   * The questions for one reason.
+   *
+   * Items with `is_safety_check` are the red-flag screening and must be asked
+   * FIRST, before the rest. What answer trips a flag is deliberately not sent
+   * to the device -- screening happens on the server, so a client that knew the
+   * triggers could not be made to route around them.
+   */
+  async getEvisitForm(reasonCode) {
+    return apiRequest(`/mychart/evisits/form?reason=${encodeURIComponent(reasonCode)}`);
+  },
+
+  /**
+   * Raise one.
+   *
+   * IMPORTANT: a red-flag answer comes back as HTTP 200 with
+   * `success: false, refused: true` and an `urgent` block. That is not a
+   * validation error and must not be shown as a toast -- render `urgent` as a
+   * full-screen "get help now", including its `terms`, which say in plain words
+   * that nobody is reading the message and not to wait for a reply.
+   *
+   * @param {Object} payload { reason_code, answers: { [key]: string } }
+   */
+  async submitEvisit(payload) {
+    return apiRequest('/mychart/evisits', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  },
+
+  /** One of mine, with the thread and what I told them. */
+  async getEvisit(evisitId) {
+    return apiRequest('/mychart/evisits/show', {
+      method: 'POST',
+      body: JSON.stringify({ id: Number(evisitId) })
+    });
+  },
+
+  /** One follow-up question after a reply, inside the follow-up window. */
+  async followUpEvisit(evisitId, body) {
+    return apiRequest('/mychart/evisits/follow-up', {
+      method: 'POST',
+      body: JSON.stringify({ id: Number(evisitId), body })
+    });
+  },
+
+  /** Take back one nobody has replied to yet. */
+  async withdrawEvisit(evisitId) {
+    return apiRequest('/mychart/evisits/withdraw', {
+      method: 'POST',
+      body: JSON.stringify({ id: Number(evisitId) })
+    });
+  },
+
+  // -------------------------------------------------------------
   // 5. Billing & Statements (Phase M4)
   // -------------------------------------------------------------
 

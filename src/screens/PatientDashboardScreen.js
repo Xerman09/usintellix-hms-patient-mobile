@@ -34,7 +34,8 @@ import {
   MedicalClipboardIcon,
   ShieldIcon,
   ShieldCheckIcon,
-  ReceiptIcon
+  ReceiptIcon,
+  HelpCircleIcon
 } from '../components/Icons';
 import AppointmentsModal from '../components/AppointmentsModal';
 import PrescriptionsModal from '../components/PrescriptionsModal';
@@ -56,6 +57,7 @@ import MyChartInsuranceModal from '../components/MyChartInsuranceModal';
 import MyChartQuestionnairesModal from '../components/MyChartQuestionnairesModal';
 import MyChartHealthMaintenanceModal from '../components/MyChartHealthMaintenanceModal';
 import MyChartEstimatesModal from '../components/MyChartEstimatesModal';
+import MyChartEvisitsModal from '../components/MyChartEvisitsModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -75,6 +77,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   const [showQuestionnaires, setShowQuestionnaires] = useState(false);
   const [showHealthMaintenance, setShowHealthMaintenance] = useState(false);
   const [showEstimates, setShowEstimates] = useState(false);
+  const [showEvisits, setShowEvisits] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [showClinicalReminders, setShowClinicalReminders] = useState(false);
   const [showMedicalReports, setShowMedicalReports] = useState(false);
@@ -201,6 +204,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         break;
       case 'mychart_estimates':
         setShowEstimates(true);
+        break;
+      case 'mychart_evisits':
+        setShowEvisits(true);
         break;
       default:
         break;
@@ -669,6 +675,31 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             </View>
           </TouchableOpacity>
 
+          {/* Phase M15a. "Ask a Doctor", not "Online Visit" or "Telehealth":
+              a patient looking for help does not know which of those means
+              "describe a problem and get a written reply", and the ones who
+              expect a video call would be disappointed by what this is.
+              The description says "in writing" for the same reason. */}
+          <TouchableOpacity
+            style={styles.gridCard}
+            activeOpacity={0.7}
+            onPress={() => setShowEvisits(true)}
+          >
+            <View style={styles.gridCardTopRow}>
+              <View style={styles.cardIconCircle}>
+                <HelpCircleIcon color="#090d16" size={20} />
+              </View>
+              <View style={styles.cardArrowCircle}>
+                <ChevronRightIcon color="#94a3b8" size={13} />
+              </View>
+            </View>
+            <Text style={styles.gridCardTitle}>Ask a Doctor</Text>
+            <Text style={styles.gridCardDesc}>Get a reply in writing</Text>
+            <View style={styles.gridCardActionRow}>
+              <Text style={styles.gridCardActionText}>Describe a problem →</Text>
+            </View>
+          </TouchableOpacity>
+
           {/* Card 5: Messages */}
           <TouchableOpacity
             style={styles.gridCard}
@@ -777,6 +808,12 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         onClose={() => setShowEstimates(false)}
       />
 
+      {/* Phase M15a: asynchronous e-visits -- ask a clinician in writing */}
+      <MyChartEvisitsModal
+        visible={showEvisits}
+        onClose={() => setShowEvisits(false)}
+      />
+
       {/* Messages Interactive Bottom Sheet */}
       <MessagesModal
         visible={showMessages}
@@ -825,6 +862,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           else if (tab === 'mychart_questionnaires') handleMyChartNavigate('mychart_questionnaires');
           else if (tab === 'mychart_health_maintenance') handleMyChartNavigate('mychart_health_maintenance');
           else if (tab === 'mychart_estimates') handleMyChartNavigate('mychart_estimates');
+          else if (tab === 'mychart_evisits') handleMyChartNavigate('mychart_evisits');
           else if (tab === 'messages') setShowMessages(true);
         }}
       />
@@ -870,6 +908,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
           else if (tab === 'mychart_questionnaires') handleMyChartNavigate('mychart_questionnaires');
           else if (tab === 'mychart_health_maintenance') handleMyChartNavigate('mychart_health_maintenance');
           else if (tab === 'mychart_estimates') handleMyChartNavigate('mychart_estimates');
+          else if (tab === 'mychart_evisits') handleMyChartNavigate('mychart_evisits');
           else if (tab === 'messages') setShowMessages(true);
         }}
       />

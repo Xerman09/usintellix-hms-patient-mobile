@@ -271,6 +271,45 @@ export const MyChartService = {
   },
 
   // -------------------------------------------------------------
+  // 4e. What you are due for (Phase M14)
+  // -------------------------------------------------------------
+
+  /**
+   * Screenings and vaccinations this patient is due for, overdue on, or up to
+   * date with, plus their own requests about them.
+   *
+   * Each item carries `status` (overdue | due | up_to_date), a `status_text`
+   * sentence to show instead of working one out from dates, `can_request`, and
+   * `pending_request` when they have already asked. Only items the hospital has
+   * approved for patients come back at all -- the rules engine matches on age
+   * and sex alone, so it is the server that decides what is safe to show.
+   */
+  async getHealthMaintenance() {
+    return apiRequest('/mychart/health-maintenance');
+  },
+
+  /**
+   * Ask about one of them. Neither action changes the record.
+   *
+   * @param {Object} payload { id, action: 'book'|'report_done', note?,
+   *   done_on? (YYYY-MM-DD, report_done only), done_where? }
+   */
+  async requestCareGap(payload) {
+    return apiRequest('/mychart/health-maintenance/request', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  },
+
+  /** Take back a request the clinic has not looked at yet. */
+  async withdrawCareGapRequest(requestId) {
+    return apiRequest('/mychart/health-maintenance/withdraw', {
+      method: 'POST',
+      body: JSON.stringify({ id: Number(requestId) })
+    });
+  },
+
+  // -------------------------------------------------------------
   // 5. Billing & Statements (Phase M4)
   // -------------------------------------------------------------
 

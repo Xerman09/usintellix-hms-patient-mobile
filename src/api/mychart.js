@@ -458,6 +458,76 @@ export const MyChartService = {
   },
 
   // -------------------------------------------------------------
+  // 4h. Fast Pass -- being offered an earlier appointment (Phase M18)
+  // -------------------------------------------------------------
+
+  /**
+   * Any live offer, which of my appointments are on the list, and which could be.
+   *
+   * `offers` comes first in the payload because it is the only time-limited thing
+   * in My Chart: each one carries `deadline` and `minutes_left`, and a patient who
+   * has to scroll past a list to find it may miss it.
+   *
+   * Note what is NOT here: a queue position. The desk can see it, the patient
+   * cannot, because it moves for reasons that have nothing to do with them.
+   */
+  async getFastPass() {
+    return apiRequest('/mychart/fastpass');
+  },
+
+  /**
+   * Ask to be offered anything earlier for an appointment I already hold.
+   *
+   * `earliest_date` is optional and is a hard constraint, not a preference -- "I
+   * am away until the 20th". An offer that breaks it would be useless.
+   *
+   * @param {number} appointmentId
+   * @param {string} [earliestDate] YYYY-MM-DD
+   */
+  async joinFastPass(appointmentId, earliestDate) {
+    return apiRequest('/mychart/fastpass/join', {
+      method: 'POST',
+      body: JSON.stringify({
+        appointment_id: Number(appointmentId),
+        earliest_date: earliestDate || ''
+      })
+    });
+  },
+
+  /** Come off the list. The appointment is not touched. */
+  async leaveFastPass(waitlistId) {
+    return apiRequest('/mychart/fastpass/leave', {
+      method: 'POST',
+      body: JSON.stringify({ waitlist_id: Number(waitlistId) })
+    });
+  },
+
+  /**
+   * Take the offered slot, which MOVES the appointment named on the offer.
+   *
+   * Takes an offer id and nothing else -- the appointment, the slot and the
+   * patient all come from the offer row on the server.
+   *
+   * A failure here is usually not an error: a few patients are offered the same
+   * slot and somebody else may have answered first. The message says so, and the
+   * right thing to do is show it and reload, not retry.
+   */
+  async acceptFastPass(offerId) {
+    return apiRequest('/mychart/fastpass/accept', {
+      method: 'POST',
+      body: JSON.stringify({ offer_id: Number(offerId) })
+    });
+  },
+
+  /** Turn this one down and stay on the list. */
+  async declineFastPass(offerId, reason) {
+    return apiRequest('/mychart/fastpass/decline', {
+      method: 'POST',
+      body: JSON.stringify({ offer_id: Number(offerId), reason: reason || '' })
+    });
+  },
+
+  // -------------------------------------------------------------
   // 5. Billing & Statements (Phase M4)
   // -------------------------------------------------------------
 

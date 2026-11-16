@@ -35,7 +35,8 @@ import {
   ShieldIcon,
   ShieldCheckIcon,
   ReceiptIcon,
-  HelpCircleIcon
+  HelpCircleIcon,
+  ClockIcon
 } from '../components/Icons';
 import AppointmentsModal from '../components/AppointmentsModal';
 import PrescriptionsModal from '../components/PrescriptionsModal';
@@ -58,6 +59,7 @@ import MyChartQuestionnairesModal from '../components/MyChartQuestionnairesModal
 import MyChartHealthMaintenanceModal from '../components/MyChartHealthMaintenanceModal';
 import MyChartEstimatesModal from '../components/MyChartEstimatesModal';
 import MyChartEvisitsModal from '../components/MyChartEvisitsModal';
+import MyChartFastPassModal from '../components/MyChartFastPassModal';
 import ProfileSettingsScreen from './ProfileSettingsScreen';
 import SidebarDrawer from '../components/SidebarDrawer';
 import { AnnouncementsService } from '../api/announcements';
@@ -78,6 +80,7 @@ export default function PatientDashboardScreen({ user, onLogout }) {
   const [showHealthMaintenance, setShowHealthMaintenance] = useState(false);
   const [showEstimates, setShowEstimates] = useState(false);
   const [showEvisits, setShowEvisits] = useState(false);
+  const [showFastPass, setShowFastPass] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [showClinicalReminders, setShowClinicalReminders] = useState(false);
   const [showMedicalReports, setShowMedicalReports] = useState(false);
@@ -207,6 +210,9 @@ export default function PatientDashboardScreen({ user, onLogout }) {
         break;
       case 'mychart_evisits':
         setShowEvisits(true);
+        break;
+      case 'mychart_fastpass':
+        setShowFastPass(true);
         break;
       default:
         break;
@@ -700,6 +706,34 @@ export default function PatientDashboardScreen({ user, onLogout }) {
             </View>
           </TouchableOpacity>
 
+          {/* Phase M18. "Come in Sooner", not "Fast Pass" or "Waitlist": the
+              patient does not care what the feature is called, they care what it
+              does for them, and "waitlist" suggests waiting for an appointment
+              they do not have rather than moving one they do.
+
+              The description says "if something comes free" rather than promising
+              anything. Most people on this list will never be offered a slot, and
+              a tile that implied otherwise would be the first disappointment. */}
+          <TouchableOpacity
+            style={styles.gridCard}
+            activeOpacity={0.7}
+            onPress={() => setShowFastPass(true)}
+          >
+            <View style={styles.gridCardTopRow}>
+              <View style={styles.cardIconCircle}>
+                <ClockIcon color="#090d16" size={20} />
+              </View>
+              <View style={styles.cardArrowCircle}>
+                <ChevronRightIcon color="#94a3b8" size={13} />
+              </View>
+            </View>
+            <Text style={styles.gridCardTitle}>Come in Sooner</Text>
+            <Text style={styles.gridCardDesc}>If something comes free</Text>
+            <View style={styles.gridCardActionRow}>
+              <Text style={styles.gridCardActionText}>Ask to be told →</Text>
+            </View>
+          </TouchableOpacity>
+
           {/* Card 5: Messages */}
           <TouchableOpacity
             style={styles.gridCard}
@@ -812,6 +846,15 @@ export default function PatientDashboardScreen({ user, onLogout }) {
       <MyChartEvisitsModal
         visible={showEvisits}
         onClose={() => setShowEvisits(false)}
+      />
+
+      {/* Phase M18: Fast Pass -- be offered an earlier appointment. Reached from
+          the tile and from the fastpass_offer notification, which deep-links here
+          rather than to the appointment list: the offer has a deadline on it and
+          this is the only screen where it can be answered. */}
+      <MyChartFastPassModal
+        visible={showFastPass}
+        onClose={() => setShowFastPass(false)}
       />
 
       {/* Messages Interactive Bottom Sheet */}

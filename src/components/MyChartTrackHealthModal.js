@@ -381,6 +381,17 @@ export default function MyChartTrackHealthModal({
                             <Text style={styles.logUnits}>{item.units}</Text>
                           </Text>
                           <Text style={styles.logDate}>{formatDate(item.taken_at)}</Text>
+                          {/* Phase M17a. Where the reading came from, said on the row
+                              rather than left to be inferred. A patient scrolling their
+                              own log is the only person who can spot a reading that is
+                              not theirs -- a shared monitor, somebody else's watch -- and
+                              they cannot do that if every row looks hand-typed. */}
+                          {item.source === 'device' ? (
+                            <Text style={styles.logSource}>
+                              From {item.source_app || 'a device'}
+                              {item.device_name ? ` (${item.device_name})` : ''}
+                            </Text>
+                          ) : null}
                           {item.note ? <Text style={styles.logNote}>Note: {item.note}</Text> : null}
                         </View>
 
@@ -838,6 +849,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginTop: 2
   },
+  logSource: { fontSize: 11, color: '#2563eb', marginTop: 2, fontWeight: '600' },
   alertedPill: {
     flexDirection: 'row',
     alignItems: 'center',

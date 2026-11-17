@@ -20,7 +20,7 @@ import {
   AlertTriangleIcon,
   ChevronRightIcon
 } from './Icons';
-import { myChartApi } from '../api/mychart';
+import { MyChartService } from '../api/mychart';
 
 /**
  * What this will cost (Phase M16).
@@ -59,7 +59,7 @@ export default function MyChartEstimatesModal({ visible, onClose }) {
     setLoading(true);
     setError(null);
     try {
-      const res = await myChartApi.getEstimates();
+      const res = await MyChartService.getEstimates();
       if (res?.success) setData(res.data);
       else setError(res?.message || 'Could not load your estimates.');
     } catch (e) {
@@ -73,7 +73,7 @@ export default function MyChartEstimatesModal({ visible, onClose }) {
     setLoading(true);
     setError(null);
     try {
-      const res = await myChartApi.getEstimateCatalogue();
+      const res = await MyChartService.getEstimateCatalogue();
       if (res?.success) setCatalogue(res.data);
       else setError(res?.message || 'Could not load the price list.');
     } catch (e) {
@@ -94,7 +94,7 @@ export default function MyChartEstimatesModal({ visible, onClose }) {
   const openDetail = async (estimateId) => {
     setBusy(true);
     try {
-      const res = await myChartApi.getEstimate(estimateId);
+      const res = await MyChartService.getEstimate(estimateId);
       if (res?.success) {
         setDetail(res.data);
         setView('detail');
@@ -117,7 +117,7 @@ export default function MyChartEstimatesModal({ visible, onClose }) {
       if (askText.trim()) payload.asked_about = askText.trim();
       if (askNote.trim()) payload.note = askNote.trim();
 
-      const res = await myChartApi.requestEstimate(payload);
+      const res = await MyChartService.requestEstimate(payload);
 
       if (res?.success) {
         setAskOpen(false);
@@ -139,7 +139,7 @@ export default function MyChartEstimatesModal({ visible, onClose }) {
   const withdrawAsk = async (requestId) => {
     setBusy(true);
     try {
-      await myChartApi.withdrawEstimateRequest(requestId);
+      await MyChartService.withdrawEstimateRequest(requestId);
       await loadMine();
     } finally {
       setBusy(false);

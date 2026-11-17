@@ -20,7 +20,7 @@ import {
   AlertTriangleIcon,
   CalendarIcon
 } from './Icons';
-import { myChartApi } from '../api/mychart';
+import { MyChartService } from '../api/mychart';
 
 /**
  * Fast Pass (Phase M18) -- being offered an earlier appointment.
@@ -74,7 +74,7 @@ export default function MyChartFastPassModal({ visible, onClose }) {
     setLoading(true);
     setError(null);
     try {
-      const res = await myChartApi.getFastPass();
+      const res = await MyChartService.getFastPass();
       if (res?.success) setData(res.data);
       else setError(res?.message || 'Could not load this.');
     } catch (e) {
@@ -99,7 +99,7 @@ export default function MyChartFastPassModal({ visible, onClose }) {
     setBusy(true);
     setError(null);
     try {
-      const res = await myChartApi.acceptFastPass(offerId);
+      const res = await MyChartService.acceptFastPass(offerId);
 
       if (res?.success) {
         setMoved(res.message || 'Your appointment has been moved.');
@@ -121,7 +121,7 @@ export default function MyChartFastPassModal({ visible, onClose }) {
   const decline = async (offerId) => {
     setBusy(true);
     try {
-      const res = await myChartApi.declineFastPass(offerId, declineWhy.trim());
+      const res = await MyChartService.declineFastPass(offerId, declineWhy.trim());
       setDecliningId(null);
       setDeclineWhy('');
 
@@ -140,7 +140,7 @@ export default function MyChartFastPassModal({ visible, onClose }) {
   const join = async (appointmentId) => {
     setBusy(true);
     try {
-      const res = await myChartApi.joinFastPass(appointmentId, earliest.trim());
+      const res = await MyChartService.joinFastPass(appointmentId, earliest.trim());
 
       if (!res?.success) {
         setError(res?.message || 'That could not be done.');
@@ -160,7 +160,7 @@ export default function MyChartFastPassModal({ visible, onClose }) {
   const leave = async (waitlistId) => {
     setBusy(true);
     try {
-      await myChartApi.leaveFastPass(waitlistId);
+      await MyChartService.leaveFastPass(waitlistId);
       await load();
     } finally {
       setBusy(false);

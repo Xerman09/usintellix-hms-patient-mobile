@@ -21,7 +21,7 @@ import {
   ChevronRightIcon,
   ClockIcon
 } from './Icons';
-import { myChartApi } from '../api/mychart';
+import { MyChartService } from '../api/mychart';
 
 /**
  * Online visits (Phase M15a).
@@ -65,7 +65,7 @@ export default function MyChartEvisitsModal({ visible, onClose }) {
     setLoading(true);
     setError(null);
     try {
-      const res = await myChartApi.getEvisits();
+      const res = await MyChartService.getEvisits();
       if (res?.success) setData(res.data);
       else setError(res?.message || 'Could not load your online visits.');
     } catch (e) {
@@ -88,7 +88,7 @@ export default function MyChartEvisitsModal({ visible, onClose }) {
   const openReasons = async () => {
     setLoading(true);
     try {
-      const res = await myChartApi.getEvisitReasons();
+      const res = await MyChartService.getEvisitReasons();
       if (res?.success) {
         setReasons(res.data);
         setView('reasons');
@@ -103,7 +103,7 @@ export default function MyChartEvisitsModal({ visible, onClose }) {
   const openForm = async (reasonCode) => {
     setLoading(true);
     try {
-      const res = await myChartApi.getEvisitForm(reasonCode);
+      const res = await MyChartService.getEvisitForm(reasonCode);
       if (res?.success) {
         setForm(res.data);
         setAnswers({});
@@ -120,7 +120,7 @@ export default function MyChartEvisitsModal({ visible, onClose }) {
   const openDetail = async (evisitId) => {
     setBusy(true);
     try {
-      const res = await myChartApi.getEvisit(evisitId);
+      const res = await MyChartService.getEvisit(evisitId);
       if (res?.success) {
         setDetail(res.data);
         setFollowUpText('');
@@ -135,7 +135,7 @@ export default function MyChartEvisitsModal({ visible, onClose }) {
     setBusy(true);
     setError(null);
     try {
-      const res = await myChartApi.submitEvisit({
+      const res = await MyChartService.submitEvisit({
         reason_code: form.reason_code,
         answers
       });
@@ -168,7 +168,7 @@ export default function MyChartEvisitsModal({ visible, onClose }) {
     if (!followUpText.trim()) return;
     setBusy(true);
     try {
-      const res = await myChartApi.followUpEvisit(detail.id, followUpText.trim());
+      const res = await MyChartService.followUpEvisit(detail.id, followUpText.trim());
       if (res?.success) {
         setFollowUpText('');
         await openDetail(detail.id);
@@ -184,7 +184,7 @@ export default function MyChartEvisitsModal({ visible, onClose }) {
   const withdraw = async (evisitId) => {
     setBusy(true);
     try {
-      await myChartApi.withdrawEvisit(evisitId);
+      await MyChartService.withdrawEvisit(evisitId);
       setView('list');
       await loadList();
     } finally {

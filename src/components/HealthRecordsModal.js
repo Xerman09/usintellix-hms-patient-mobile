@@ -5,19 +5,34 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  TextInput
 } from 'react-native';
 import { HealthRecordsService } from '../api/healthRecords';
 import { MyChartService } from '../api/mychart';
-import { RecordsIcon, HelpCircleIcon } from '../components/Icons';
+import { RecordsIcon, HelpCircleIcon, InfoCircleIcon, AlertTriangleIcon, CheckCircleIcon } from '../components/Icons';
 import DiagnosisGuideModal from './DiagnosisGuideModal';
 import { getFallbackGuides } from '../utils/diagnosisDictionary';
+
+// The six clinical lists come from /mychart/chart (Phase M19), which applies the
+// verification gate. The other three stay on the shared CCD summary, which M19
+// does not cover.
+const CHART_TABS = {
+  allergies: 'allergies',
+  problems: 'conditions',
+  medications: 'medications',
+  procedures: 'procedures',
+  devices: 'devices',
+  immunizations: 'immunizations'
+};
 
 const TABS = [
   { id: 'summary', label: 'Summary' },
   { id: 'allergies', label: 'Allergies' },
   { id: 'problems', label: 'Conditions' },
   { id: 'medications', label: 'Medications' },
+  { id: 'procedures', label: 'Operations' },
+  { id: 'devices', label: 'Implants' },
   { id: 'immunizations', label: 'Vaccines' },
   { id: 'results', label: 'Lab Results' },
   { id: 'encounters', label: 'Visits' },
@@ -35,6 +50,18 @@ export default function HealthRecordsModal({ visible, onClose, initialTab = 'sum
   const [guides, setGuides] = useState({});
   const [openGuide, setOpenGuide] = useState(null);
 
+  // Phase M19. The six clinical lists come from here rather than from the CCD
+  // summary, because this endpoint applies the verification gate: /health-summary
+  // hands back rows whose status is `Refuted` (a clinician decided the patient
+  // does NOT have this) or `Entered in Error`, and this screen used to render
+  // them as facts.
+  const [chart, setChart] = useState(null);
+  const [correcting, setCorrecting] = useState(null);   // { section, item }
+  const [says, setSays] = useState('');
+  const [asks, setAsks] = useState('correct');
+  const [busy, setBusy] = useState(false);
+  const [saidThanks, setSaidThanks] = useState(null);
+
   useEffect(() => {
     if (visible) {
       setActiveTab(initialTab);
@@ -42,11 +69,24 @@ export default function HealthRecordsModal({ visible, onClose, initialTab = 'sum
     } else {
       setGuides({});
       setOpenGuide(null);
+      setCorrecting(null);
+      setSaidThanks(null);
     }
   }, [visible, initialTab]);
 
+  const loadChart = async () => {
+    try {
+      const res = await MyChartService.getChart();
+      setChart(res?.success ? res.data : null);
+    } catch (e) {
+      // The CCD tabs still work without it; the clinical lists say so.
+      setChart(null);
+    }
+  };
+
   const loadHealthSummary = async () => {
     setLoading(true);
+    loadChart();
     try {
       const res = await HealthRecordsService.getHealthSummary();
       if (res.success && res.data) {
@@ -67,9 +107,13 @@ export default function HealthRecordsModal({ visible, onClose, initialTab = 'sum
     if (!visible || activeTab !== 'problems') return;
     if (Object.keys(guides).length > 0) return;
 
-    const items = (data?.problems || [])
-      .map((p) => ({ code: p.coding || '', text: p.title || p.diagnosis || '' }))
-      .filter((i) => i.text || i.code);
+    // Driven by the gated conditions list, not by the CCD summary: a refuted
+    // condition is not shown, so it should not be fetching a guide either, and
+    // the titles have to be the ones the list actually renders for
+    // guideForProblem() to match them.
+    const items = ((chart?.sections || []).find((x) => x.code === 'conditions')?.items || [])
+      .map((p) => ({ code: '', text: p.title || '' }))
+      .filter((i) => i.text !== '');
 
     if (items.length === 0) return;
 
@@ -85,7 +129,134 @@ export default function HealthRecordsModal({ visible, onClose, initialTab = 'sum
         console.warn('Could not load diagnosis guides, falling back offline:', err);
         setGuides(getFallbackGuides(items));
       });
-  }, [visible, activeTab, data]);
+  }, [visible, activeTab, chart]);
+
+  // ------------------------------------------------------------------
+  // Phase M19: one renderer for all six clinical lists.
+  //
+  // Everything it shows comes from the server already filtered and already
+  // worded. Nothing here decides what a patient may see -- that is the point.
+  // ------------------------------------------------------------------
+  const chartSection = (code) =>
+    (chart?.sections || []).find((x) => x.code === code) || null;
+
+  const sendCorrection = async () => {
+    if (!correcting || !says.trim()) return;
+
+    setBusy(true);
+    try {
+      const res = await MyChartService.raiseChartCorrection({
+        section: correcting.section,
+        item_id: correcting.item.id,
+        says: says.trim(),
+        asks
+      });
+
+      if (res?.success) {
+        setCorrecting(null);
+        setSays('');
+        setAsks('correct');
+        setSaidThanks(res.message || 'Thank you. Someone will look at this.');
+        await loadChart();
+      } else {
+        setSaidThanks(res?.message || 'That could not be sent.');
+        setCorrecting(null);
+      }
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const renderChartSection = (code, extraFor) => {
+    const section = chartSection(code);
+
+    if (!chart) {
+      return (
+        <View style={styles.sectionCard}>
+          <Text style={styles.emptyText}>Loading your record…</Text>
+        </View>
+      );
+    }
+
+    if (!chart.enabled || !section) {
+      return (
+        <View style={styles.sectionCard}>
+          <Text style={styles.emptyText}>
+            {chart.message || 'This part of your record is not shown here.'}
+          </Text>
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.sectionCard}>
+        <Text style={styles.cardHeaderTitle}>{section.label}</Text>
+        {section.blurb ? <Text style={styles.sectionBlurb}>{section.blurb}</Text> : null}
+
+        {section.items.length === 0 ? (
+          // NOT a tick and not "none". An empty list means nothing was written
+          // down, which is a different statement from "you have none" -- and the
+          // patient may repeat whichever one we show them to the next clinician
+          // who asks.
+          <View style={styles.emptyCard}>
+            <Text style={styles.emptyCardText}>{section.empty_text || 'Nothing has been written down here.'}</Text>
+          </View>
+        ) : (
+          section.items.map((item) => (
+            <View key={`${code}-${item.id}`} style={styles.recordItem}>
+              <View style={{ flex: 1 }}>
+                <View style={styles.itemTopRow}>
+                  <Text style={styles.recordTitle}>{item.title}</Text>
+                  {item.status === 'unconfirmed' ? (
+                    <View style={styles.pillUnconfirmed}>
+                      <Text style={styles.pillUnconfirmedText}>Not confirmed</Text>
+                    </View>
+                  ) : null}
+                  {item.active === false ? (
+                    <View style={styles.pillEnded}>
+                      <Text style={styles.pillEndedText}>Ended</Text>
+                    </View>
+                  ) : null}
+                </View>
+
+                {item.detail ? <Text style={styles.recordDesc}>{item.detail}</Text> : null}
+                <Text style={styles.recordDesc}>
+                  {item.since || item.when}{item.until ? ` · ${item.until}` : ''}
+                </Text>
+
+                {item.status_note ? (
+                  <View style={styles.rowIcon}>
+                    <InfoCircleIcon color="#92400e" size={12} />
+                    <Text style={styles.unconfirmedNote}>  {item.status_note}</Text>
+                  </View>
+                ) : null}
+
+                {extraFor ? extraFor(item) : null}
+
+                {item.correction ? (
+                  <View style={styles.flaggedBox}>
+                    <Text style={styles.flaggedText}>
+                      You told us about this one. {item.correction.note}
+                    </Text>
+                  </View>
+                ) : item.can_correct ? (
+                  <TouchableOpacity
+                    style={styles.correctChip}
+                    onPress={() => { setCorrecting({ section: code, item }); setSays(''); setAsks('correct'); }}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Tell us something is wrong with ${item.title}`}
+                  >
+                    <AlertTriangleIcon color="#b45309" size={12} />
+                    <Text style={styles.correctChipText}>This does not look right</Text>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+            </View>
+          ))
+        )}
+      </View>
+    );
+  };
 
   if (!visible) return null;
 
@@ -93,12 +264,14 @@ export default function HealthRecordsModal({ visible, onClose, initialTab = 'sum
 
   const demographics = data?.demographics || {};
   const careProvider = data?.care_provider;
-  const allergies = data?.allergies || [];
-  const problems = data?.problems || [];
-  const medications = data?.medications || [];
   const prescriptions = data?.prescriptions || [];
+
+  // The snapshot counts come from the GATED chart, not from the CCD summary, so
+  // they agree with the lists underneath them. Counting the summary's rows would
+  // tally items the lists correctly refuse to show -- "3 allergies" above a list
+  // of two is the kind of mismatch a patient notices and cannot explain.
+  const countOf = (code) => chartSection(code)?.count ?? 0;
   const results = data?.results || [];
-  const immunizations = data?.immunizations || [];
   const encounters = data?.encounters || [];
 
   return (
@@ -204,19 +377,19 @@ export default function HealthRecordsModal({ visible, onClose, initialTab = 'sum
                 <Text style={styles.sectionTitle}>Medical Snapshot</Text>
                 <View style={styles.snapshotGrid}>
                   <TouchableOpacity style={styles.snapshotTile} onPress={() => setActiveTab('allergies')}>
-                    <Text style={styles.snapshotNum}>{allergies.length}</Text>
+                    <Text style={styles.snapshotNum}>{countOf('allergies')}</Text>
                     <Text style={styles.snapshotLabel}>Allergies</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.snapshotTile} onPress={() => setActiveTab('problems')}>
-                    <Text style={styles.snapshotNum}>{problems.length}</Text>
+                    <Text style={styles.snapshotNum}>{countOf('conditions')}</Text>
                     <Text style={styles.snapshotLabel}>Conditions</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.snapshotTile} onPress={() => setActiveTab('medications')}>
-                    <Text style={styles.snapshotNum}>{medications.length || prescriptions.length}</Text>
+                    <Text style={styles.snapshotNum}>{countOf('medications') || prescriptions.length}</Text>
                     <Text style={styles.snapshotLabel}>Medicines</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.snapshotTile} onPress={() => setActiveTab('immunizations')}>
-                    <Text style={styles.snapshotNum}>{immunizations.length}</Text>
+                    <Text style={styles.snapshotNum}>{countOf('immunizations')}</Text>
                     <Text style={styles.snapshotLabel}>Vaccines</Text>
                   </TouchableOpacity>
                 </View>
@@ -242,94 +415,35 @@ export default function HealthRecordsModal({ visible, onClose, initialTab = 'sum
             )}
 
             {/* ================= TAB 2: ALLERGIES ================= */}
-            {activeTab === 'allergies' && (
-              <View style={styles.sectionCard}>
-                <Text style={styles.cardHeaderTitle}>Medication &amp; Environmental Allergies</Text>
-                {allergies.length === 0 ? (
-                  <View style={styles.cleanBadge}>
-                    <Text style={styles.cleanBadgeText}>✓ No known allergies on record (NKDA)</Text>
-                  </View>
-                ) : (
-                  allergies.map((item, idx) => (
-                    <View key={item.id || idx} style={styles.recordItem}>
-                      <View style={{ flex: 1 }}>
-                        <Text style={styles.recordTitle}>{item.title || item.name || 'Allergy'}</Text>
-                        <Text style={styles.recordDesc}>Reported Date: {item.begin_date || item.created_at?.slice(0, 10) || 'On record'}</Text>
-                        {item.referred_by && <Text style={styles.recordDesc}>Referred By: {item.referred_by}</Text>}
-                      </View>
-                      <View style={[styles.pillAlert, { backgroundColor: '#fef2f2' }]}>
-                        <Text style={[styles.pillAlertText, { color: '#dc2626' }]}>
-                          {item.severity || 'Reported'}
-                        </Text>
-                      </View>
-                    </View>
-                  ))
-                )}
-              </View>
-            )}
+            {activeTab === 'allergies' && renderChartSection('allergies')}
 
-            {/* ================= TAB 3: MEDICAL PROBLEMS / CONDITIONS ================= */}
-            {activeTab === 'problems' && (
-              <View style={styles.sectionCard}>
-                <Text style={styles.cardHeaderTitle}>Current Problems &amp; Diagnoses</Text>
-                {problems.length === 0 ? (
-                  <Text style={styles.emptyText}>No records found.</Text>
-                ) : (
-                  problems.map((p, idx) => (
-                    <View key={p.id || idx} style={styles.recordItem}>
-                      <View style={{ flex: 1 }}>
-                        <Text style={styles.recordTitle}>{p.title || p.diagnosis || 'Diagnosis'}</Text>
-                        <Text style={styles.recordDesc}>Reported Date: {p.created_at?.slice(0, 10) || '-'}</Text>
-                        {p.begin_date && <Text style={styles.recordDesc}>Start Date: {p.begin_date}</Text>}
-                        {p.end_date && <Text style={styles.recordDesc}>End Date: {p.end_date}</Text>}
-                        {guideForProblem(p) ? (
-                          <TouchableOpacity
-                            style={styles.guideChip}
-                            onPress={() =>
-                              setOpenGuide({
-                                diagnosis: p.title || p.diagnosis,
-                                code: p.coding || null,
-                                guide: guideForProblem(p)
-                              })
-                            }
-                            accessibilityRole="button"
-                            accessibilityLabel={`Learn about ${guideForProblem(p).title}`}
-                          >
-                            <HelpCircleIcon color="#2563eb" size={13} />
-                            <Text style={styles.guideChipText}>What this means, and what to do</Text>
-                          </TouchableOpacity>
-                        ) : null}
-                      </View>
-                      <View style={[styles.pillAlert, { backgroundColor: '#f0fdf4' }]}>
-                        <Text style={[styles.pillAlertText, { color: '#16a34a' }]}>
-                          {p.status || 'Active'}
-                        </Text>
-                      </View>
-                    </View>
-                  ))
-                )}
-              </View>
+            {activeTab === 'problems' && renderChartSection('conditions', (item) =>
+              guideForProblem(item) ? (
+                <TouchableOpacity
+                  style={styles.guideChip}
+                  onPress={() =>
+                    setOpenGuide({
+                      diagnosis: item.title,
+                      // The chart payload deliberately carries no clinical
+                      // coding, so guides resolve on the title. M9 falls back
+                      // from exact code to keyword, which is this path.
+                      code: null,
+                      guide: guideForProblem(item)
+                    })
+                  }
+                  accessibilityRole="button"
+                  accessibilityLabel={`Learn about ${guideForProblem(item).title}`}
+                >
+                  <HelpCircleIcon color="#2563eb" size={13} />
+                  <Text style={styles.guideChipText}>What this means, and what to do</Text>
+                </TouchableOpacity>
+              ) : null
             )}
 
             {/* ================= TAB 4: MEDICATIONS & PRESCRIPTIONS ================= */}
             {activeTab === 'medications' && (
               <>
-                <View style={styles.sectionCard}>
-                  <Text style={styles.cardHeaderTitle}>Current Medications</Text>
-                  {medications.length === 0 ? (
-                    <Text style={styles.emptyText}>No records found.</Text>
-                  ) : (
-                    medications.map((m, idx) => (
-                      <View key={m.id || idx} style={styles.recordItem}>
-                        <View style={{ flex: 1 }}>
-                          <Text style={styles.recordTitle}>{m.title || m.name || 'Medication'}</Text>
-                          <Text style={styles.recordDesc}>Start Date: {m.begin_date || '-'}</Text>
-                          <Text style={styles.recordDesc}>End Date: {m.end_date || 'Ongoing'}</Text>
-                        </View>
-                      </View>
-                    ))
-                  )}
-                </View>
+                {renderChartSection('medications')}
 
                 <View style={styles.sectionCard}>
                   <Text style={styles.cardHeaderTitle}>Active Prescriptions</Text>
@@ -356,26 +470,13 @@ export default function HealthRecordsModal({ visible, onClose, initialTab = 'sum
               </>
             )}
 
-            {/* ================= TAB 5: IMMUNIZATIONS ================= */}
-            {activeTab === 'immunizations' && (
-              <View style={styles.sectionCard}>
-                <Text style={styles.cardHeaderTitle}>Patient Immunization History</Text>
-                {immunizations.length === 0 ? (
-                  <Text style={styles.emptyText}>No records found.</Text>
-                ) : (
-                  immunizations.map((imm, idx) => (
-                    <View key={imm.id || idx} style={styles.recordItem}>
-                      <View style={{ flex: 1 }}>
-                        <Text style={styles.recordTitle}>{imm.vaccine_name || imm.cvx_code || 'Vaccine'}</Text>
-                        <Text style={styles.recordDesc}>Date Administered: {imm.administered_at || '-'}</Text>
-                        {imm.manufacturer && <Text style={styles.recordDesc}>Manufacturer: {imm.manufacturer}</Text>}
-                        {imm.administered_by_provider_name && <Text style={styles.recordDesc}>Administered By: {imm.administered_by_provider_name}</Text>}
-                      </View>
-                    </View>
-                  ))
-                )}
-              </View>
-            )}
+            {/* ===== Operations and implants: new in M19, not in the CCD summary ===== */}
+            {activeTab === 'procedures' && renderChartSection('procedures')}
+
+            {activeTab === 'devices' && renderChartSection('devices')}
+
+            {/* ================= TAB 5: VACCINATIONS ================= */}
+            {activeTab === 'immunizations' && renderChartSection('immunizations')}
 
             {/* ================= TAB 6: LAB RESULTS ================= */}
             {activeTab === 'results' && (
@@ -471,11 +572,164 @@ export default function HealthRecordsModal({ visible, onClose, initialTab = 'sum
         code={openGuide?.code}
         guide={openGuide?.guide}
       />
+
+      {/* Phase M19. Saying something is wrong is NOT an edit -- the patient
+          never writes to their own clinical record. It raises a request a
+          clinician answers either way, which the wording here says plainly so
+          nobody leaves expecting the list to have changed. */}
+      {correcting ? (
+        <View style={styles.sheetOverlay}>
+          <View style={styles.sheet}>
+            <Text style={styles.sheetTitle}>{correcting.item.title}</Text>
+            <Text style={styles.sheetSub}>Tell us what is wrong with this.</Text>
+
+            <View style={styles.sheetNote}>
+              <Text style={styles.sheetNoteText}>
+                This does not change your record by itself. Someone will read it and decide,
+                and you will hear back either way.
+              </Text>
+            </View>
+
+            <Text style={styles.sheetLabel}>What would you like to happen?</Text>
+            <View style={styles.askRow}>
+              {[
+                { id: 'remove', label: 'Take it off' },
+                { id: 'correct', label: 'It is wrong' },
+                { id: 'add_detail', label: 'Add something' },
+                { id: 'unsure', label: 'Not sure' }
+              ].map((o) => (
+                <TouchableOpacity
+                  key={o.id}
+                  style={[styles.askChip, asks === o.id && styles.askChipOn]}
+                  onPress={() => setAsks(o.id)}
+                  accessibilityRole="button"
+                >
+                  <Text style={[styles.askChipText, asks === o.id && styles.askChipTextOn]}>{o.label}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            <Text style={styles.sheetLabel}>In your own words</Text>
+            <TextInput
+              style={styles.sheetInput}
+              value={says}
+              onChangeText={setSays}
+              placeholder="e.g. I have never reacted to this"
+              placeholderTextColor="#94a3b8"
+              multiline
+              maxLength={2000}
+            />
+
+            <View style={styles.sheetButtons}>
+              <TouchableOpacity
+                style={styles.sheetCancel}
+                onPress={() => { setCorrecting(null); setSays(''); }}
+                disabled={busy}
+              >
+                <Text style={styles.sheetCancelText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.sheetSend, (!says.trim() || busy) && styles.sheetSendOff]}
+                onPress={sendCorrection}
+                disabled={!says.trim() || busy}
+              >
+                <Text style={styles.sheetSendText}>{busy ? 'Sending…' : 'Send'}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      ) : null}
+
+      {saidThanks ? (
+        <View style={styles.sheetOverlay}>
+          <View style={styles.thanksSheet}>
+            <CheckCircleIcon color="#15803d" size={30} />
+            <Text style={styles.thanksText}>{saidThanks}</Text>
+            <TouchableOpacity style={styles.sheetSend} onPress={() => setSaidThanks(null)}>
+              <Text style={styles.sheetSendText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  // ---- Phase M19: the chart, and saying something in it is wrong ----
+  sectionBlurb: { fontSize: 12, color: '#64748b', lineHeight: 18, marginBottom: 10, marginTop: -2 },
+  itemTopRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 },
+  rowIcon: { flexDirection: 'row', alignItems: 'flex-start', marginTop: 5 },
+
+  // Deliberately plain. An empty list is not good news and must not be styled
+  // as though it were -- this replaced a green tick reading "No known allergies
+  // on record (NKDA)", which asserted a clinical finding the record never made.
+  emptyCard: {
+    backgroundColor: '#f8fafc', borderRadius: 10, borderWidth: 1, borderColor: '#e2e8f0',
+    padding: 12, marginTop: 4
+  },
+  emptyCardText: { fontSize: 12.5, color: '#475569', lineHeight: 18 },
+
+  pillUnconfirmed: { backgroundColor: '#fef3c7', borderRadius: 999, paddingHorizontal: 8, paddingVertical: 1 },
+  pillUnconfirmedText: { fontSize: 10, fontWeight: '800', color: '#92400e' },
+  pillEnded: { backgroundColor: '#e2e8f0', borderRadius: 999, paddingHorizontal: 8, paddingVertical: 1 },
+  pillEndedText: { fontSize: 10, fontWeight: '800', color: '#475569' },
+  unconfirmedNote: { fontSize: 11.5, color: '#92400e', lineHeight: 16, flex: 1 },
+
+  correctChip: {
+    flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', marginTop: 8,
+    backgroundColor: '#fffbeb', borderWidth: 1, borderColor: '#fde68a',
+    borderRadius: 999, paddingHorizontal: 10, paddingVertical: 5
+  },
+  correctChipText: { fontSize: 11.5, fontWeight: '700', color: '#b45309', marginLeft: 5 },
+
+  flaggedBox: {
+    marginTop: 8, backgroundColor: '#eff6ff', borderRadius: 8, borderWidth: 1,
+    borderColor: '#bfdbfe', padding: 9
+  },
+  flaggedText: { fontSize: 11.5, color: '#1e40af', lineHeight: 17 },
+
+  sheetOverlay: {
+    position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+    backgroundColor: 'rgba(15,23,42,0.5)', alignItems: 'center', justifyContent: 'center', padding: 20
+  },
+  sheet: {
+    backgroundColor: '#ffffff', borderRadius: 16, padding: 18, width: '100%', maxWidth: 420
+  },
+  sheetTitle: { fontSize: 16, fontWeight: '800', color: '#0f172a' },
+  sheetSub: { fontSize: 12.5, color: '#64748b', marginTop: 2 },
+  sheetNote: {
+    backgroundColor: '#f8fafc', borderRadius: 10, borderWidth: 1, borderColor: '#e2e8f0',
+    padding: 11, marginTop: 12
+  },
+  sheetNoteText: { fontSize: 12, color: '#475569', lineHeight: 18 },
+  sheetLabel: { fontSize: 11.5, fontWeight: '800', color: '#64748b', marginTop: 14, marginBottom: 6 },
+  askRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
+  askChip: {
+    borderWidth: 1, borderColor: '#cbd5e1', borderRadius: 999, paddingHorizontal: 11, paddingVertical: 6
+  },
+  askChipOn: { borderColor: '#15803d', backgroundColor: '#f0fdf4' },
+  askChipText: { fontSize: 12, fontWeight: '700', color: '#475569' },
+  askChipTextOn: { color: '#15803d' },
+  sheetInput: {
+    borderWidth: 1, borderColor: '#cbd5e1', borderRadius: 10, padding: 10, minHeight: 78,
+    fontSize: 13, color: '#0f172a', textAlignVertical: 'top'
+  },
+  sheetButtons: { flexDirection: 'row', gap: 8, marginTop: 16 },
+  sheetCancel: {
+    flex: 1, borderWidth: 1, borderColor: '#cbd5e1', borderRadius: 10, paddingVertical: 12, alignItems: 'center'
+  },
+  sheetCancelText: { fontSize: 13.5, fontWeight: '700', color: '#475569' },
+  sheetSend: {
+    flex: 1, backgroundColor: '#15803d', borderRadius: 10, paddingVertical: 12, alignItems: 'center'
+  },
+  sheetSendOff: { opacity: 0.5 },
+  sheetSendText: { fontSize: 13.5, fontWeight: '800', color: '#ffffff' },
+  thanksSheet: {
+    backgroundColor: '#ffffff', borderRadius: 16, padding: 22, width: '100%', maxWidth: 380, alignItems: 'center'
+  },
+  thanksText: { fontSize: 13.5, color: '#334155', lineHeight: 20, textAlign: 'center', marginTop: 10, marginBottom: 16 },
+
   overlay: {
     position: 'absolute',
     top: 0,

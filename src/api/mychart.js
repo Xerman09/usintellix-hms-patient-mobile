@@ -528,6 +528,56 @@ export const MyChartService = {
   },
 
   // -------------------------------------------------------------
+  // 4i. The chart itself -- allergies, conditions, medicines,
+  //     operations, implants, vaccinations (Phase M19)
+  // -------------------------------------------------------------
+
+  /**
+   * The patient's own clinical lists, already filtered for what they may see.
+   *
+   * USE THIS RATHER THAN /health-summary FOR THESE SIX LISTS.
+   *
+   * /health-summary is the shared CCD endpoint staff read too. It returns rows
+   * straight from the tables, including ones whose verification_status is
+   * `Refuted` (a clinician decided the patient does NOT have this) or
+   * `Entered in Error`. Rendering those tells a patient they have something that
+   * was ruled out.
+   *
+   * This endpoint applies that gate, marks unconfirmed items as unconfirmed,
+   * carries the hospital's own wording for each list -- including what an EMPTY
+   * list means, which is not the same as "you have none" -- and goes through
+   * PortalGuard, so it is capability-gated and appears in the patient's own
+   * access log. /health-summary is none of those things.
+   */
+  async getChart() {
+    return apiRequest('/mychart/chart');
+  },
+
+  /**
+   * Say that one item on the chart is wrong.
+   *
+   * Never an edit: the patient does not write to their own clinical record.
+   * This raises a request a clinician answers either way.
+   *
+   * @param {Object} payload { section, item_id, says, asks }
+   *   asks is one of remove | correct | add_detail | unsure
+   */
+  async raiseChartCorrection(payload) {
+    return apiRequest('/mychart/chart/correction', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  },
+
+  /** Take one back while it is still waiting. */
+  async withdrawChartCorrection(id) {
+    return apiRequest('/mychart/chart/correction/withdraw', {
+      method: 'POST',
+      body: JSON.stringify({ id: Number(id) })
+    });
+  },
+
+  // -------------------------------------------------------------
   // 5. Billing & Statements (Phase M4)
   // -------------------------------------------------------------
 

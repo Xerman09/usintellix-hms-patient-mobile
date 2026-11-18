@@ -4,6 +4,38 @@ export const AuthService = {
   /**
    * Log in patient with credentials and enforce patient role security
    */
+  /*
+   * Forgot Password.
+   *
+   * requestPasswordReset() succeeds whatever the username was. The server
+   * answers identically for a real account, one that does not exist, a
+   * suspended one and one with no address on file, so this cannot be used to
+   * discover which usernames are real. Do not add handling that reads a
+   * failure as "no such user" -- there is no such response.
+   */
+  async requestPasswordReset(username) {
+    return await apiRequest('/auth/password-reset/request', {
+      method: 'POST',
+      body: JSON.stringify({ username })
+    });
+  },
+
+  /** Check a code without spending it, so a wrong one is caught before they type a password twice. */
+  async verifyPasswordResetCode(username, code) {
+    return await apiRequest('/auth/password-reset/verify', {
+      method: 'POST',
+      body: JSON.stringify({ username, code })
+    });
+  },
+
+  /** Spend the code and set the new password. */
+  async completePasswordReset(username, code, password) {
+    return await apiRequest('/auth/password-reset/complete', {
+      method: 'POST',
+      body: JSON.stringify({ username, code, password })
+    });
+  },
+
   async login(username, password) {
     const res = await apiRequest('/login', {
       method: 'POST',

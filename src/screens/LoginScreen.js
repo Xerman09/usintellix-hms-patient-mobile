@@ -20,9 +20,11 @@ import { getServerHost, setServerHost, CONFIG } from '../constants/config';
 import { MailIcon, LockIcon, EyeOffIcon, ShieldIcon, FingerprintIcon, FaceIdIcon } from '../components/Icons';
 import { BiometricService } from '../utils/biometricAuth';
 import logoImg from '../../assets/logo.png';
+import ForgotPasswordModal from '../components/ForgotPasswordModal';
 
 export default function LoginScreen({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
+  const [showForgot, setShowForgot] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -543,13 +545,10 @@ export default function LoginScreen({ onLoginSuccess }) {
                 <View style={styles.passwordLabelRow}>
                   <Text style={styles.fieldUpperLabel}>ACCOUNT PASSWORD</Text>
                   <TouchableOpacity
-                    onPress={() =>
-                      Alert.alert(
-                        'Password Recovery',
-                        'Please contact your organization administrator or clinical desk for password assistance.'
-                      )
-                    }
+                    onPress={() => setShowForgot(true)}
                     hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                    accessibilityRole="button"
+                    accessibilityLabel="Reset your password"
                   >
                     <Text style={styles.forgotPasswordTeal}>Forgot Password?</Text>
                   </TouchableOpacity>
@@ -955,6 +954,15 @@ export default function LoginScreen({ onLoginSuccess }) {
           </View>
         </View>
       </Modal>
+      {/* Forgot Password. Until now this link raised an alert telling the
+          patient to contact an administrator -- there was no route, no service
+          and no table behind it. The username already typed into the form is
+          handed across so they do not type it twice. */}
+      <ForgotPasswordModal
+        visible={showForgot}
+        onClose={() => setShowForgot(false)}
+        initialUsername={username}
+      />
     </KeyboardAvoidingView>
   );
 }
